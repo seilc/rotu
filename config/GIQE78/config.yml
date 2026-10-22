@@ -1,0 +1,7 @@
+object: orig/GIQE78/sys/main.dol
+hash: ef1087df2c1f04bf820b975483adf0d0d3f4d8bf
+symbols: config/GIQE78/symbols.txt
+splits: config/GIQE78/splits.txt
+symbols_known: true
+fill_gaps: false
+ldscript_template: config/GIQE78/ldscript.tpl

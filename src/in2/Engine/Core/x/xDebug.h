@@ -1,0 +1,160 @@
+#ifndef XDEBUG_H
+#define XDEBUG_H
+
+#include "iDebug.h"
+
+enum en_VERBOSE_MSGLEVEL
+{
+    DBML_NONE,
+    DBML_RELDISP,
+    DBML_DISP,
+    DBML_USER,
+    DBML_ERR,
+    DBML_TIME,
+    DBML_WARN,
+    DBML_VALID,
+    DBML_INFO,
+    DBML_DBG,
+    DBML_TEST,
+    DBML_VDBG,
+    DBML_SPEW
+};
+
+#if DEBUG || RELEASE
+#define xWARN(...) DBprintf(DBML_WARN, __VA_ARGS__)
+#define xVERBOSE(...) DBprintf(DBML_VDBG, __VA_ARGS__)
+#else
+#define xWARN(...)
+#define xVERBOSE(...)
+#endif
+
+#if DEBUG
+#define _xVALIDATE(line, cond, msg)                                                               \
+do {                                                                                              \
+    static S32 been_here;                                                                         \
+    if (!(cond) && !been_here) {                                                                  \
+        DBprintf(DBML_VALID, "%s(%d) : (" msg ") in '%s'\n", __FILE__, line, __FUNCTION__);       \
+        xDebugValidateFailed();                                                                   \
+        been_here = TRUE;                                                                         \
+    }                                                                                             \
+} while (0)
+
+#define _xVALIDATEFAIL(line, msg) _xVALIDATE(line, 0, msg)
+#define xVALIDATE(line, cond) _xVALIDATE(line, cond, #cond)
+#define xVALIDATEM(line, cond, msg) _xVALIDATE(line, cond, msg)
+#define xVALIDATEFAIL(line) _xVALIDATEFAIL(line, "*always*")
+#else
+#define xVALIDATE(line, cond)
+#define xVALIDATEM(line, cond, msg)
+#define xVALIDATEFAIL(line)
+#endif
+
+#if DEBUG || RELEASE
+#define _xSTR(x) #x
+
+#define _xASSERTFAIL(line, condstr, ...)                                                          \
+{                                                                                                 \
+    xDebug_assert2_info(__FUNCTION__, __FILE__, line, condstr);                                   \
+    xDebug_assert2(__VA_ARGS__);                                                                  \
+    xDebugStackTrace();                                                                           \
+    if (xDebugBoing()) iDebugBreak();                                                             \
+}
+
+#define xASSERT(line, cond)                                                                       \
+do {                                                                                              \
+    if (!(cond)) {                                                                                \
+        _xASSERTFAIL(line, _xSTR(cond), "%s", #cond);                                             \
+    }                                                                                             \
+} while (0)
+
+#define xASSERTMSG(line, cond, msg)                                                               \
+do {                                                                                              \
+    if (!(cond)) {                                                                                \
+        _xASSERTFAIL(line, _xSTR(cond), "%s", msg);                                               \
+    }                                                                                             \
+} while (0)
+
+#define xASSERTM(line, cond, ...)                                                                 \
+do {                                                                                              \
+    if (!(cond)) {                                                                                \
+        _xASSERTFAIL(line, #cond, __VA_ARGS__);                                                   \
+    }                                                                                             \
+} while (0)
+
+#define xFAIL(line) do { _xASSERTFAIL(line, "*always*", "%s", "*always*") } while (0)
+#define xFAILM(line, ...) do { _xASSERTFAIL(line, "*always*", __VA_ARGS__) } while (0)
+
+#define xFAIL_ONCE_M(line, ...)                                                                   \
+do {                                                                                              \
+    static bool done = false;                                                                     \
+    if (!done) {                                                                                  \
+        done = true;                                                                              \
+        _xASSERTFAIL(line, "*once only*", __VA_ARGS__);                                           \
+    }                                                                                             \
+} while (0)
+
+#define xASSERT_ONCE(line, cond)                                                                  \
+do {                                                                                              \
+    static bool done = false;                                                                     \
+    if (!done && !(cond)) {                                                                       \
+        xFAILM(line, "%s", #cond);                                                                \
+        done = true;                                                                              \
+    }                                                                                             \
+} while (0)
+
+#define xASSERT_DESIGN_M(line, cond, msg)                                                         \
+do {                                                                                              \
+    static bool already_asserted = false;                                                         \
+    if (!already_asserted && !(cond)) {                                                           \
+        already_asserted = true;                                                                  \
+        _xASSERTFAIL(line, _xSTR(cond), msg);                                                     \
+    }                                                                                             \
+} while (0)
+#else
+#define _xASSERTFAIL(line, condstr, ...)
+#define xASSERT(line, cond)
+#define xASSERTMSG(line, cond, msg)
+#define xASSERTM(line, cond, ...)
+#define xFAIL(line)
+#define xFAILM(line, ...)
+#define xFAIL_ONCE_M(line, ...)
+#define xASSERT_ONCE(line, cond)
+#define xASSERT_DESIGN_M(line, cond, msg)
+#endif
+
+#define xFAIL_AND_RETURN_IF(line, cond)                                                                     \
+do {                                                                                              \
+    if ((cond)) {                                                                                 \
+        _xASSERTFAIL(line, "*always*", "%s", #cond)                                               \
+        return;                                                                                   \
+    }                                                                                             \
+} while (0)
+
+#define xFAIL_AND_RETURN_VALUE_IF(line, cond, retval)                                                            \
+do {                                                                                              \
+    if ((cond)) {                                                                                 \
+        _xASSERTFAIL(line, "*always*", "%s", #cond)                                               \
+        return (retval);                                                                          \
+    }                                                                                             \
+} while (0)
+
+typedef void(*xDebugModeCallback)();
+
+void xDebugValidateFailed();
+void xprintf(const char* fmt, ...);
+
+#if DEBUG || RELEASE
+void DBprintf(en_VERBOSE_MSGLEVEL msglvl, const char* fmt, ...);
+void xDebug_assert2_info(const char* func, const char* file, U32 line, const char* expr);
+void xDebug_assert2(const char* fmt, ...);
+U32 xDebugBoing();
+#endif
+
+S32 xDebugModeAdd(const char* debugModeName, xDebugModeCallback func);
+
+#if DEBUG || RELEASE
+S32 xDebugModeGet();
+void xDebugStackTrace();
+#endif
+
+#endif
