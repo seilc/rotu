@@ -52,7 +52,13 @@ struct xLight : xBase
 #endif
 };
 
+xLight* xLightCreateTempInternal(bool useLightCard);
+void xLightDestroyTempInternal(xLight* xl);
+void xLightOn(xLight* xl, bool on, F32 transitionTime);
+void xLightSetColor(xLight* xl, F32 r, F32 g, F32 b, F32 transitionTime);
 void xLightSetColor(xLight* xl, const xFColor& col, F32 transitionTime);
 void xLightGetColor(xLight* xl, xFColor& col);
+void xLightSetPos(xLight* xl, const xVec3& pos);
+void xLightSetRadius(xLight* xl, F32 radius);
 
 #endif

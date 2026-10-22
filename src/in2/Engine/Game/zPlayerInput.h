@@ -6,6 +6,9 @@
 class zPlayerInput
 {
 public:
+    zPlayerInput();
+    ~zPlayerInput();
+
     struct AnalogStick
     {
         F32 x;

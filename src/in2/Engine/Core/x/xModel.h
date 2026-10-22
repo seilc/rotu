@@ -72,11 +72,15 @@ struct xModelTag
     F32 wt[4];
 };
 
+xModelInstance* xModelInstanceAllocReuse(RpAtomic* data, void* object, U16 flags, U8 boneIndex, U8* boneRemap, xModelInstance* reuse_instance);
+void xModelInstanceFree(xModelInstance* modelInst, bool animFree);
 void xModelUpdate(xModelInstance* modelInst, F32 timeDelta);
 void xModelEval(xModelInstance* modelInst);
 void xModelAnimCollRefresh(const xModelInstance& cm);
 S32 xModelCullSingle(xModelInstance* minst);
 bool xModelIsPreinstanced(const xModelInstance* model);
+void xModelRender(xModelInstance* modelInst);
+void xModelSetLightKit(xModelInstance* minst, xLightKit* lightKit, F32 transitionTime);
 RpAtomic* xModelFindAtomic(U32 id, U32* actual_id);
 
 #if DEBUG || RELEASE
@@ -92,5 +96,10 @@ inline xMat4x3* xModelGetFrame(xModelInstance* model)
 }
 
 bool xModelAnimCollDirty(const xModelInstance& m);
+
+inline xModelInstance* xModelInstanceAlloc(RpAtomic* data, void* object, U16 flags, U8 boneIndex, U8* boneRemap)
+{
+    return xModelInstanceAllocReuse(data, object, flags, boneIndex, boneRemap, NULL);
+}
 
 #endif

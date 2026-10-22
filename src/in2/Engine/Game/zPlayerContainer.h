@@ -9,6 +9,8 @@ struct xEnt;
 class zPlayerContainer
 {
 public:
+    zPlayerContainer();
+
     zPlayer* operator[](S32 index)
     {
         xASSERT(23, index >= 0 && index < size());

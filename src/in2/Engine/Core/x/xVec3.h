@@ -47,6 +47,7 @@ struct xVec3
         return len;
     }
 
+    F32 safe_normalize(const xVec3& safety);
     F32 up_normalize();
     void AddScale(const xVec3& p, const xVec3& d, F32 s);
     void AddScale(const xVec3& d, F32 s);

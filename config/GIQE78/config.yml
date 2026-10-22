@@ -5,3 +5,8 @@ splits: config/GIQE78/splits.txt
 symbols_known: true
 fill_gaps: false
 ldscript_template: config/GIQE78/ldscript.tpl
+block_relocations:
+  # xsavegame: `addi r6, r2, -0x731c` is xsavegame's own .sdata2 (@1033 at 0x803F0868) minus 4 for an
+  # lwzu copy loop; dtk attributed it to xRumbleManager's @1219 (0x803F0864, EndCameraShake's 0.3f) and
+  # made that symbol global, which a compiled xRumbleManager.o can't provide. Raw r2 offset instead.
+  - source: 0x8005B59C

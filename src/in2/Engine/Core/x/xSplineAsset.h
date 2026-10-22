@@ -20,6 +20,7 @@ public:
     void find_derivative_basis_functions(F32 u, S32 i, S32 order, F32 ders[5][5]) const;
     F32 start() const;
     F32 end() const;
+    xVec3 evaluate(F32 u) const;
     void evaluate(F32 u, xVec3& point) const;
     xVec3 evaluate(F32 u, S32 d) const;
     void evaluate(F32 u, S32 d, xVec3& point) const;

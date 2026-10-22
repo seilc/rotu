@@ -49,6 +49,7 @@ F32 xasin(F32 x);
 F32 xatan2(F32 y, F32 x);
 F32 xfmod(F32 x, F32 y);
 void xsqrtfast(F32& o, F32 fVal);
+F32 xurand();
 
 inline F32 xrmod(F32 ang)
 {

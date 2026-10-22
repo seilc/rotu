@@ -40,7 +40,6 @@ struct zPlayerCheckPoint
 struct zPlayer : zEnt
 {
 public:
-    zPlayerActionManager actionManager;
     S32 index;
     
 public:
@@ -52,13 +51,9 @@ public:
     virtual bool AllowInteraction(zInteraction*);
     virtual void AttackHit(bool);
     virtual void BeginUpdate(F32 dt);
-    virtual void DefaultBeginUpdate(F32 dt);
     virtual void Update(F32 dt);
-    virtual void DefaultUpdate(F32 dt);
     virtual void EndUpdate(F32 dt);
-    virtual void DefaultEndUpdate(F32 dt);
     virtual void Move(xScene* s, F32 dt, xEntFrame* frame);
-    virtual void DefaultMove(xScene* s, F32 dt, xEntFrame* frame);
     virtual void Render();
     virtual bool WasRendered() const;
     virtual void HandleEvent(xBase* from, U32 toEvent, const F32* toParam, xBase* toParamWidget, U32 toParamWidgetID);
@@ -88,7 +83,7 @@ public:
     virtual bool NeedsHealth() const;
     virtual const xVec3& GetFloorNormal() const;
 
-    virtual bool IsFloorColliding() const
+    bool IsFloorColliding() const
     {
         return Get_floor_collision() && CollisionOn();
     }
@@ -115,6 +110,8 @@ public:
     virtual F32 PredictY(F32 time) const;
     virtual bool IsInteractioning();
 
+    bool CanSayOneLiner();
+
     bool Get_humanPlayer() const
     {
         return (zPlayerFlags >> 18) & 0x1;
@@ -132,7 +129,6 @@ public:
 
     virtual void SetEnemyIsNear(bool isit);
     virtual void EnemyKilled(zNPC::zNPCCommon* npc);
-    virtual bool IsJumping() const = 0;
     virtual void ParseIni();
     virtual void AddStates(xAnimTable* table);
     virtual void AddTransitions(xAnimTable*);
@@ -241,6 +237,9 @@ private:
 
 public:
     U32* hitSoundsMap;
+
+private:
+    U8 unkB0C[0x324];
 };
 
 #endif
