@@ -19,8 +19,6 @@ typedef enum _SDRenderState
     eRenderStateStreak,
     eRenderStateTide,
     eRenderStateSkyDomeBack,
-    eRenderStateSkyDomeFlat,
-    eRenderStateSkyDome3D,
     eRenderStateEnvironment,
     eRenderStateFill,
     eRenderStateGlare,
