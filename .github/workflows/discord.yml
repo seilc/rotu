@@ -58,4 +58,8 @@ jobs:
             exit 0
           fi
           python3 .github/progress.py cur $PREV > payload.json
+          if [ ! -s payload.json ]; then
+            echo "No progress change, skipped"
+            exit 0
+          fi
           curl -fsS -H "Content-Type: application/json" --data-binary @payload.json "$HOOK"

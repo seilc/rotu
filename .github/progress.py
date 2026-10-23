@@ -2,6 +2,7 @@
 """Print a Discord message (JSON payload) with the progress from objdiff reports, as a list.
 
 Usage: progress.py CUR_DIR [PREV_DIR]
+Prints nothing when no displayed number changed since PREV_DIR.
 Each directory holds GIQE78_report/report.json, as downloaded from the Build workflow's artifacts.
 """
 import json
@@ -30,19 +31,25 @@ def main():
     cur = load(cur_dir, VERSION)
     prev = load(prev_dir, VERSION) if prev_dir else None
     lines = ["**Progress**"]
+    changed = not prev
     for name, key, total in MEASURES:
         line = f"- {name}: **{pct(cur, key, total):.2f}%**"
         if prev:
-            line += f" ({pct(cur, key, total) - pct(prev, key, total):+.2f})"
+            delta = pct(cur, key, total) - pct(prev, key, total)
+            changed |= round(delta, 2) != 0
+            line += f" ({delta:+.2f})"
         lines.append(line)
     units = cur.get("complete_units", 0)
     line = f"- Files: **{units}/{cur.get('total_units', 0)}**"
     if prev:
-        line += f" ({units - prev.get('complete_units', 0):+d})"
+        delta = units - prev.get("complete_units", 0)
+        changed |= delta != 0
+        line += f" ({delta:+d})"
     lines.append(line)
     if not prev:
         lines.append("(no previous report to compare with)")
-    print(json.dumps({"username": "Underminer", "content": "\n".join(lines)}))
+    if changed:
+        print(json.dumps({"username": "Underminer", "content": "\n".join(lines)}))
 
 
 if __name__ == "__main__":
