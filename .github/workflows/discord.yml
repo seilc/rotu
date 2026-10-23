@@ -52,11 +52,10 @@ jobs:
       - name: Post progress to Discord
         env:
           HOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
-          SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
           if [ -z "$HOOK" ]; then
             echo "::warning::No DISCORD_PROGRESS_WEBHOOK secret, skipped"
             exit 0
           fi
-          python3 .github/progress.py cur $PREV --title "Progress after ${SHA:0:7}" > payload.json
+          python3 .github/progress.py cur $PREV > payload.json
           curl -fsS -H "Content-Type: application/json" --data-binary @payload.json "$HOOK"

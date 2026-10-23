@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
-"""Print a Discord message (JSON payload) with per-version progress from objdiff reports.
+"""Print a Discord message (JSON payload) with the progress from objdiff reports, as a list.
 
-Usage: progress.py CUR_DIR [PREV_DIR] [--title TEXT]
-Each directory holds <VERSION>_report/report.json, as downloaded from the Build workflow's artifacts.
+Usage: progress.py CUR_DIR [PREV_DIR]
+Each directory holds GIQE78_report/report.json, as downloaded from the Build workflow's artifacts.
 """
 import json
 import sys
 from pathlib import Path
 
-VERSIONS = ["GIQE78"]
-COLUMNS = [("Code linked", "complete_code", "total_code"), ("Code matched", "matched_code", "total_code"),
-           ("Data linked", "complete_data", "total_data"), ("Data matched", "matched_data", "total_data")]
+VERSION = "GIQE78"
+MEASURES = [("Code", "matched_code", "total_code"), ("Data", "matched_data", "total_data")]
 
 
 def load(d, ver):
@@ -27,28 +26,23 @@ def pct(m, key, total):
 
 def main():
     args = sys.argv[1:]
-    title = "Progress"
-    if "--title" in args:
-        i = args.index("--title")
-        title = args[i + 1]
-        del args[i:i + 2]
     cur_dir, prev_dir = args[0], (args[1] if len(args) > 1 else None)
-    rows = [f"{'':<12}" + "".join(f"{c[0]:>16}" for c in COLUMNS) + f"{'Units':>10}"]
-    for ver in VERSIONS:
-        cur = load(cur_dir, ver)
-        if cur is None:
-            continue
-        prev = load(prev_dir, ver) if prev_dir else None
-        row = f"{ver:<12}"
-        for _, key, total in COLUMNS:
-            cell = f"{pct(cur, key, total):.2f}%"
-            if prev:
-                cell += f" {pct(cur, key, total) - pct(prev, key, total):+.2f}"
-            row += f"{cell:>16}"
-        row += f"{cur.get('complete_units', 0):>5}/{cur.get('total_units', 0)}"
-        rows.append(row)
-    note = "" if prev_dir else "\n(no previous report to compare with)"
-    print(json.dumps({"username": "Underminer", "content": f"**{title}**\n```\n" + "\n".join(rows) + "\n```" + note}))
+    cur = load(cur_dir, VERSION)
+    prev = load(prev_dir, VERSION) if prev_dir else None
+    lines = ["**Progress**"]
+    for name, key, total in MEASURES:
+        line = f"- {name}: **{pct(cur, key, total):.2f}%**"
+        if prev:
+            line += f" ({pct(cur, key, total) - pct(prev, key, total):+.2f})"
+        lines.append(line)
+    units = cur.get("complete_units", 0)
+    line = f"- Files: **{units}/{cur.get('total_units', 0)}**"
+    if prev:
+        line += f" ({units - prev.get('complete_units', 0):+d})"
+    lines.append(line)
+    if not prev:
+        lines.append("(no previous report to compare with)")
+    print(json.dumps({"username": "Underminer", "content": "\n".join(lines)}))
 
 
 if __name__ == "__main__":
