@@ -3,6 +3,7 @@
 #include "iMath.h"
 #include "xCam.h"
 #include "xColor.h"
+#include "xDebugTweak.h"
 #include "xGlobals.h"
 #include "xLight.h"
 #include "xMemMgr.h"
@@ -35,43 +36,41 @@ struct _blastConfig
     F32 blueTintDist;
 };
 
-// Tweakables (addTweaks) in debug builds, constants here
-const U32 texture = 0xDED04D47;
-const U32 mistTexture = 0xDED04D47;
-const U32 glintTexture = 0xDED04D47;
-
-const F32 singleEmitTime = 0.03f;
-const F32 singleVelocity = 20.0f;
-const F32 singleSize = 0.3f;
-const F32 singleRandomEmitLoc = 0.1f;
-const F32 maxLightIntensity = 1.0f;
-const F32 lightDecay = 0.8f;
-const F32 lightSampleDelay = 0.5f;
-const F32 lightRadius = 7.0f;
-const F32 redMultiplier = 1.0f;
-const F32 greenMultiplier = 1.0f;
-const F32 angleStretch = 2.0f;
-const F32 alphaMissFade = 0.2f;
-const F32 alphaCollideFade = 0.0f;
-const F32 mistEmitRate = 100.0f;
-const U32 mistAlpha = 16;
-const F32 mistLifetime = 1.0f;
-const F32 mistGrowthRate = 3.0f;
-const F32 mistMinSize = 0.5f;
-const F32 mistVelocity = 1.0f;
-const F32 mistFadeInTime = 0.3f;
-const F32 glintVelocity = 7.0f;
-const F32 glintEmitRate = 15.0f;
-const F32 glintLength = 0.0f;
-const F32 glintLengthRand = 0.1f;
-const F32 glintLegnthMax = 0.1f;
-const F32 glintLifetimeMin = 0.3f;
-const F32 glintLifetimeRange = 0.1f;
-const F32 glintWidth = 0.02f;
-const F32 glintWidthRand = 0.0f;
-const F32 glintGravity = 20.0f;
-const F32 glintSplashDelay = 0.1f;
-const F32 glintDirVary = PI / 2;
+xTWEAKABLE U32 texture = 0xDED04D47;
+xTWEAKABLE U32 mistTexture = 0xDED04D47;
+xTWEAKABLE U32 glintTexture = 0xDED04D47;
+xTWEAKABLE F32 singleEmitTime = 0.03f;
+xTWEAKABLE F32 singleVelocity = 20.0f;
+xTWEAKABLE F32 singleSize = 0.3f;
+xTWEAKABLE F32 singleRandomEmitLoc = 0.1f;
+xTWEAKABLE F32 maxLightIntensity = 1.0f;
+xTWEAKABLE F32 lightDecay = 0.8f;
+xTWEAKABLE F32 lightSampleDelay = 0.5f;
+xTWEAKABLE F32 lightRadius = 7.0f;
+xTWEAKABLE F32 redMultiplier = 1.0f;
+xTWEAKABLE F32 greenMultiplier = 1.0f;
+xTWEAKABLE F32 angleStretch = 2.0f;
+xTWEAKABLE F32 alphaMissFade = 0.2f;
+xTWEAKABLE F32 alphaCollideFade = 0.0f;
+xTWEAKABLE F32 mistEmitRate = 100.0f;
+xTWEAKABLE U32 mistAlpha = 16;
+xTWEAKABLE F32 mistLifetime = 1.0f;
+xTWEAKABLE F32 mistGrowthRate = 3.0f;
+xTWEAKABLE F32 mistMinSize = 0.5f;
+xTWEAKABLE F32 mistVelocity = 1.0f;
+xTWEAKABLE F32 mistFadeInTime = 0.3f;
+xTWEAKABLE F32 glintVelocity = 7.0f;
+xTWEAKABLE F32 glintEmitRate = 15.0f;
+xTWEAKABLE F32 glintLength = 0.0f;
+xTWEAKABLE F32 glintLengthRand = 0.1f;
+xTWEAKABLE F32 glintLegnthMax = 0.1f;
+xTWEAKABLE F32 glintLifetimeMin = 0.3f;
+xTWEAKABLE F32 glintLifetimeRange = 0.1f;
+xTWEAKABLE F32 glintWidth = 0.02f;
+xTWEAKABLE F32 glintWidthRand = 0.0f;
+xTWEAKABLE F32 glintGravity = 20.0f;
+xTWEAKABLE F32 glintSplashDelay = 0.1f;
+xTWEAKABLE F32 glintDirVary = PI / 2;
 
 S32 sPowerupLevel;
 zFrozoneBlast blastEffect;
@@ -116,6 +115,7 @@ void zFrozoneBlast::SingleBlast(const xRay3* direction, F32 velocity, bool colli
 
 void zFrozoneBlast::SetPowerupLevel(S32 level)
 {
+    xASSERT(__LINE__, level >= 0 && level < 3);
     sPowerupLevel = level;
 }
 
@@ -169,7 +169,9 @@ void zFrozoneBlast::loadAssets()
     blastConfig[2].velocityRange = 0.5f;
 
     mSystemID = createParticleSystem(mSystemID, texture, 5, 6, sizeof(blastParticle), updateBlastParticles);
+    xASSERT(__LINE__, mSystemID != -1);
     mMistSystemID = createParticleSystem(mMistSystemID, mistTexture, 5, 6, sizeof(mistParticle), updateMistParticles);
+    xASSERT(__LINE__, mMistSystemID != -1);
     zParticleCustomCreateGlintSystem(mGlintSystemID, glintTexture, "Frozone Blast Splash");
 }
 
@@ -178,7 +180,7 @@ S32 zFrozoneBlast::createParticleSystem(S32 oldSystemId, U32, U32 srcBlend, U32 
 {
     xParticleBatchSystem system;
     system.pool_type = PGT_POS_COLOR_SIZE;
-    system.rs.texture = (RwTexture*)xSTFindAsset(texture, NULL);
+    system.rs.texture = texture ? (RwTexture*)xSTFindAsset(texture, NULL) : NULL;
     system.rs.src_blend = srcBlend;
     system.rs.dst_blend = dstBlend;
     system.rs.flags = 4;
@@ -189,7 +191,7 @@ S32 zFrozoneBlast::createParticleSystem(S32 oldSystemId, U32, U32 srcBlend, U32 
     system.context = NULL;
 
     if (oldSystemId == -1) {
-        return xParticleBatchAddSystem(system);
+        return xPARTICLEBATCHADDSYSTEM(system, __LINE__);
     }
 
     xParticleBatchReplaceSystem(oldSystemId, system);
@@ -320,7 +322,8 @@ void zFrozoneBlast::emitBlastParticles(blastStream& stream, F32 dt)
             part->scaleY = stream.initSize * (lengthY * blastConfig[powerupLevel].size);
 
             F32 randomDT = -dt * xrand_GenRandFloat();
-            updateParticle(part, 0.3f * (part->scaleX / vel) + randomDT);
+            randomDT += 0.3f * (part->scaleX / vel);
+            updateParticle(part, randomDT);
 
             part++;
         }
@@ -373,10 +376,8 @@ void zFrozoneBlast::emitSingleBlastParticles(blastStream& stream, F32 dt)
 
             part->dir.Scale(stream.direction.dir, stream.direction.max_t / part->lifetime);
 
-            part->growthRateY = 0.0f;
-            part->growthRateX = 0.0f;
-            part->scaleY = singleSize;
-            part->scaleX = singleSize;
+            part->growthRateX = part->growthRateY = 0.0f;
+            part->scaleX = part->scaleY = singleSize;
             part->r = 255;
             part->g = 255;
             part->b = 255;
@@ -395,7 +396,7 @@ void zFrozoneBlast::updateLight(blastStream& stream, F32 dt)
             return;
         }
 
-        stream.light = xLightCreateTempInternal(false);
+        stream.light = xLightCreateTemp(false, __LINE__);
         if (!stream.light) {
             return;
         }
@@ -408,7 +409,7 @@ void zFrozoneBlast::updateLight(blastStream& stream, F32 dt)
     stream.lightIntensity -= lightDecay * dt;
     if (stream.lightIntensity <= 0.0f) {
         if (!stream.active) {
-            xLightDestroyTempInternal(stream.light);
+            xLightDestroyTemp(stream.light, __LINE__);
             stream.light = NULL;
             return;
         }
@@ -485,6 +486,7 @@ U32 zFrozoneBlast::_ActivateStream(const xRay3* direction)
         }
     }
 
+    xFAIL(__LINE__);
     return 0;
 }
 
@@ -492,7 +494,11 @@ DECOMP_FORCEFLOAT(3.0f)
 
 void zFrozoneBlast::_UpdateStream(U32 id, const xRay3* newDirection, bool collision)
 {
+    (void)collision;
+    (void)collision;
+
     U32 blastID = id - 1000;
+    xASSERT(__LINE__, blastID < 3);
     blastStream& s = mStreams[blastID];
     s.direction = *newDirection;
     s.colliding = true;
@@ -503,11 +509,17 @@ void zFrozoneBlast::_UpdateStream(U32 id, const xRay3* newDirection, bool collis
 void zFrozoneBlast::_StopStream(U32 id)
 {
     U32 blastID = id - 1000;
+    xASSERT(__LINE__, blastID < 3);
     mStreams[blastID].active = false;
 }
 
 void zFrozoneBlast::_SingleBlast(const xRay3* direction, F32 velocity, bool collision)
 {
+    (void)collision;
+    (void)collision;
+
+    xASSERT(__LINE__, direction);
+
     if (velocity < 0.0f) {
         velocity = singleVelocity;
     }
@@ -630,9 +642,9 @@ void zFrozoneBlast::emitSplashParticles(const xVec3* pos, const xVec3* normal, F
         return;
     }
 
-    xVec3* locList = (xVec3*)xMemPushTemp(num_particles * sizeof(xVec3));
-    xVec3* dirList = (xVec3*)xMemPushTemp(num_particles * sizeof(xVec3));
-    F32* lenVelList = (F32*)xMemPushTemp(num_particles * sizeof(F32));
+    xVec3* locList = (xVec3*)xMEMPUSHTEMP(num_particles * sizeof(xVec3), 0, __LINE__);
+    xVec3* dirList = (xVec3*)xMEMPUSHTEMP(num_particles * sizeof(xVec3), 0, __LINE__);
+    F32* lenVelList = (F32*)xMEMPUSHTEMP(num_particles * sizeof(F32), 0, __LINE__);
 
     F32 cosangle = icos(glintDirVary);
     xMat3x3 dirMat;
@@ -670,6 +682,9 @@ void zFrozoneBlast::emitSplashParticles(const xVec3* pos, const xVec3* normal, F
 
 void zFrozoneBlast::_CollisionSplash(const xVec3* pos, const xVec3* normal, F32 dt)
 {
+    xASSERT(__LINE__, pos);
+    xASSERT(__LINE__, normal);
+
     emitSplashMist(pos, normal, dt);
     emitSplashParticles(pos, normal, dt);
 }
