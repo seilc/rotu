@@ -8,6 +8,7 @@
 #include "xModel.h"
 #include "xRand.h"
 #include "xScrFx.h"
+#include "xSpacePartitionTree.h"
 #include "xstransvc.h"
 #include "iMath.h"
 #include "zBomb.h"
@@ -16,11 +17,6 @@
 #include "zGlobals.h"
 #include "zScene.h"
 #include "zShrapnel.h"
-
-#include "decomp.h"
-
-DECOMP_FORCEFLOAT(0.0f)
-DECOMP_FORCEFLOAT(1.0f)
 
 namespace {
 const xFXRibbon::curve_node RIBBON_CURVE[] = {
