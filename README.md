@@ -20,9 +20,10 @@ A work-in-progress matching decompilation of *The Incredibles: Rise of the Under
 
 This repository does **not** contain any game assets or assembly whatsoever. An existing copy of the game is required.
 
-Full disclosure: this project is AI-assisted, much of the decompiled code is written with the help of an LLM and
-checked against the original binary. Matching code is byte-identical to the original, but names, types and
-source structure beyond what the binary and its debug info prove may be guesses.
+Full disclosure: this project is AI-assisted. It was set up with the help of an LLM, and new code is decompiled with
+its help, then reviewed and checked against the original binary. Most of the code ported from Rat was
+decompiled by hand there, before Rat started using AI on October 21, 2026. Matching code is byte-identical to the
+original, but names, types and source structure beyond what the binary and its debug info prove may be guesses.
 
 Supported versions:
 
