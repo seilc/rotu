@@ -43,10 +43,10 @@ public:
 
 class xOneLinerList
 {
-public:
     U32 mNumSounds;
     xOneLiner* mSounds;
 
+public:
     void InitWithSounds(xOneLiner* soundList, U32 maxCheck);
     void Reset();
 
