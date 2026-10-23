@@ -20,6 +20,10 @@ A work-in-progress matching decompilation of *The Incredibles: Rise of the Under
 
 This repository does **not** contain any game assets or assembly whatsoever. An existing copy of the game is required.
 
+Full disclosure: this project is AI-assisted, much of the decompiled code is written with the help of an LLM and
+checked against the original binary. Matching code is byte-identical to the original, but names, types and
+source structure beyond what the binary and its debug info prove may be guesses.
+
 Supported versions:
 
 - `GIQE78` - Rise of the Underminer (USA), retail `main.dol`
