@@ -29,6 +29,10 @@ const xFXRibbon::curve_node RIBBON_CURVE[] = {
 
 xFXRibbon::config_type RIBBON_CONFIG = { 0.15f, rwBLENDSRCALPHA, rwBLENDONE, 0.5f, 0, RIBBON_CURVE, 2, NULL };
 
+const F32 TIMEOUT = 5.0f;
+const F32 Y_COLLISION_START = 7.0f;
+const F32 Y_HEIGHT_SHIFT = 15.0f;
+
 xLightKit* GetGlobalLightKit();
 }
 
@@ -72,7 +76,7 @@ void zShowerParticle::Exit()
 
 void zShowerParticle::Update(pool_list<zShowerParticle>& list, xEnt* owner, zShowerCBInterface* collideCallback, F32 dt)
 {
-    if (time >= 5.0f) {
+    if (time >= TIMEOUT) {
         alive = false;
     }
 
@@ -84,8 +88,8 @@ void zShowerParticle::Update(pool_list<zShowerParticle>& list, xEnt* owner, zSho
         if (time * speed >= 8.0f) {
             xSweptSphere sws((xVec3&)model->Mat->pos, end, config->radius, 0);
 
-            F32 remainingTime = 15.0f / speed - time;
-            F32 collisionStartY = 7.0f + (end.y - speed * remainingTime);
+            F32 remainingTime = Y_HEIGHT_SHIFT / speed - time;
+            F32 collisionStartY = Y_COLLISION_START + (end.y - speed * remainingTime);
             if (sws.start.y > collisionStartY) {
                 sws.start.y = collisionStartY;
             }
@@ -124,7 +128,7 @@ void zShowerParticle::Update(pool_list<zShowerParticle>& list, xEnt* owner, zSho
             }
         }
 
-        F32 shadowRadius = config->radius * xmin(1.0f, time * speed / 15.0f);
+        F32 shadowRadius = config->radius * xmin(1.0f, time * speed / Y_HEIGHT_SHIFT);
         xShadowSimple_Add(&shadow, (xMat4x3*)model->Mat, shadowRadius, 1.0f);
 
         xVec3Copy((xVec3*)&model->Mat->pos, &end);
@@ -186,7 +190,8 @@ xLightKit* GetGlobalLightKit()
 void zShowerSystem::Reset()
 {
     particleList.clear();
-    effectTimer = spawnTimer = HUGE;
+    spawnTimer = HUGE;
+    effectTimer = HUGE;
 }
 
 void zShowerSystem::Start(const xVec3& pos, zShowerCBInterface* collideCB)
@@ -219,7 +224,7 @@ void zShowerSystem::Update(F32 dt)
     if (spawnTimer <= 0.0f) {
         F32 radius = xrand_RandomFloatRange(config->minRadius, config->maxRadius);
         F32 angle = xrand_RandomFloatRange(0.0f, 2 * PI);
-        xVec3 position = { radius * icos(angle) + center.x, 15.0f + center.y, radius * isin(angle) + center.z };
+        xVec3 position = { radius * icos(angle) + center.x, Y_HEIGHT_SHIFT + center.y, radius * isin(angle) + center.z };
 
         if (particleList.size() < particleList.max_size()) {
             particleList.push_front();

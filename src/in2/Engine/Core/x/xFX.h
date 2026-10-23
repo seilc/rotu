@@ -37,10 +37,7 @@ public:
 
     bool empty() const
     {
-        if (act == NULL) {
-            return true;
-        }
-        return act->joints.empty();
+        return (act == NULL) ? true : act->joints.empty();
     }
 
 private:
