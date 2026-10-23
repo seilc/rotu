@@ -5,6 +5,93 @@ splits: config/GIQE78/splits.txt
 symbols_known: true
 fill_gaps: false
 ldscript_template: config/GIQE78/ldscript.tpl
+
+# Pool references taken minus 4 that dtk attributes to the previous object.
+add_relocations:
+- source: .text:0x8001AC88
+  type: sda21
+  target: "@1486!.sbss2:0x803F6440"
+  addend: -4
+- source: .text:0x800512CC
+  type: sda21
+  target: "@869!.sbss2:0x803F6570"
+  addend: -4
+- source: .text:0x80056008
+  type: sda21
+  target: "@1752!.sbss2:0x803F6630"
+  addend: -4
+- source: .text:0x8005B668
+  type: sda21
+  target: "@1039!.sbss2:0x803F66B0"
+  addend: -4
+- source: .text:0x80064ADC
+  type: sda21
+  target: "@1375!.sbss2:0x803F66F0"
+  addend: -4
+- source: .text:0x8007A6A8
+  type: sda21
+  target: "@956!.sdata2:0x803F0D38"
+  addend: -4
+- source: .text:0x8007D124
+  type: sda21
+  target: "@868!.sbss2:0x803F67A8"
+  addend: -4
+- source: .text:0x80080390
+  type: sda21
+  target: "@996!.sdata2:0x803F0DC8"
+  addend: -4
+- source: .text:0x800850D4
+  type: sda21
+  target: "@1312!.sbss2:0x803F67F0"
+  addend: -4
+- source: .text:0x80086078
+  type: sda21
+  target: "@1812!.sdata2:0x803F0E88"
+  addend: -4
+- source: .text:0x800B86C4
+  type: sda21
+  target: "@1132!.sbss2:0x803F69B8"
+  addend: -4
+- source: .text:0x800B9868
+  type: sda21
+  target: "@1238!.sbss:0x803ED3C0"
+  addend: -4
+- source: .text:0x800FCA00
+  type: sda21
+  target: "@1339!.sbss2:0x803F6B50"
+  addend: -4
+- source: .text:0x800FF828
+  type: sda21
+  target: "@719!.sbss2:0x803F6BB0"
+  addend: -4
+- source: .text:0x8011F5CC
+  type: sda21
+  target: "@1141!.sbss2:0x803F6C18"
+  addend: -4
+- source: .text:0x80143BF8
+  type: sda21
+  target: "@288!.sdata2:0x803F2E48"
+  addend: -4
+- source: .text:0x8014C8B0
+  type: sda21
+  target: "@688!.sbss2:0x803F6D78"
+  addend: -4
+- source: .text:0x801D9ED4
+  type: sda21
+  target: "g_I3!.sbss:0x803EC6C0"
+  addend: -4
+- source: .text:0x801DCF78
+  type: sda21
+  target: "tweakOnOffCB$1191!.sdata:0x803EB858"
+  addend: -4
+- source: .text:0x801DD35C
+  type: sda21
+  target: "@758!.sbss2:0x803F7140"
+  addend: -4
+- source: .text:0x801DF560
+  type: sda21
+  target: "@914!.sdata2:0x803F4F28"
+  addend: -4
 block_relocations:
   # xsavegame: `addi r6, r2, -0x731c` is xsavegame's own .sdata2 (@1033 at 0x803F0868) minus 4 for an
   # lwzu copy loop; dtk attributed it to xRumbleManager's @1219 (0x803F0864, EndCameraShake's 0.3f) and
