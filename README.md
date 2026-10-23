@@ -1,5 +1,18 @@
-The Incredibles: Rise of the Underminer (GameCube)
+The Incredibles: Rise of the Underminer (GameCube)  
+[![Build Status]][actions] <!--[![Code Progress]][progress] [![Data Progress]][progress]--> [![Discord Badge]][discord]
 =============
+
+[Build Status]: https://github.com/seilc/rotu/actions/workflows/build.yml/badge.svg
+[actions]: https://github.com/seilc/rotu/actions/workflows/build.yml
+<!--
+decomp.dev progress badges (hidden until the project is registered on decomp.dev)
+See https://decomp.dev/api for an API overview.
+-->
+[Code Progress]: https://decomp.dev/seilc/rotu.svg?mode=shield&measure=code&label=Code
+[Data Progress]: https://decomp.dev/seilc/rotu.svg?mode=shield&measure=data&label=Data
+[progress]: https://decomp.dev/seilc/rotu
+[Discord Badge]: https://img.shields.io/discord/829152115322257436?color=%237289DA&logo=discord&logoColor=%23FFFFFF
+[discord]: https://discord.gg/dVbGFdYU6A
 
 A work-in-progress matching decompilation of *The Incredibles: Rise of the Underminer* for the GameCube (USA,
 `GIQE78`), built on Heavy Iron's EvilEngine. Much of the engine is shared with the
