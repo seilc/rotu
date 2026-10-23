@@ -3,8 +3,6 @@
 #include "xDebug.h"
 #include "xBound.h"
 
-#include "decomp.h"
-
 U32 xRayHitsSphereFast(const xRay3* r, const xSphere* s)
 {
     xASSERT(26, r);
