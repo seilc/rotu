@@ -125,12 +125,9 @@ public:
 
     widget(const asset& a);
 
-    // RECONSTRUCTED (deadstripped): __dt__Q24xhud6widgetFv, MAP UNUSED in xHudFontMeter.o. A derived
-    // constructor registers it as a cleanup action, which makes IRO treat `this` as address-taken
-    // (xHudUnitMeter ctor loop in R/MD/M). Verified: sizes 0x54/0x48/0x44/0x44 match the MAP in all four
-    // builds. Unverified: the empty body, its position in the class.
+    // RESTORED: speculative
     ~widget() {}
-    // END RECONSTRUCTED
+    // END RESTORED
 
     static void init_base(xBase& data, const xBaseAsset& asset, size_t chunk_size);
 
