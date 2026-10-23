@@ -16,7 +16,6 @@
 
 #include "decomp.h"
 
-// line_vs_square (xSpacePartitionTree.h, deadstripped)
 DECOMP_FORCEFLOAT(0.0f)
 DECOMP_FORCEFLOAT(1.0f)
 
@@ -489,7 +488,6 @@ U32 zFrozoneBlast::_ActivateStream(const xRay3* direction)
     return 0;
 }
 
-// xsqrt (header inline, first generated after normalize)
 DECOMP_FORCEFLOAT(3.0f)
 
 void zFrozoneBlast::_UpdateStream(U32 id, const xRay3* newDirection, bool collision)

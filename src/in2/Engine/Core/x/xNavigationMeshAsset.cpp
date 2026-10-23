@@ -14,7 +14,6 @@ DECOMP_FORCEFLOAT(1.0f)
 DECOMP_FORCEACTIVE(&zMeshCircle::SetPosition)
 DECOMP_FORCEACTIVE(xMath2NearestPointOnLine)
 #else
-// RotU: 0.0f, 1.0f lead the pool (as xMath2NearestPointOnLine creates them), probably from a deadstripped early user
 DECOMP_FORCEFLOAT(0.0f)
 DECOMP_FORCEFLOAT(1.0f)
 #endif

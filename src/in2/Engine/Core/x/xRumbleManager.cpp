@@ -10,7 +10,6 @@
 #define kMaxRumblingPads 4
 #define RUMBLELIVE_MAXTHRESHOLD 4.0f
 
-// RotU: 0.0f, 1.0f lead the pool as consecutive @N (as in most RotU units), probably from a header function
 DECOMP_FORCEFLOAT(0.0f)
 DECOMP_FORCEFLOAT(1.0f)
 

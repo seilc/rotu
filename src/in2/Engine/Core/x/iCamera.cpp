@@ -22,7 +22,6 @@ DECOMP_FORCEACTIVE(
 #if DEBUG || RELEASE
 DECOMP_FORCEACTIVE((void(*)(const char*, U32*, U32, U32, const tweak_callback*, void*, U32))xDebugAddTweak)
 #else
-// RotU: iCamera.o carries the linked copy of xatan, from a deadstripped user
 DECOMP_FORCEACTIVE(xatan)
 #endif
 

@@ -18,8 +18,6 @@
 
 #include "decomp.h"
 
-// RotU: 0.0f and 1.0f come before RIBBON_CURVE in .sdata2 (@1146, @1147, created before the
-// first user of 1.0f here), probably by deadstripped code
 DECOMP_FORCEFLOAT(0.0f)
 DECOMP_FORCEFLOAT(1.0f)
 
