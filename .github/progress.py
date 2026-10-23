@@ -37,7 +37,7 @@ def main():
         if prev:
             delta = pct(cur, key, total) - pct(prev, key, total)
             changed |= round(delta, 2) != 0
-            line += f" ({delta:+.2f})"
+            line += f" ({delta:+.2f}%)"
         lines.append(line)
     units = cur.get("complete_units", 0)
     line = f"- Files: **{units}/{cur.get('total_units', 0)}**"
