@@ -74,6 +74,7 @@ public:
 
     void set_config(const config_type* cfg);
     void insert(const xVec3& loc, const xVec3& norm, F32 scale, F32 alpha, S32 flags);
+    void copy_parameters(xFXRibbon* ribbon) const;
 
     static RwRaster* get_raster(const char* name);
 

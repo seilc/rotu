@@ -246,6 +246,7 @@ F32 sphericalEmitter::GetTimeLeft()
     S32 startidx = 0;
     while (xTRCPadFindFirst(startidx, TRC_PadActive)) {
         S32 padPort = xTRCPadGetPadPort(startidx);
+        xASSERT(__LINE__, padPort >= 0 && padPort < k_MAX_TRC_PADS);
         timeLeft += Manager::Get().GetRumbleTimeLeft(&mPad[padPort], this);
         startidx++;
     }
@@ -262,15 +263,19 @@ FreezableObjectEffect::FreezableObjectEffect()
 void FreezableObjectEffect::Init(U32 sphereEmitterID)
 {
     mDefaultSphericalEmitterAsset = (sphericalEmitterAsset*)xSTFindAsset(sphereEmitterID, NULL);
-    if (mDefaultSphericalEmitterAsset) {
-        pEffectAsset = (effectAsset*)xSTFindAsset(mDefaultSphericalEmitterAsset->effectID, NULL);
-        if (pEffectAsset) {
-            xBaseInit(this, mDefaultSphericalEmitterAsset);
-            eventFunc = emitter_EventCB;
-            mModifiableAsset = *mDefaultSphericalEmitterAsset;
-            mRadiusSqrd = xsqr(mModifiableAsset.radius);
-        }
+    if (!mDefaultSphericalEmitterAsset) {
+        xFAILM(__LINE__, "%s", "Unable to find FREEZABLE_OBJECT_RUMBLE_EMIT. Please repack BOOT.SDF");
+        return;
     }
+    pEffectAsset = (effectAsset*)xSTFindAsset(mDefaultSphericalEmitterAsset->effectID, NULL);
+    if (!pEffectAsset) {
+        xFAILM(__LINE__, "%s", "Unable to find FREEZABLE_OBJECT_RUMBLE. Please repack BOOT.SDF");
+        return;
+    }
+    xBaseInit(this, mDefaultSphericalEmitterAsset);
+    eventFunc = emitter_EventCB;
+    mModifiableAsset = *mDefaultSphericalEmitterAsset;
+    mRadiusSqrd = xsqr(mModifiableAsset.radius);
 }
 
 bool FreezableObjectEffect::GetIntensity(const xVec3& position, F32& intensity) const
@@ -289,6 +294,10 @@ bool FreezableObjectEffect::GetIntensity(const xVec3& position, F32& intensity) 
 
     if (mModifiableAsset.onlyRumbleOnY && !xeq(mModifiableAsset.position.y / position.y, 1.0f, 0.1f)) {
         return false;
+    }
+
+    if (mModifiableAsset.onlyOnFloor) {
+        xFAIL_ONCE_M(__LINE__, "%s", "OnlyOnFloor is ignored by the FreezableObject Rumble Effect.");
     }
 
     if (mModifiableAsset.fallOff) {

@@ -73,7 +73,12 @@ struct xModelTag
 };
 
 xModelInstance* xModelInstanceAllocReuse(RpAtomic* data, void* object, U16 flags, U8 boneIndex, U8* boneRemap, xModelInstance* reuse_instance);
+#if DEBUG || RELEASE
+void xModelInstanceFreeDebug(xModelInstance* modelInst, bool animFree, const char* file, S32 line, const char* function);
+#define xModelInstanceFree(modelInst, animFree) xModelInstanceFreeDebug(modelInst, animFree, __FILE__, __LINE__, __FUNCTION__)
+#else
 void xModelInstanceFree(xModelInstance* modelInst, bool animFree);
+#endif
 void xModelUpdate(xModelInstance* modelInst, F32 timeDelta);
 void xModelEval(xModelInstance* modelInst);
 void xModelAnimCollRefresh(const xModelInstance& cm);

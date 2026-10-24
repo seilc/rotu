@@ -488,8 +488,6 @@ U32 zFrozoneBlast::_ActivateStream(const xRay3* direction)
     return 0;
 }
 
-DECOMP_FORCEFLOAT(3.0f)
-
 void zFrozoneBlast::_UpdateStream(U32 id, const xRay3* newDirection, bool collision)
 {
     DECOMP_FORCEREGISTER(collision);

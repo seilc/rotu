@@ -20,6 +20,7 @@ struct RyzMemData
 struct RyzMemGrow
 {
     S32 IsEnabled() { return flg_grow & RMEM_GROW_ENABLED; }
+    void Done(); // inferred from TSSM GC, Rat MAP
 
 protected:
     S32 flg_grow;

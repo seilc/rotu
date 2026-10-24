@@ -47,7 +47,16 @@ struct xVec3
         return len;
     }
 
-    F32 safe_normalize(const xVec3& safety);
+    F32 safe_normalize(const xVec3& safety)
+    {
+        F32 len = length();
+        if (len < 0.00001f)
+            *this = safety;
+        else
+            *this *= 1.0f / len;
+        return len;
+    }
+
     F32 up_normalize();
     void AddScale(const xVec3& p, const xVec3& d, F32 s);
     void AddScale(const xVec3& d, F32 s);
@@ -93,6 +102,7 @@ void xVec3Sub(xVec3& o, const xVec3& a, const xVec3& b);
 void xVec3SMul(xVec3* o, const xVec3* v, F32 s);
 void xVec3SMulBy(xVec3& v, F32 s);
 void xVec3Cross(xVec3* o, const xVec3* a, const xVec3* b);
+F32 xVec3Length(const xVec3* v);
 F32 xVec3Length2(const xVec3* v);
 void xVec3Inv(xVec3& v);
 F32 xVec3Hdng(xVec3* hdng, const xVec3* a, const xVec3* b);

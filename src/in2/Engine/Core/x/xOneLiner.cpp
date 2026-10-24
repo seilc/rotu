@@ -23,6 +23,15 @@ struct xRequestedSound
     F32 mRequestTime;
     S32 mRequestID;
 
+    // RESTORED: speculative
+    void Init(xOneLiner* sound, S32 requestID)
+    {
+        mSound = sound;
+        mRequestID = requestID;
+        mRequestTime = iTimeGetGame();
+    }
+    // END RESTORED
+
     void Display(bool wasPlayed)
     {
         xprintf("%s %.4d: %s\n", wasPlayed ? "PLAYED   " : "REQUESTED", mRequestID, mSound->mAssetName);
@@ -50,6 +59,18 @@ struct xSoundHistory
             mNumSounds--;
         }
     }
+
+    // RESTORED: speculative
+    void AddSound(xOneLiner* sound)
+    {
+        if (mNumSounds >= 5) {
+            ScrollSounds();
+        }
+        mHistory[mNumSounds].Init(sound, mTotalRequests);
+        mNumSounds++;
+        mTotalRequests++;
+    }
+    // END RESTORED
 
     void Age()
     {
@@ -175,6 +196,9 @@ bool xOneLiner::PlaySound()
     if (delayBits) {
         return PlaySoundDelayed(0.1f * delayBits);
     }
+#if DEBUG || RELEASE
+    sSndHistory.AddSound(this);
+#endif
     return PlaySoundCore();
 }
 
@@ -185,6 +209,9 @@ bool xOneLiner::PlaySoundDelayed(F32 delay)
         F32 futureTime = timeNow + delay;
         if (futureTime >= mSoonestTimeToPlay) {
             mSoonestTimeToPlay = futureTime;
+#if DEBUG || RELEASE
+            sSndHistory.AddSound(this);
+#endif
             sDelayedSound = this;
             return true;
         }
