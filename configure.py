@@ -551,7 +551,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xSubTitles.cpp"),
             Object(Matching, "in2/Engine/Core/x/xSurface.cpp"),
             Object(Matching, "in2/Engine/Core/x/xTextAsset.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xTextureManager.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xTextureManager.cpp"),
             Object(Matching, "in2/Engine/Core/x/xTimer.cpp"),
             Object(Matching, "in2/Engine/Core/x/xTransient.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xTRC.cpp"),

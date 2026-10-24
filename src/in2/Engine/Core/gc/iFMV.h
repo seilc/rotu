@@ -2,6 +2,7 @@
 #define IFMV_H
 
 #include "types.h"
+#include "xpkrsvc.h"
 #include <rwcore.h>
 #include <dolphin.h>
 
@@ -18,5 +19,8 @@ struct MOVIE
     U32 other_movie_flags : 7;
     U32 disk_open_frame : 24;
 };
+
+MOVIE* iFMVOpen(PKRAssetTOCInfo& rAssetInfo);
+void iFMVClose(MOVIE*& pMovie);
 
 #endif
