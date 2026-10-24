@@ -1,15 +1,16 @@
 #ifndef IFMV_H
 #define IFMV_H
 
-#include <bink.h>
 #include "types.h"
 #include <rwcore.h>
 #include <dolphin.h>
 
+struct BINK;
+
 struct MOVIE
 {
     U32 aid;
-    HBINK hBink;
+    BINK* hBink;
     DVDFileInfo file;
     RwTexture* pBinkTexture;
     U32 uMovieOffsetBytes;

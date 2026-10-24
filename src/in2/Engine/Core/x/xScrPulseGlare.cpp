@@ -18,6 +18,8 @@ namespace {
         F32 noise;
     };
 
+    typedef void(*xPulseGlareUpdateCallback)(xPulse&, F32);
+
     struct xPulseGlare
     {
         struct config
@@ -28,8 +30,8 @@ namespace {
         };
 
         config cfg;
-        void(*cb_update_size)(xPulse&, F32);
-        void(*cb_update_rot)(xPulse&, F32);
+        xPulseGlareUpdateCallback cb_update_size;
+        xPulseGlareUpdateCallback cb_update_rot;
         xVec3 pos;
         xVec3 dir;
         F32 scale_dir;

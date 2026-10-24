@@ -174,7 +174,7 @@ void zFrozoneBlast::loadAssets()
 }
 
 S32 zFrozoneBlast::createParticleSystem(S32 oldSystemId, U32, U32 srcBlend, U32 dstBlend, S32 stride,
-                                        S32 (*update)(U8*, S32, ptank_pool&, F32, void*))
+                                        xParticleBatchUpdateCallback update)
 {
     xParticleBatchSystem system;
     system.pool_type = PGT_POS_COLOR_SIZE;
@@ -221,7 +221,7 @@ S32 zFrozoneBlast::updateBlastParticles(U8* mem, S32 count, ptank_pool& apool, F
 
         RwSphere worldsph;
         worldsph.center = p->loc.m_RwV3d;
-        worldsph.radius = p->scaleX > p->scaleY ? p->scaleX : p->scaleY;
+        worldsph.radius = xmax(p->scaleX, p->scaleY);
 
         if (RwCameraFrustumTestSphere(xglobals->screen->icam, &worldsph) != rwSPHEREOUTSIDE) {
             pool.next();
@@ -261,7 +261,7 @@ void zFrozoneBlast::emitBlastParticles(blastStream& stream, F32 dt)
 
     stream.emitTimer -= emitted;
 
-    F32 randomEmitDir2 = 2.0f * (blastConfig[powerupLevel].randomEmitDir * blastConfig[powerupLevel].randomEmitDir);
+    F32 randomEmitDir2 = 2.0f * xsqr(blastConfig[powerupLevel].randomEmitDir);
 
     const xMat4x3& viewMat = *(const xMat4x3*)RwCameraGetViewMatrix(globals.screen->icam);
     xVec3 screenVec;
@@ -304,7 +304,7 @@ void zFrozoneBlast::emitBlastParticles(blastStream& stream, F32 dt)
             part->dir.Add(randDir);
 
             F32 distance = xVec3Length2(&randDir) / randomEmitDir2;
-            F32 colorStrength = 1.0f - distance * distance * blastConfig[powerupLevel].blueTintDist;
+            F32 colorStrength = 1.0f - xsqr(distance) * blastConfig[powerupLevel].blueTintDist;
             if (colorStrength < 0.0f) {
                 colorStrength = 0.0f;
             }
@@ -613,7 +613,7 @@ void zFrozoneBlast::emitSplashMist(const xVec3* pos, const xVec3*, F32 dt)
 
             F32 ang = 2.0f * PI * xrand_GenRandFloat();
             F32 uz = 2.0f * xrand_GenRandFloat() - 1.0f;
-            F32 r = xsqrt(1.0f - uz * uz);
+            F32 r = xsqrt(1.0f - xsqr(uz));
             part->dir.assign(r * icos(ang), r * isin(ang), uz);
             part->dir.Scale(mistVelocity * xrand_RandomBipolarUnitFloat());
 
@@ -656,14 +656,14 @@ void zFrozoneBlast::emitSplashParticles(const xVec3* pos, const xVec3* normal, F
 
         F32 ang = 2.0f * PI * xurand();
         F32 uz = (1.0f - cosangle) * xurand() + cosangle;
-        F32 r = xsqrt(1.0f - uz * uz);
+        F32 r = xsqrt(1.0f - xsqr(uz));
         dirPtr->assign(r * icos(ang), r * isin(ang), -uz);
         xMat3x3RMulVec(dirPtr, &dirMat, dirPtr);
         dirPtr->Scale(glintVelocity);
         dirPtr++;
 
         F32 length = glintLength + glintLengthRand * xrand_GenRandFloat();
-        *lenPtr = length < glintLegnthMax ? length : glintLegnthMax;
+        *lenPtr = xmin(length, glintLegnthMax);
         lenPtr++;
     }
 
