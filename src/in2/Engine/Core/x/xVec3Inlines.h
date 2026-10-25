@@ -156,6 +156,13 @@ inline F32 xVec3LengthFast(F32 _x, F32 _y, F32 _z)
     return len;
 }
 
+inline F32 xVec3LengthFast(const xVec3* v)
+{
+    F32 len;
+    xsqrtfast(len, v->x * v->x + v->y * v->y + v->z * v->z);
+    return len;
+}
+
 inline F32 xVec3Length2(const xVec3* v)
 {
     return v->x * v->x + v->y * v->y + v->z * v->z;
@@ -179,6 +186,8 @@ inline void xVec3Inv(xVec3& v)
     v.y = -v.y;
     v.z = -v.z;
 }
+
+inline void xVec3ScaleC(xVec3* o, const xVec3* v, F32 _x, F32 _y, F32 _z); // inferred from BFBB GC, Rat MAP
 
 inline void xVec3ScaleC(xVec3& o, F32 scale)
 {

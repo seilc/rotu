@@ -20,9 +20,14 @@ struct xVec3
 
     static const xVec3 m_Null;
     static const xVec3 m_Ones;
+    static const xVec3 m_NegOnes; // inferred from Incredibles PS2, Rat MAP
     static const xVec3 m_UnitAxisX;
     static const xVec3 m_UnitAxisY;
     static const xVec3 m_UnitAxisZ;
+    static const xVec3 m_HalfVec; // inferred from Incredibles PS2, Rat MAP
+    static const xVec3 m_NegHalfVec; // inferred from Incredibles PS2, Rat MAP
+    static const xVec3 m_DoubleVec; // inferred from Incredibles PS2, Rat MAP
+    static const xVec3 m_NegDoubleVec; // inferred from Incredibles PS2, Rat MAP
 
     xVec3& assign(F32 x, F32 y, F32 z);
     xVec3& assign(F32 v);
@@ -92,6 +97,7 @@ do {                                                                            
 } while (0)
 
 F32 xVec3Normalize(xVec3* o, const xVec3* v);
+F32 xVec3NormalizeFast(xVec3* o, const xVec3* v); // inferred from TSSM GC, Rat MAP
 void xVec3Copy(xVec3* o, const xVec3* v);
 F32 xVec3Dot(const xVec3* vec1, const xVec3* vec2);
 
