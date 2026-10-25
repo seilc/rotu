@@ -4,6 +4,7 @@
 #include "zScene.h"
 #include "xGlobals.h"
 #include "zNPCCommon.h"
+#include "xSpacePartitionTree.h"
 
 #include "decomp.h"
 
@@ -13,9 +14,6 @@ static const U32 MAX_CIRCLES = 50;
 DECOMP_FORCEFLOAT(1.0f)
 DECOMP_FORCEACTIVE(&zMeshCircle::SetPosition)
 DECOMP_FORCEACTIVE(xMath2NearestPointOnLine)
-#else
-DECOMP_FORCEFLOAT(0.0f)
-DECOMP_FORCEFLOAT(1.0f)
 #endif
 
 namespace {

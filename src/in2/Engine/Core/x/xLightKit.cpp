@@ -4,6 +4,7 @@
 #include "xDebug.h"
 #include "xMath.h"
 #include "xModel.h"
+#include "xSpacePartitionTree.h"
 
 #include "decomp.h"
 
@@ -25,8 +26,6 @@ DECOMP_FORCEACTIVE(
     "radius=",
     "angle="
 )
-DECOMP_FORCEFLOAT(0.0f)
-
 xLightKit* xLightKit_Prepare(void* data)
 {
     iAsyncLockRWSentry rw_sentry;

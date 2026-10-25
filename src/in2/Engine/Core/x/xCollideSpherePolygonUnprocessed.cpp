@@ -1,9 +1,6 @@
 #include "xCollideSpherePolygonUnprocessed.h"
 
-#include "decomp.h"
-
-DECOMP_FORCEFLOAT(0.0f)
-DECOMP_FORCEFLOAT(1.0f)
+#include "xSpacePartitionTree.h"
 
 namespace xCollideSpherePolygonUnprocessed {
 static F32 normalize(xVec3& v)

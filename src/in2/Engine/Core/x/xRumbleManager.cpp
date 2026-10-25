@@ -2,16 +2,12 @@
 
 #include "xGlobals.h"
 #include "zPlayer.h"
+#include "xSpacePartitionTree.h"
 
 #include <string.h>
 
-#include "decomp.h"
-
 #define kMaxRumblingPads 4
 #define RUMBLELIVE_MAXTHRESHOLD 4.0f
-
-DECOMP_FORCEFLOAT(0.0f)
-DECOMP_FORCEFLOAT(1.0f)
 
 namespace xRumble {
 

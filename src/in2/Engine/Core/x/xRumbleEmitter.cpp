@@ -7,11 +7,7 @@
 #include "xGlobals.h"
 #include "zScene.h"
 #include "zPlayer.h"
-
-#include "decomp.h"
-
-DECOMP_FORCEFLOAT(0.0f)
-DECOMP_FORCEFLOAT(1.0f)
+#include "xSpacePartitionTree.h"
 
 namespace {
 
