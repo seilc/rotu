@@ -703,7 +703,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zNPCGroup.cpp"),
             Object(NonMatching, "in2/Engine/Game/zThrowableSystem.cpp"),
             Object(Matching, "in2/Engine/Game/zUIController.cpp", extra_cflags=['-sym on']),
-            Object(Matching, "in2/Engine/Core/x/xLightVolume.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xLightVolume.cpp", extra_cflags=['-sym on']),
             Object(NonMatching, "in2/Engine/Game/zUICustom.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUIIncredibles.cpp"),
             Object(Matching, "in2/Engine/Core/x/xMemoryManager.cpp", extra_cflags=['-sym on']),
