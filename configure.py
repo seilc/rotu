@@ -550,7 +550,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Core/x/xSpacePartitionTree.cpp"),
             Object(Matching, "in2/Engine/Core/x/xSpline.cpp"),
             Object(Matching, "in2/Engine/Core/x/xSplineAsset.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xstransvc.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xstransvc.cpp"),
             Object(Matching, "in2/Engine/Core/x/xString.cpp"),
             Object(Matching, "in2/Engine/Core/x/xSubTitles.cpp"),
             Object(Matching, "in2/Engine/Core/x/xSurface.cpp"),
