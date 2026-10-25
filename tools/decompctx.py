@@ -158,12 +158,12 @@ def main():
         os.path.join(root_dir, "src"),
         os.path.join(root_dir, "src/PowerPC_EABI_Support/MSL/MSL_C/MSL_Common/Include"),
         os.path.join(root_dir, "src/PowerPC_EABI_Support/MSL/MSL_C++/MSL_Common/Include"),
-        os.path.join(root_dir, "src/rt"),
-        os.path.join(root_dir, "src/rt/Engine/Core/gc"),
-        os.path.join(root_dir, "src/rt/Engine/Core/x"),
-        os.path.join(root_dir, "src/rt/Engine/Game"),
-        os.path.join(root_dir, "src/rwsdk/include/gcn"),
-        os.path.join(root_dir, "src/dolphin"),
+        os.path.join(root_dir, "src/in2"),
+        os.path.join(root_dir, "src/in2/Engine/Core/gc"),
+        os.path.join(root_dir, "src/in2/Engine/Core/x"),
+        os.path.join(root_dir, "src/in2/Engine/Game"),
+        os.path.join(root_dir, "src/rwsdk/include"),
+        os.path.join(root_dir, "src/dolphin/include"),
         os.path.join(root_dir, "src/bink/bink"),
     ]
     global exclude_globs
