@@ -234,7 +234,7 @@ void xOneLinerList::InitWithSounds(xOneLiner* soundList, U32 maxCheck)
         mNumSounds++;
         soundList++;
     }
-    xASSERT(__LINE__, maxCheck == 0 || maxCheck == mNumSounds);
+    xASSERT(maxCheck == 0 || maxCheck == mNumSounds);
 }
 
 inline void xOneLiner::Init()

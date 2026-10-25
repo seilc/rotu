@@ -132,7 +132,7 @@ void xHierarchyBoundInit(xHierarchyBound* bound, const xHierarchyBoundInitData* 
     while (init[count].bone >= -1) count++;
     bound->count = count;
 
-    bound->nodes = (xHierarchyNode*)xMEMALLOC(sizeof(xHierarchyNode) * (count + extraBounds), 0, eMemMgrTag_HierarchyBound, 0, __LINE__);
+    bound->nodes = (xHierarchyNode*)xMEMALLOC(sizeof(xHierarchyNode) * (count + extraBounds), 0, eMemMgrTag_HierarchyBound, 0);
 
     for (U32 i = 0; i < count; i++) {
         xHierarchyNode& node = bound->nodes[i];
@@ -217,8 +217,8 @@ void xHierarchyBoundAddDebugTweaks(xHierarchyBound* bound, const char* base, con
         NULL
     };
 
-    xASSERT(461, boneNames != NULL || boneCount > 0);
-    xASSERT(462, boneCount < 64);
+    xASSERT_L(461, boneNames != NULL || boneCount > 0);
+    xASSERT_L(462, boneCount < 64);
 
     char buffer[128];
 

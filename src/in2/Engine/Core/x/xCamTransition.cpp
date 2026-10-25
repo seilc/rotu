@@ -39,7 +39,7 @@ void xCamTransition::Init(const xCamTransitionAsset& asset)
     mTransitionVolume = NULL;
 
     if (baseType == eBaseTypeCamTransitionPath) {
-        xFAILM(81, "%s", "Got curve based transition in non-curve init function!");
+        xFAIL_FMT_L(81, "%s", "Got curve based transition in non-curve init function!");
     }
 }
 
@@ -56,7 +56,7 @@ void xCamTransition::Init(zEntTrigger& theVolume)
     mCamBlendBias = new (eMemStaticType_0, eMemMgrTag_Camera) xCamPathBias(&theVolume);
     mTransitionVolume = &theVolume;
 
-    xASSERT(98, this->mCamBlendBias);
+    xASSERT_L(98, this->mCamBlendBias);
 }
 
 #if DEBUG || RELEASE
@@ -76,7 +76,7 @@ void xCamTransition::Init(xBase& data, xDynAsset& asset, size_t)
 void xCamTransition::AddTriggerTransition(zEntTrigger& theVolume)
 {
     xCamTransition* trans = new (eMemStaticType_0, eMemMgrTag_Camera) xCamTransition();
-    xASSERT(122, trans);
+    xASSERT_L(122, trans);
 
     if (trans) {
         trans->Init(theVolume);
@@ -120,8 +120,8 @@ void xCamTransition::Start()
     case 1: {
         xBase* cameraA = zSceneFindObject(mTransitionVolume->Asset().camTransition.cameraAID);
         xBase* cameraB = zSceneFindObject(mTransitionVolume->Asset().camTransition.cameraBID);
-        xASSERT(173, cameraA);
-        xASSERT(174, cameraB);
+        xASSERT_L(173, cameraA);
+        xASSERT_L(174, cameraB);
         if (!cameraA || !cameraB) {
             return;
         }
@@ -136,10 +136,10 @@ void xCamTransition::Start()
         destCamera = forward ? cameraB : cameraA;
         xBase* srcCamera = forward ? cameraA : cameraB;
 
-        xASSERT_DESIGN_M(188,
+        xASSERT_DESIGN_L(188,
             !globals.cam->primary || !globals.cam->primary->find_camera(destCamera->id),
             "WARNING: Designer Error? Destination Camera is already active");
-        xASSERT_DESIGN_M(189,
+        xASSERT_DESIGN_L(189,
             !globals.cam->primary || globals.cam->primary->find_camera(srcCamera->id),
             "WARNING: Designer Error? Current camera is not transition source camera");
         
@@ -150,7 +150,7 @@ void xCamTransition::Start()
         break;
     }
     default:
-        xFAIL_ONCE_M(196, "%s", "Illegal Transition Type!");
+        xFAIL_ONCE_L(196, "%s", "Illegal Transition Type!");
         return;
     }
     
@@ -169,7 +169,7 @@ void xCamTransition::Start()
         mActive = ((zCamBinaryPOI*)destCamera)->Activate(&params, false);
         break;
     case eBaseTypeCamera:
-        xFAILM(221, "%s", "This kind of Transition to old cameras is not supported");
+        xFAIL_FMT_L(221, "%s", "This kind of Transition to old cameras is not supported");
         break;
     }
 }
@@ -195,7 +195,7 @@ void xCamTransition::Completed(bool sendCompletionEvents)
 
 void zCamTransition_EventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*, U32)
 {
-    xASSERT(264, to);
+    xASSERT_L(264, to);
 
     switch (toEvent) {
     case eEventCameraTransitionBegin:
@@ -249,7 +249,7 @@ xCamPathBias::xCamPathBias(zEntTrigger* triggerEnt)
 void xCamPathBias::ResetCurve()
 {
     mCurve = (const xNurbs*)xSTFindAsset(mTrigger->Asset().camTransition.curveID, NULL);
-    xASSERTM(327, mCurve,
+    xASSERT_FMT_L(327, mCurve,
         "Cannot Find Control Curve ID %x for Camera Transition Volume %s. This is BAD!",
         mTrigger->Asset().camTransition.curveID,
         xSTAssetName(mTrigger->id));
@@ -261,12 +261,12 @@ void xCamPathBias::ResetCurve()
     mCurve->evaluate(0.0f, mCurveEnd0);
     mCurve->evaluate(1.0f, mCurveEnd1);
 
-    xASSERTM(334, mTrigger->PointIntersects(mCurveEnd0),
+    xASSERT_FMT_L(334, mTrigger->PointIntersects(mCurveEnd0),
         "DESIGNER WARNING: 0.0 end of Curve %s is outside of owning Camera Transition Volume %s",
         xSTAssetName(mTrigger->Asset().camTransition.curveID),
         xSTAssetName(mTrigger->id));
     
-    xASSERTM(335, mTrigger->PointIntersects(mCurveEnd1),
+    xASSERT_FMT_L(335, mTrigger->PointIntersects(mCurveEnd1),
         "DESIGNER WARNING: 1.0 end of Curve %s is outside of owning Camera Transition Volume %s",
         xSTAssetName(mTrigger->Asset().camTransition.curveID),
         xSTAssetName(mTrigger->id));
@@ -367,7 +367,7 @@ bool xCamPathBias::IsActive()
 bool xCamPathBias::DidComplete()
 {
     if (!mIsActive && mBias.Goal() > 0.0f && mBias.Goal() < 1.0f) {
-        xFAILM(475, "%s", "WARNING: Blend incomplete. Make sure curve is completely inside volume, and ends do not double back.");
+        xFAIL_FMT_L(475, "%s", "WARNING: Blend incomplete. Make sure curve is completely inside volume, and ends do not double back.");
     }
 
     return !mIsActive;

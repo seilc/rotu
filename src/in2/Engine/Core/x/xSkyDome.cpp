@@ -34,9 +34,9 @@ void xSkyDome_AddEntity(xEnt* ent, S32 sortorder, S32 lockY, S32 lockXZ)
 {
     if (xSkyDome_EntityIsSkyDome(ent)) {
         S32 index = (S32)ent->user_data;
-        xASSERT(64, (index >= 0) && (index < sSkyCount));
+        xASSERT_L(64, (index >= 0) && (index < sSkyCount));
         SkyDomeInfo& info = sSkyList[index];
-        xASSERT(66, info.ent == ent);
+        xASSERT_L(66, info.ent == ent);
         return;
     }
     
@@ -45,12 +45,12 @@ void xSkyDome_AddEntity(xEnt* ent, S32 sortorder, S32 lockY, S32 lockXZ)
     for (i = 0; i < sSkyCount; i++) {
         if (sSkyList[i].ent == ent) {
             S32 index = (S32)ent->user_data;
-            xASSERT(78, index == i);
+            xASSERT_L(78, index == i);
             inList = true;
             break;
         }
     }
-    xASSERT(83, sSkyCount < MAX_SKYDOME_OBJECTS);
+    xASSERT_L(83, sSkyCount < MAX_SKYDOME_OBJECTS);
     if (!inList) {
         for (i = 0; i < sSkyCount; i++) {
             if (sortorder < sSkyList[i].sortorder) {
