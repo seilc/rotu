@@ -21,8 +21,6 @@ DECOMP_FORCEACTIVE(
 )
 #if DEBUG || RELEASE
 DECOMP_FORCEACTIVE((void(*)(const char*, U32*, U32, U32, const tweak_callback*, void*, U32))xDebugAddTweak)
-#else
-DECOMP_FORCEACTIVE(xatan)
 #endif
 
 #undef RwCameraCreate
@@ -261,7 +259,16 @@ void iCameraSetFOV(RwCamera* cam, F32 fov)
     RwCameraSetViewWindow(cam, &vw);
 }
 
-DECOMP_FORCEACTIVE("cam != 0", "vw != 0")
+// RESTORED: speculative
+F32 iCameraGetFOV(RwCamera* cam)
+{
+    xASSERT(cam != 0);
+    const RwV2d* vw = RwCameraGetViewWindow(cam);
+    xASSERT(vw != 0);
+    F32 angle = xatan(vw->x);
+    return 2.0f * (180.0f/PI) * angle;
+}
+// END RESTORED
 
 void iCameraAssignEnv(RwCamera* camera, iEnv* env_geom)
 {
