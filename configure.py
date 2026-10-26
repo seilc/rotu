@@ -240,8 +240,7 @@ cflags_runtime = [
     "-O4,p",
 ]
 
-# Dolphin SDK flags (dolsdk2004's Makefile), release libraries. SDK_REVISION copied from Rat's MASTER (the Nov 10
-# 2004 OS/GX patch); not yet verified for RotU.
+# Dolphin SDK flags (dolsdk2004's Makefile), release libraries.
 cflags_sdk_base = [
     "-char unsigned",
     "-nodefaults",
@@ -253,7 +252,6 @@ cflags_sdk_base = [
     "-requireprotos",
     '-pragma "cats off"',
     "-D__GEKKO__",
-    "-DSDK_REVISION=2",
     "-nosyspath",
     "-i src/dolphin/include",
     "-i src/dolphin/include/libc",
@@ -276,8 +274,23 @@ cflags_sdk_release = [
 ]
 cflags_sdk = cflags_sdk_release
 sdk_char_signed = ["-char signed"]
+
+# SDK_REVISION: each library's build date (YYYYMMDD) from its version string; libraries without one get the date
+# most libraries carry. OS and GX are the Nov 10 2004 patch.
+sdk_dates = {
+    "gx": 20041110,
+    "os": 20041110,
+    "vi": 20040407,
+}
+sdk_date_default = 20040405
+
+
+def sdk_revision(lib_name: str) -> str:
+    return f"-DSDK_REVISION={sdk_dates.get(lib_name, sdk_date_default)}"
+
+
 # EXIBios.c is built at -O3,p instead of -O4,p in the release library
-cflags_sdk_exibios = [("-O3,p" if f == "-O4,p" else f) for f in cflags_sdk]
+cflags_sdk_exibios = [("-O3,p" if f == "-O4,p" else f) for f in cflags_sdk] + [sdk_revision("exi")]
 
 # REL flags
 cflags_rel = [
@@ -419,7 +432,7 @@ def DolphinLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     return {
         "lib": lib_name,
         "mw_version": "GC/1.2.5n",
-        "cflags": cflags_sdk,
+        "cflags": [*cflags_sdk, sdk_revision(lib_name)],
         "progress_category": "sdk",
         "objects": objects,
     }
