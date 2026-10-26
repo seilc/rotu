@@ -201,7 +201,6 @@ void zCamTransition_EventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*, 
     case eEventCameraTransitionBegin:
         ((xCamTransition*)to)->Start();
         break;
-// Fakematch?
 #if DEBUG || RELEASE
     case eEventCameraTransitionDone:
 #endif
