@@ -66,9 +66,6 @@ public:
     virtual void Unselect();
     virtual void Visible();
     virtual void Invisible();
-#if DEBUG || RELEASE
-    virtual void DoAddTweaks(const char* baseName);
-#endif
 
 private:
     zUIMotionAsset* motion;

@@ -235,45 +235,6 @@ struct xParCmdShaperData : xParCmdAsset
     F32 gravity;
 };
 
-union xParCmdAny
-{
-    xParCmdMove Move;
-    xParCmdMoveRandom MoveRandom;
-    xParCmdMoveRandomPar MoveRandomPar;
-    xParCmdScale3rdPolyReg Scale3rdPolyReg;
-    xParCmdAlpha3rdPolyReg Alpha3rdPolyReg;
-    xParCmdClipVolumes ClipVolumes;
-    xParCmdSmokeAlpha SmokeAlpha;
-    xParCmdDamagePlayer DamagePlayer;
-    xParCmdScale Scale;
-    xParCmdAnimalMagentism AnimalMagentism;
-    xParCmdRotPar RotPar;
-    xParCmdApplyWind ApplyWind;
-    xParCmdPlayerCollision PlayerCollision;
-    xParCmdRandomVelocityPar RandomVelocityPar;
-    xParCmdAccelerate Accelerate;
-    xParCmdVelocityApply VelocityApply;
-    xParCmdJet Jet;
-    xParCmdKillOld KillOld;
-    xParCmdKillSlow KillSlow;
-    xParCmdKillDistance KillDistance;
-    xParCmdAge Age;
-    xParCmdFollow Follow;
-    xParCmdOrbitLine OrbitLine;
-    xParCmdOrbitPoint OrbitPoint;
-    xParCmdApplyCamMat ApplyCamMat;
-    xParCmdRotateAround RotateAround;
-    xParCmdTex Tex;
-    xParCmdTexAnim TexAnim;
-    xParCmdCustom Custom;
-    xParCmdCollideFall CollideFall;
-    xParCmdCollideFallSticky CollideFallSticky;
-    xParCmdDampenData DampenData;
-    xParCmdAlphaInOutData AlphaInOutData;
-    xParCmdSizeInOutData SizeInOutData;
-    xParCmdShaperData ShaperData;
-};
-
 struct xParCmd
 {
     U32 flag;

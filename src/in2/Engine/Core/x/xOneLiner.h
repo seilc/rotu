@@ -19,7 +19,6 @@ public:
     static void SceneInit();
     static void SceneReset();
     static void UpdateSounds();
-    static void TweaksInit();
 
     bool NoInhibitions() const;
     bool IsProbable() const;
@@ -50,20 +49,20 @@ public:
     void InitWithSounds(xOneLiner* soundList, U32 maxCheck);
     void Reset();
 
-    bool PlaySound(U32 index)
+    bool PlaySound(U32 r4)
     {
-        if (index < mNumSounds) {
-            return mSounds[index].PlaySound();
+        if (r4 < mNumSounds) {
+            return mSounds[r4].PlaySound();
         }
         return false;
     }
 
-    iSndGroupHandle GetSoundGroup(U32 index) const
+    iSndGroupHandle GetSoundGroup(U32 r4) const
     {
-        if (index >= mNumSounds) {
+        if (r4 >= mNumSounds) {
             return ISND_INVALID_SND_GROUP_HANDLE;
         }
-        return mSounds[index].GetSoundGroup();
+        return mSounds[r4].GetSoundGroup();
     }
 };
 

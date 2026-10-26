@@ -13,7 +13,7 @@ public:
 
     zPlayer* operator[](S32 index)
     {
-        xASSERT_L(23, index >= 0 && index < size());
+        xASSERT(index >= 0 && index < size());
         return playerArray[index];
     }
 

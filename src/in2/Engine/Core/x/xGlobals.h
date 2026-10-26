@@ -5,7 +5,6 @@
 #include "xUpdateCull.h"
 #include "iFog.h"
 #include "iTime.h"
-#include "xPlaybackBuffers.h"
 #include "zPlayerContainer.h"
 
 #include <rpworld.h>
@@ -13,7 +12,6 @@
 struct xCamGroup;
 struct xCamScreen;
 struct zScene;
-class xDebugLink;
 
 enum sceDemoEndReason
 {
@@ -68,16 +66,6 @@ struct xGlobals
     U32 slowdown;
     F32 update_dt;
     U32 dumpCutscene;
-#if DEBUG || RELEASE
-    U32 PlaybackMode;
-    PlaybackBuffers PlaybackFrames[4];
-    char PlaybackFile[128];
-    U32 PlaybackStartFrame;
-    U32 PlaybackEndFrame;
-    U32 PlaybackResolution;
-    S32 MemTrackingLvl;
-    char MemTrackLogFileName[128];
-#endif
     S16 ForceCutscene;
     S32 useHIPHOP;
     bool NoMusic;
@@ -90,9 +78,6 @@ struct xGlobals
     bool enableHelperAIAttack;
     bool enableDebugControls;
     bool showReleaseMemInfo;
-#if DEBUG || RELEASE
-    bool PlaybackFlashDemo;
-#endif
     bool FlashWIP;
     bool inLoadingScreen;
     bool LoadingScene;
@@ -114,10 +99,6 @@ struct xGlobals
     char watermark[127];
     U8 watermarkAlpha;
     F32 watermarkSize;
-#if DEBUG || RELEASE
-    xDebugLink* debugLink;
-    bool enableRealTimeUpdate;
-#endif
     bool showMenuOnBoot;
     bool enableHUD;
     bool skipAnimViewer;

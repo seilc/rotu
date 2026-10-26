@@ -74,10 +74,6 @@ public:
     virtual void SetCamera();
     virtual void RenderEffects();
 
-#if DEBUG || RELEASE
-    virtual void SetupTweaks();
-#endif
-
     virtual void GiveHealth(S32 hitPoints, bool from_pickup);
     virtual void ResetHealth();
     virtual bool NeedsHealth() const;
@@ -223,17 +219,6 @@ private:
     xMat4x3 reticleMat;
     F32 idleSoundTimer;
     U32 oldSlidePen;
-
-#if DEBUG || RELEASE
-    struct
-    {
-        U8 debugging;
-        xVec3 positions[180];
-        xVec3 startPos;
-        xVec3 endPos;
-        S32 posCount;
-    } physicsDebug;
-#endif
 
 public:
     U32* hitSoundsMap;

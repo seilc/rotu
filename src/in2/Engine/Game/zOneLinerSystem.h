@@ -5,9 +5,9 @@
 
 struct zPlayer;
 
-// Empty for now - Not found in DWARF
 enum zOneLinerTypes
 {
+    zOLT_Total = 55
 };
 
 void zOneLinerSystemSetup();

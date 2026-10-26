@@ -2,8 +2,6 @@
 
 #include "xRenderState.h"
 
-#include "decomp.h"
-
 const S32 NURBS_DRAW_MAX = 256;
 
 static RwIm3DVertex gSectionVerts[NURBS_DRAW_MAX];
@@ -52,10 +50,6 @@ S32 xNurbs::find_span(F32 u) const
 
     return mid;
 }
-
-#if !DEBUG
-DECOMP_FORCEFLOAT(0.5f)
-#endif
 
 static const S32 MAX_DEGREE = 4;
 

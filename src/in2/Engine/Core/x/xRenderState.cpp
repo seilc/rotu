@@ -31,11 +31,7 @@ void xRenderStateSetZBias(RwReal bias)
     xASSERT_L(184, cam != 0);
     if (!cam) return;
 
-#if DEBUG || RELEASE
-    static RwReal bias_scale = 0.005f;
-#else
     static const RwReal bias_scale = 0.005f;
-#endif
     bias *= bias_scale;
 
     old_near_plane = RwCameraGetNearClipPlane(cam);
@@ -101,84 +97,6 @@ void xRenderFixIMBegin()
 void xRenderFixIMEnd()
 {
 }
-
-#if DEBUG || RELEASE
-RwBool xRenderStateCheckBlendModes(RwBlendFunction desiredSrcBlend, RwBlendFunction desiredDestBlend)
-{
-    RwBlendFunction currentSrcBlend, currentDestBlend;
-    xRenderStateBlendModesGet(&currentSrcBlend, &currentDestBlend);
-
-    if (currentSrcBlend != desiredSrcBlend) {
-        return TRUE;
-    }
-
-    if (currentDestBlend != desiredDestBlend) {
-        xASSERT_FMT_L(1466, 0, "Unexpected SRCBLEND.\n"
-                              "Expected: 0x%08X Actual: 0x%08X", desiredDestBlend, currentDestBlend);
-        return TRUE;
-    }
-
-    return FALSE;
-}
-
-RwBool xRenderStateCheckState(RwRenderState state, void* desiredValue)
-{
-    if (state == rwRENDERSTATESRCBLEND || state == rwRENDERSTATEDESTBLEND) {
-        xFAIL_FMT_L(1478, "%s", "Please do not use RwRenderStateSet for SRCBLEND, DESTBLEND.\n"
-                                       "Use xRenderStateCheckBlendModes.");
-        return TRUE;
-    }
-
-    RwUInt32 curValue;
-    RwRenderStateGetMacro(state, (void*)&curValue);
-
-    if (curValue != (RwUInt32)desiredValue) {
-        static RwBool shhhh = FALSE;
-        if (shhhh) {
-            iprintf("Unexpected Render State."
-                    "State %d Expected: 0x%08X Actual: 0x%08X", state, desiredValue, curValue);
-        } else {
-            xASSERT_FMT_L(1495, 0, "Unexpected Render State.\n"
-                                  "State %d Expected: 0x%08X Actual: 0x%08X", state, desiredValue, curValue);
-        }
-        return TRUE;
-    }
-
-    return FALSE;
-}
-
-void RwRenderStateSetWrapper(RwRenderState state, void* value)
-{
-    if (state == rwRENDERSTATESRCBLEND ||
-        state == rwRENDERSTATEDESTBLEND ||
-        state == rwRENDERSTATEZWRITEENABLE ||
-        state == rwRENDERSTATEZTESTENABLE) {
-        xFAIL_FMT_L(1606, "%s", "Please do not use RwRenderStateSet for SRCBLEND, DESTBLEND, ZWRITE and ZTEST.\n"
-                                       "Use xRenderStateBlendModesSet, xRenderStateZModesSet or xRenderStateBlendAndZModesSet.");
-        return;
-    }
-
-    RwBool ret = RwRenderStateSetMacro(state, value);
-    if (!ret && state != rwRENDERSTATESRCBLEND) {
-        RwInt32 asdf = 1234;
-    }
-}
-
-RwBool RwRenderStateGetWrapper(RwRenderState state, void* value)
-{
-    if (state == rwRENDERSTATESRCBLEND || state == rwRENDERSTATEDESTBLEND) {
-        xFAIL_FMT_L(1630, "%s", "Please do not use RwRenderStateGet for SRCBLEND and DESTBLEND.\n"
-                                       "Use xRenderStateBlendModesGet.");
-        return FALSE;
-    }
-
-    RwBool ret = RwRenderStateGetMacro(state, value);
-    if (!ret) {
-        RwInt32 asdf = 1234;
-    }
-    return ret;
-}
-#endif
 
 void xRenderStateBlendModesSet(RwBlendFunction srcBlend, RwBlendFunction destBlend)
 {

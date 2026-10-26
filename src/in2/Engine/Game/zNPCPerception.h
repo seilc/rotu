@@ -17,9 +17,6 @@ protected:
     F32 priority;
     F32 distSq;
     F32 damagedByTimer;
-#if DEBUG
-    char description[128];
-#endif
 };
 
 class zNPCPerception

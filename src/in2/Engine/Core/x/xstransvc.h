@@ -17,11 +17,10 @@ F32 xSTLoadStep(U32);
 void xSTDisconnect(U32 sid, S32 flg_hiphop);
 S32 xSTSwitchScene(U32 sid, void* userdata, S32(*progmon)(void*, F32));
 char* xSTAssetName(U32 aid);
-char* xSTAssetName(void* raw_HIP_asset);
+char* xSTAssetName(void* raw_HIP_asset); // inferred from BFBB GC, TSSM GC, Rat GC
 char* xSTAssetNameFromPointer(void* model);
 en_pkrfindmyass xSTRandMemToAsset(PKRAssetTOCInfo* ainfo, const void* addr);
 void* xSTFindAsset(U32 aid, U32* size);
-st_PACKER_ATOC_NODE* xSTFindAssetNode(U32 aid, U32* size);
 S32 xSTAssetCountByType(U32 type);
 void* xSTFindAssetByType(U32 type, S32 idx, U32* size);
 S32 xSTGetAssetInfo(U32 aid, PKRAssetTOCInfo* tocainfo);
@@ -29,15 +28,11 @@ S32 xSTGetAssetInfoByType(U32 type, S32 idx, PKRAssetTOCInfo* tocainfo);
 S32 xSTGetAssetInfoInHxP(U32 aid, PKRAssetTOCInfo* tocainfo, U32 hash); // inferred from BFBB GC, Rat MAP
 char* xST_xAssetID_HIPFullPath(U32 aid);
 char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID);
-#if DEBUG
-void xSTReportLoadTimes(U32 sceneID, S32 toScreen);
-#endif
 void xSTSetLocalizationCode(const char* code);
 char* xSTGetLocalizationCode();
 xRegion xSTGetLocalizationEnum();
 void xSTAddToDiscLanguageConfig(xRegion region);
 U32 xSTGetDiscLanguageConfig();
-S32 xSTGetAssetTypes(U32* types, S32 max_types);
 
 inline const char* xSTAssetNameOrID(U32 aid)
 {

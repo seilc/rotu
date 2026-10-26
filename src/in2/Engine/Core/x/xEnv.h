@@ -13,10 +13,6 @@ struct xEnv
 
 extern xEnv* gCurXEnv;
 
-#if DEBUG || RELEASE
-extern bool debugNoJspsRendering;
-#endif
-
 void xEnvLoadJSPList(xEnv* env, S32 dataType);
 void xEnvSetup(xEnv* env);
 void xEnvFree(xEnv* env);

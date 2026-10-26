@@ -1,7 +1,5 @@
 #include "containers.h"
 
-#include "decomp.h"
-
 void pool_list_base::push_front()
 {
     node_base* n = alloc();
@@ -11,8 +9,6 @@ void pool_list_base::push_front()
     _size++;
 }
 
-DECOMP_FORCEACTIVE("containers.cpp", "!empty()")
-
 void pool_list_base::push_back()
 {
     node_base* n = alloc();
@@ -21,8 +17,6 @@ void pool_list_base::push_back()
     n->next->prev = n; n->prev->next = n;
     _size++;
 }
-
-DECOMP_FORCEACTIVE("n != 0")
 
 void pool_list_base::create(S32 node_size, S32 max_size, U32 memtag, void* buffer)
 {
@@ -124,12 +118,3 @@ pool_list_base::node_base* pool_list_base::erase(node_base* first, node_base* la
     
     return last;
 }
-
-DECOMP_FORCEACTIVE(
-    "dead_total == (_max_size - _size)",
-    "alive->prev != 0",
-    "alive->next != 0",
-    "alive->prev->next == alive",
-    "alive->next->prev == alive",
-    "alive_total == _size"
-)

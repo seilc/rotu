@@ -101,23 +101,12 @@ public:
     virtual void setAnimState(U32 new_stateID, F32 blend, F32 dest_time, xModelInstance* model);
     virtual bool hasAnimEnded(xModelInstance* model);
 
-#if DEBUG || RELEASE
-    virtual void debugDisplay();
-    virtual void debugRender();
-    virtual void addStaticTweaks();
-    virtual void addTweaks(const char*);
-    virtual const char* getTweakName();
-#endif
-
 protected:
     struct testNode
     {
         testFunc testFunction;
         behavior* changeToBehavior;
         testNode* next;
-#if DEBUG || RELEASE
-        char* description;
-#endif
         F32 waitTime;
         F32 remainingTime;
     };
@@ -195,12 +184,6 @@ public:
     virtual bool collisionResponse(const xVec3& current_dir, const SphereCollisionResults& scene_collide, xVec3& response_dpos);
     virtual void registerCollision(const SphereCollisionResults& scene_collide);
     virtual void RunDamageBehavior(behavior* dmgBehavior, zCombatDamageInfo& damageInfo);
-
-#if DEBUG || RELEASE
-    virtual void debugDisplay();
-    virtual void debugRender();
-    virtual void addTweaks(const char*);
-#endif
 };
 
 #endif

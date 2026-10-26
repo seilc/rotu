@@ -2,7 +2,6 @@
 
 #include "xDebug.h"
 #include "xGlobals.h"
-#include "xMemMgr.h"
 #include "xOutputMgr.h"
 #include "xutil.h"
 #include "iFile.h"
@@ -151,10 +150,6 @@ S32 xSTPreLoadScene(U32 sid, void* userdata, S32 flg_hiphop, S32 fileflags, cons
             XST_unlock(sdata);
             sdata = NULL;
             result = 0;
-#if DEBUG
-            char* cp = (char*)&sid;
-            xWARN("HOP open failed: %c%c%c%c\n", cp[0], cp[1], cp[2], cp[3]);
-#endif
         } else {
             result = cltver;
         }
@@ -380,26 +375,6 @@ char* xSTAssetName(U32 aid)
     return (char*)aname;
 }
 
-char* xSTAssetName(void* raw_HIP_asset)
-{
-    const char* aname = NULL;
-    S32 scncnt, i;
-    st_STRAN_SCENE* sdata;
-    U32 aid;
-
-    scncnt = XST_cnt_locked();
-    for (i = 0; i < scncnt; i++) {
-        sdata = XST_nth_locked(i);
-        xASSERT_L(541, sdata);
-        xVALIDATE_L(542, sdata->spkg);
-        aid = PKRAssetIDFromInst(raw_HIP_asset);
-        aname = g_pkrf->AssetName(sdata->spkg, aid);
-        if (aname) break;
-    }
-
-    return (char*)aname;
-}
-
 char* xSTAssetNameFromPointer(void* model)
 {
     PKRAssetTOCInfo ainfo;
@@ -453,41 +428,6 @@ void* xSTFindAsset(U32 aid, U32* size)
         }
 
         memloc = g_pkrf->LoadAsset(sdata->spkg, aid, NULL, NULL, &asssize);
-        if (memloc) {
-            if (size) {
-                *size = asssize;
-            }
-            break;
-        }
-    }
-
-    return memloc;
-}
-
-st_PACKER_ATOC_NODE* xSTFindAssetNode(U32 aid, U32* size)
-{
-    st_PACKER_ATOC_NODE* memloc;
-    S32 scncnt, i;
-    st_STRAN_SCENE* sdata;
-    S32 asssize;
-
-    xASSERT_FMT_L(646, aid, "xSTFindAsset function is called with 0 asset ID ");
-    if (!aid) {
-        return NULL;
-    }
-
-    memloc = NULL;
-    scncnt = XST_cnt_locked();
-    for (i = 0; i < scncnt; i++) {
-        sdata = XST_nth_locked(i);
-        xASSERT_L(671, sdata);
-
-        asssize = 0;
-        if (!sdata->spkg) {
-            return NULL;
-        }
-
-        memloc = PKR_FindAssetNode(sdata->spkg, aid, &asssize);
         if (memloc) {
             if (size) {
                 *size = asssize;
@@ -614,36 +554,6 @@ char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID)
 
     return (char*)da_hipname;
 }
-
-#if DEBUG
-void xSTReportLoadTimes(U32 sceneID, S32 toScreen)
-{
-    st_STRAN_SCENE* sdata = NULL;
-    S32 scncnt = 0, i = 0, rptopts = 0;
-
-    if (g_pkrf->dbgrpt_loadtimes) {
-        if (toScreen) {
-            rptopts = 0xD;
-        } else {
-            rptopts = 0x6;
-        }
-
-        if (!sceneID && !toScreen) rptopts |= 0x10;
-
-        scncnt = XST_cnt_locked();
-        for (i = 0; i < scncnt; i++) {
-            sdata = XST_nth_locked(i);
-            xVALIDATE_L(986, sdata);
-            xVALIDATE_L(987, sdata->spkg);
-
-            if (!sceneID || sceneID == sdata->scnid) {
-                g_pkrf->dbgrpt_loadtimes(sdata->spkg, rptopts);
-                if (sceneID) break;
-            }
-        }
-    }
-}
-#endif
 
 static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const char* sfile, S32 fileflags)
 {
@@ -863,38 +773,4 @@ void xSTAddToDiscLanguageConfig(xRegion region)
 U32 xSTGetDiscLanguageConfig()
 {
     return g_localDiscLanguageConfig;
-}
-
-S32 xSTGetAssetTypes(U32* types, S32 max_types)
-{
-    xASSERT_L(1294, max_types > 0);
-
-    U32* type_buffer = (U32*)xMEMPUSHTEMP_L(0x1000, 0, 1297);
-    U32* type = type_buffer, *end_type = type + 0x1000 / sizeof(U32);
-
-    S32 scenes = XST_cnt_locked();
-    for (S32 i = 0; i < scenes; i++) {
-        st_STRAN_SCENE* sdata = XST_nth_locked(i);
-        st_PACKER_READ_DATA* pr = sdata->spkg;
-        const PKRAssetType* atype = pr->types;
-        for (; atype->typetag != 0 && type != end_type; type++, atype++)
-            *type = atype->typetag;
-    }
-
-    S32 itotal = type - type_buffer;
-    quicksort_uint(type_buffer, itotal, sizeof(U32), 0);
-
-    U32 last_type_value = 0;
-    U32* otype = types, *end_otype = otype + max_types;
-    const U32* itype = type_buffer, *end_itype = itype + itotal;
-    for (; itype != end_itype; itype++) {
-        if (*itype != last_type_value) {
-            *otype = last_type_value = *itype;
-            otype++;
-            if (otype == end_otype) break;
-        }
-    }
-
-    xMEMPOPTEMP(type_buffer);
-    return otype - types;
 }

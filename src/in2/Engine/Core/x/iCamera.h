@@ -4,6 +4,7 @@
 #include "iFog.h"
 #include "iEnv.h"
 #include "iTime.h"
+#include "xColor.h"
 
 extern F32 sCameraNearClip;
 extern F32 giCameraOONearClip;
@@ -11,6 +12,7 @@ extern F32 sCameraFarClip;
 extern RwCamera* globalCamera;
 
 void iCameraSetOrthoProjection(RwCamera* cam, bool ortho);
+void iCameraClear(RwCamera* camera, xColor color); // inferred from TSSM GC, Rat MAP
 RwCamera* iCameraCreate(S32 width, S32 height, S32 mainGameCamera);
 void iCameraDestroy(RwCamera* camera);
 void iCameraBegin(RwCamera* cam, S32);

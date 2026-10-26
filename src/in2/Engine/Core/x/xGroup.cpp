@@ -7,8 +7,6 @@
 #include "zNPCCoverPoint.h"
 #include "xOutputMgr.h"
 
-#include "decomp.h"
-
 void xGroupInit(void* b, void* asset)
 {
     xGroupInit((xBase*)b, (xGroupAsset*)asset);
@@ -201,8 +199,6 @@ U32 xGroupGetItem(xGroup* g, U32 index)
     return idx[index];
 }
 
-DECOMP_FORCEACTIVE("to", "sc")
-
 U32 xGroupGetAny(xGroup* g)
 {
     xASSERT_L(354, g->asset);
@@ -216,8 +212,6 @@ U32 xGroupGetAny(xGroup* g)
 
     return id;
 }
-
-DECOMP_FORCEACTIVE("g->ptr_last_index < g->asset->itemCount")
 
 xBase* xGroupGetAnyRandomPtr(xGroup* g)
 {

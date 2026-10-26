@@ -6,15 +6,7 @@
 #include "zNPCCommon.h"
 #include "xSpacePartitionTree.h"
 
-#include "decomp.h"
-
 static const U32 MAX_CIRCLES = 50;
-
-#if !MASTER
-DECOMP_FORCEFLOAT(1.0f)
-DECOMP_FORCEACTIVE(&zMeshCircle::SetPosition)
-DECOMP_FORCEACTIVE(xMath2NearestPointOnLine)
-#endif
 
 namespace {
     zMeshCircle* sFreeCirclePool = NULL;
@@ -201,12 +193,6 @@ void xNavigationMeshAsset::ReleaseCircle(zMeshCircle* circle)
     circle->masterListNext = sFreeCirclePool;
     sFreeCirclePool = circle;
 }
-
-DECOMP_FORCEACTIVE(
-    "((U32)0xFFFFFFFF) / (MAX_VERTICES_PER_SUB_MESH * MAX_VERTICES_PER_SUB_MESH ) > subMeshId",
-    "We have hit the U32 limit and wrapped around the ID. This is bad because triangles will share IDs.",
-    "id <= ( id + sub_mesh_shifted )"
-)
 
 S32 xNavigationMeshAssetSubMesh::getTriangle(const xVec3& point, S32 current_triangle) const
 {

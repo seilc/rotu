@@ -1,53 +1,12 @@
 #include "xMemoryManagerFixed.h"
 
 #include "xMemMgr.h"
-#include "decomp.h"
-
-#if DEBUG || RELEASE
-inline U8 ConvertToFixedSizeEnum(U32 size)
-{
-    if (size <= 4) return 1;
-    if (size <= 8) return 2;
-    if (size <= 32) return 3;
-    if (size <= 48) return 4;
-    return 0;
-}
-
-void xMemoryManagerFixed::SetOrigSize(void* pointer, U32 size) const
-{
-    U32 start = (U32)GetArenaStart();
-    U32 index = ((U32)pointer - start) / elementSize;
-    origSizeList[index] = ConvertToFixedSizeEnum(size);
-}
-
-U32 xMemoryManagerFixed::GetOrigSize(void* pointer) const
-{
-    U32 index = ((U32)pointer - (U32)GetArenaStart()) / elementSize;
-    switch (origSizeList[index]) {
-    case 1: return 4;
-    case 2: return 8;
-    case 3: return 32;
-    case 4: return 48;
-    }
-    return 0;
-}
-#endif
-
-DECOMP_FORCEACTIVE(
-    "assert: %d (%s#%d)\n",
-    "elementSize > 0 && elementSize >= sizeof(FixedHeader)",
-    "xMemoryManagerFixed.cpp"
-)
 
 void xMemoryManagerFixed::Init(void* start, U32 elements, U32 elementSize)
 {
     xMEMORYMANAGER_ASSERT_L(89, elementSize > 0 && elementSize >= sizeof(FixedHeader) && elements > 0);
 
-#if DEBUG || RELEASE
-    DoInit(start, elements * (elementSize + 1), false);
-#else
     DoInit(start, elements * elementSize, false);
-#endif
 
     this->elements = elements;
     this->elementSize = elementSize;
@@ -71,11 +30,6 @@ void* xMemoryManagerFixed::DoAllocate(U32 size, U32 options)
 
     freeList = freeList->next;
 
-#if DEBUG || RELEASE
-    allocatedElements++;
-    xMEMMGRGENERICMALLOCTALLY(elementSize);
-#endif
-
     return ret;
 }
 
@@ -87,11 +41,6 @@ void xMemoryManagerFixed::DoFree(void* pointer)
     FixedHeader* header = (FixedHeader*)pointer;
     header->next = freeList;
     this->freeList = header;
-
-#if DEBUG || RELEASE
-    xMEMMGRGENERICMALLOCREMOVE(elementSize);
-    allocatedElements--;
-#endif
 }
 
 #if DEBUG || RELEASE
@@ -119,9 +68,4 @@ void xMemoryManagerFixed::InitMemory()
         cur = cur->next;
     }
     cur->next = NULL;
-
-#if DEBUG || RELEASE
-    allocatedElements = 0;
-    origSizeList = (U8*)xMEMADVANCE(cur, elementSize);
-#endif
 }

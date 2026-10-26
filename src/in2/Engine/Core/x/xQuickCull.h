@@ -56,10 +56,4 @@ inline void xQuickCullForLine(xQCData* q, const xLine3* r)
     xQuickCullForLine(&xqc_def_ctrl, q, r);
 }
 
-#if DEBUG
-void xQuickCullDebugCB();
-void xQuickCullDebugUpdate();
-void xQuickCullDebugRegister(const xQCData* q);
-#endif
-
 #endif

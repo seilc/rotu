@@ -58,8 +58,6 @@ S16 xFFXAddEffect(xEnt* ent, xFFX* f)
     return ent->num_ffx++;
 }
 
-DECOMP_FORCEACTIVE("n < ent->num_ffx")
-
 U32 xFFXRemoveEffectByFData(xEnt* ent, void* fdata)
 {
     xASSERT_L(209, ent);
@@ -158,16 +156,6 @@ void xFFXShakeFree(xFFXShakeState* s)
 }
 
 DECOMP_FORCEACTIVE(
-    "dt > 0",
-    "xFFXRotMatchUpdateEnt: ent has no collision!\n",
-    "xFFXRotMatchUpdateEnt: ent has no frame!\n",
-    "rms->max_decl > edecl",
-    "fdecl > edecl",
-    "xEnt.h",
-    "ent->model",
-    "xModel.h",
-    "model",
-    "model->Mat",
     RELEASE ? "xVec3Inlines.h" : 0,
     RELEASE ? "o != a && o != b" : 0,
     RELEASE ? "Sorry, but the input vector can't be the same as the output vector. You'll get the wrong answer" : 0

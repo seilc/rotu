@@ -17,24 +17,6 @@ class zSwitchLever;
 struct xModelAssetParam;
 struct zNPCCombatInitData;
 
-#if DEBUG || RELEASE
-struct zDebugStoredEvents
-{
-    iTime storedTime;
-    xBase* from;
-    xBase* to;
-    U32 to_event;
-    F32* to_param;
-    xBase* to_param_widget;
-};
-
-struct zDebugStoredAnimChanges
-{
-    iTime storedTime;
-    char animName[256];
-};
-#endif
-
 namespace zNPC {
 
 class zNPCCommonMoveToTransient;
@@ -136,10 +118,6 @@ public:
     virtual void debug_render();
     virtual void move();
     virtual F32 DistanceToPriorityTarget();
-#if DEBUG || RELEASE
-    virtual void debug_display();
-    virtual void add_tweaks(const char* prefix);
-#endif
     virtual F32 CalcTranslucency();
     virtual void activate_visible();
     virtual void deactivate_visible();
@@ -171,10 +149,6 @@ public:
         U8 pad3 : 8;
         U8 old_chkby : 8;
     } commonFlags;
-#if DEBUG || RELEASE
-    zDebugStoredEvents storedEvents[8];
-    zDebugStoredAnimChanges storedAnimChanges[8];
-#endif
     zNPCNavigate* navigation_behavior;
     zBehaviorManager manager;
     F32 freezeValue;
@@ -208,13 +182,6 @@ public:
     xVec3 surroundedMoveTo;
     bool surroundedValid;
     xVec3 shakeModelDisp;
-#if DEBUG || RELEASE
-    F32 tweak_scale;
-    xVec3 tweak_offset;
-    const char* debug_name;
-    bool tweak_use_bounding_box;
-    bool debug_output;
-#endif
 
 protected:
     bool off_during_cinematic;
@@ -250,10 +217,6 @@ public:
     F32 originalScale;
     bool ourDeathHasBeenRegistered;
 
-// ???
-#if DEBUG || RELEASE
-protected:
-#endif
     F32 prevAlpha;
 };
 

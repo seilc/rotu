@@ -17,16 +17,6 @@ void xRenderFixUntexturedEnd(RpAtomic*);
 void xRenderFixIMBegin();
 void xRenderFixIMEnd();
 
-#if DEBUG || RELEASE
-RwBool xRenderStateCheckBlendModes(RwBlendFunction desiredSrcBlend, RwBlendFunction desiredDestBlend);
-RwBool xRenderStateCheckState(RwRenderState state, void* desiredValue);
-void RwRenderStateSetWrapper(RwRenderState state, void* value);
-RwBool RwRenderStateGetWrapper(RwRenderState state, void* value);
-#else
-#define xRenderStateCheckBlendModes FALSE
-#define xRenderStateCheckState FALSE
-#endif
-
 void xRenderStateBlendModesSet(RwBlendFunction srcBlend, RwBlendFunction destBlend);
 void xRenderStateZModesSet(RwBool ZWrite, RwBool ZTest);
 void xRenderStateBlendAndZModesSet(RwBlendFunction srcBlend, RwBlendFunction destBlend, RwBool ZWrite, RwBool ZTest);

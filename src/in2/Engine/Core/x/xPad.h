@@ -59,7 +59,6 @@ void xPadClear();
 void xPadClear(S32 idx);
 S32 xPadUpdate(S32 idx, F32 time_passed);
 void xPadUpdateAllPads(F32 time_passed);
-void SubMapAll(S32* neuon, xPad* xp);
 void xPadNormalizeAnalog(xPad& pad, S32 inner_zone, S32 outer_zone);
 void xPadKill();
 void xPadAnalogIsDigital(S32 idx, S32 enable);

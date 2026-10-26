@@ -74,21 +74,12 @@ public:
 
     void set_config(const config_type* cfg);
     void insert(const xVec3& loc, const xVec3& norm, F32 scale, F32 alpha, S32 flags);
-    void copy_parameters(xFXRibbon* ribbon) const;
 
     static RwRaster* get_raster(const char* name);
 
 private:
-#if DEBUG || RELEASE
-    struct debug_info;
-#endif
-
     activity_data* act;
     const config_type* cfg;
-
-#if DEBUG || RELEASE
-    debug_info* debug;
-#endif
 };
 
 void xFX_SceneEnter(RpWorld* world);

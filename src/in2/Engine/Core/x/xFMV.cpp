@@ -8,8 +8,6 @@
 #include "zMenu.h"
 #include "xDebug.h"
 
-#include "decomp.h"
-
 #include <bink.h>
 
 static void DefaultFMVPauseSoundCB(bool doPause);
@@ -84,21 +82,6 @@ RwTexture* xFMVGetTexture(MOVIE* pMovie, U16 looping, U16 freezeframed, U32 star
     if (pMovie->hBink->LastFrameNum == 0xFFFFFFFF) {
         BinkGoto(pMovie->hBink, startframe + 1, 0);
     }
-
-#if DEBUG || RELEASE
-    if (xDebugModeGet() == 18) {
-        S32 frameSkipped;
-        DECOMP_FORCEREGISTER(frameSkipped);
-        xprintf("Time Code:       %02d:%02d:%02d:%02d\nFrame %d/%d\nSkipped %d\n",
-                pMovie->hBink->FrameNum / (30 * 60 * 40),
-                pMovie->hBink->FrameNum / (30 * 60) % 60,
-                pMovie->hBink->FrameNum / 30 % 60,
-                pMovie->hBink->FrameNum % 30,
-                pMovie->hBink->FrameNum,
-                pMovie->hBink->Frames,
-                pMovie->hBink->skippedblits);
-    }
-#endif
 
     RwRaster* pBinkRaster = RwTextureGetRaster(pMovie->pBinkTexture);
 

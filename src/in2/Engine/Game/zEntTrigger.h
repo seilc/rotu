@@ -29,8 +29,4 @@ struct zEntTrigger : zEnt
     xTriggerAsset& Asset() const;
 };
 
-#if DEBUG || RELEASE
-void zEntTriggerDebugDraw(xBase* btrig);
-#endif
-
 #endif

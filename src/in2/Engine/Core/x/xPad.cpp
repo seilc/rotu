@@ -6,8 +6,6 @@
 #include "zGame.h"
 #include "zGlobals.h"
 
-#include "decomp.h"
-
 #include <string.h>
 
 xPad mPad[k_XPAD_MAX];
@@ -29,16 +27,6 @@ S32 xPadInit()
 
     return 1;
 }
-
-DECOMP_FORCEACTIVE(
-    "xPad.cpp",
-    "i > -1 && i < 4",
-    "%s",
-    "i > -1 && i < k_XPAD_MAX"
-)
-#if DEBUG || RELEASE
-DECOMP_FORCEACTIVE(iDebugBreak)
-#endif
 
 xPad* xPadEnable(S32 idx)
 {
@@ -129,11 +117,6 @@ S32 xPadUpdate(S32 idx, F32 time_passed)
         }
     }
 
-#if DEBUG || RELEASE
-    static S32 submap = 0;
-    if (submap) SubMapAll((S32*)&new_on, p);
-#endif
-
     p->pressed = new_on & ~p->on;
     p->released = p->on & ~new_on;
     p->on = new_on;
@@ -184,38 +167,6 @@ void xPadUpdateAllPads(F32 time_passed)
     for (S32 j = 0; j < k_XPAD_MAX; j++) {
         xPadUpdate(j, time_passed);
     }
-}
-
-void SubMapAll(S32* neuon, xPad* xp)
-{
-    S32 old = *neuon;
-    S32 keys = 0;
-    
-    *neuon &= 0xFFF0880F;
-
-    if (old & 0x10) keys |= 0x40;
-    if (old & 0x40) keys |= 0x10;
-    if (old & 0x80) keys |= 0x20;
-    if (old & 0x20) keys |= 0x80;
-    if (old & 0x10000) keys |= 0x80000;
-    if (old & 0x20000) keys |= 0x10000;
-    if (old & 0x40000) keys |= 0x20000;
-    if (old & 0x80000) keys |= 0x40000;
-    if (old & 0x100) keys |= 0x1000;
-    if (old & 0x200) keys |= 0x2000;
-    if (old & 0x400) keys |= 0x4000;
-    if (old & 0x800) keys |= 0x8000;
-    if (old & 0x1000) keys |= 0x100;
-    if (old & 0x2000) keys |= 0x200;
-    if (old & 0x4000) keys |= 0x400;
-    if (old & 0x8000) keys |= 0x800;
-
-    xp->analog1.x = -xp->analog1.x;
-    xp->analog1.y = -xp->analog1.y;
-    xp->analog2.x = -xp->analog2.x;
-    xp->analog2.y = -xp->analog2.y;
-
-    *neuon |= keys;
 }
 
 void xPadNormalizeAnalog(xPad& pad, S32 inner_zone, S32 outer_zone)

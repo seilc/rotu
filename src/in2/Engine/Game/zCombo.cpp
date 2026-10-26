@@ -40,25 +40,3 @@ void zCombo_Paused()
         comboHUD->w.clear_motives();
     }
 }
-
-#if DEBUG || RELEASE
-DECOMP_FORCEACTIVE(
-    "zCombo.cpp",
-    "comboReward[i].textAsset",
-    "You need to get latest MNUI and in.ini",
-    "Player|Combo|\2combo add points",
-    "Player|Combo|\2comboInputMult",
-    "Player|Combo|\2comboMaxTime",
-    "Player|Combo|\3combo add type",
-    "Player|Combo|Add Combo Point",
-    "Go!",
-    "Player|Combo|comboTimer",
-    "Player|Combo|comboCounter",
-    "Player|Combo|comboLevel",
-    "Player|Combo|comboHitsNextLevel",
-    "Player|Combo|\1comboCounterGraph|",
-    "rewardLevel < comboNumRewards",
-    "%s",
-    "rewardLevel > -1"
-)
-#endif

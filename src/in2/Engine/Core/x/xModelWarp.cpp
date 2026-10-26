@@ -4,8 +4,6 @@
 #include "xDebugTweak.h"
 #include "xModel.h"
 
-#include "decomp.h"
-
 namespace {
 
     struct render_context
@@ -25,17 +23,6 @@ namespace {
 
         xFColor default_color = { 1, 1, 1, 1 };
 
-#if DEBUG || RELEASE
-        namespace debug {
-
-            S32 render_texture = -1;
-            S32 render_bound = -1;
-            S32 render_rect = -1;
-            bool force_default_color = false;
-            
-        }
-#endif
-
         void add_tweaks()
         {
             const char* prefix = "FX|Model Warp|";
@@ -43,12 +30,6 @@ namespace {
             xAUTOTWEAKRANGE(prefix, "default_color \2g", &default_color.g, 0.0f, 2.0f, NULL, NULL, 0, false);
             xAUTOTWEAKRANGE(prefix, "default_color \3b", &default_color.b, 0.0f, 2.0f, NULL, NULL, 0, false);
             xAUTOTWEAKRANGE(prefix, "default_color a", &default_color.a, 0.0f, 2.0f, NULL, NULL, 0, false);
-#if DEBUG || RELEASE
-            xAUTOTWEAKRANGE(prefix, "debug::render_texture", &debug::render_texture, -1, MAX_ACTIVE, NULL, NULL, 0, true);
-            xAUTOTWEAKRANGE(prefix, "debug::render_bound", &debug::render_bound, -1, MAX_ACTIVE, NULL, NULL, 0, true);
-            xAUTOTWEAKRANGE(prefix, "debug::render_rect", &debug::render_rect, -1, MAX_ACTIVE, NULL, NULL, 0, true);
-            xAUTOTWEAKBOOL(prefix, "debug::force_default_color", &debug::force_default_color, NULL, NULL, 0, true);
-#endif
         }
 
     }
@@ -102,15 +83,6 @@ void xModelWarpSceneEnter()
     render_contexts_size = 0;
 
     tweak::add_tweaks();
-
-#if DEBUG
-    U32 test_atomic_id = xStrHash("00_test_torus");
-    RpAtomic* test_atomic = xModelFindAtomic(test_atomic_id, NULL);
-    if (test_atomic) {
-        xModelWarpSphereMapUVs(test_atomic, false);
-        xModelWarpSetEffect(test_atomic, NULL, NULL);
-    }
-#endif
 }
 
 void xModelWarpSceneExit()
@@ -164,8 +136,6 @@ void xModelWarpSetEffect(RpAtomic* atomic, const xBox* box, const xFColor* color
         context.color = tweak::default_color;
     }
 }
-
-DECOMP_FORCEACTIVE("context != 0")
 
 void xModelWarpSphereMapUVsByNormals(xVec2* uv, S32 verts_size, const xVec3* norm)
 {

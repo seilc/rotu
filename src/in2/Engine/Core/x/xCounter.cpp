@@ -15,55 +15,9 @@
 
 namespace {
 
-#if DEBUG || RELEASE
-const char* get_asset_name(xCounterAsset* asset)
-{
-    const char* name = xSTAssetName(asset);
-    if (name && *name != '\0') {
-        return name;
-    }
-
-    static char buffer[16];
-    sprintf(buffer, "0x%08X", asset->id);
-    return buffer;
-}
-
-void on_update_counter_tweak(const tweak_info& info)
-{
-    xCounter& c = *(xCounter*)info.context;
-    const char* msg_st = NULL;
-
-    if (c.state == 0) {
-        msg_st = "Idle";
-    } else if (c.state == 1) {
-        msg_st = "{r=1}Expired{~:r}";
-    } else {
-        msg_st = "???";
-    }
-
-    sprintf(c.stats, "{f=2}{w*.5}{h*.5}%d/%d %s %s",
-            c.count,
-            c.asset->count,
-            msg_st,
-            xBaseIsEnabled(&c) ? "Enabled" : "{r=1}Disabled{~:r}");
-}
-
-void add_tweaks(xCounter& counter)
-{
-    char prefix[128];
-    sprintf(prefix, "Widgets|Counters|%s", get_asset_name(counter.asset));
-
-    static tweak_callback cb_update = tweak_callback::create_update(on_update_counter_tweak);
-
-    counter.stats[0] = '\0';
-
-    xTWEAKMESSAGE(prefix, counter.stats, &cb_update, &counter, 0x3);
-}
-#else
 void add_tweaks(xCounter& counter)
 {
 }
-#endif
 
 }
 

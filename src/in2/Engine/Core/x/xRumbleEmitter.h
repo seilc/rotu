@@ -25,10 +25,6 @@ struct effectAsset : xDynAsset
     F32 shakeRotationalMagnitude;
     bool shakeY;
 
-#if DEBUG || RELEASE
-    void AddTweaks(const char* prefix);
-#endif
-
     F32 GetIntensity(F32 currentTime, F32 totalTime) const;
 };
 
@@ -53,10 +49,6 @@ struct effect : emitterBase
     static void Init(xBase& data, xDynAsset& asset, size_t asset_size);
     
     effect(effectAsset* pAsset);
-
-#if DEBUG || RELEASE
-    void AddTweaks();
-#endif
 };
 
 struct boxEmitterAsset : xDynAsset

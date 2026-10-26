@@ -1,8 +1,6 @@
 #include "xCamTransition.h"
 
 #include "xCamTransitionAsset.h"
-#include "xDebugTweak.h"
-#include "xDraw.h"
 #include "xEvent.h"
 #include "xSpacePartitionTree.h"
 #include "xSplineAsset.h"
@@ -16,8 +14,6 @@
 #include "zGlobals.h"
 #include "zPlayer.h"
 #include "zScene.h"
-
-#include "decomp.h"
 
 inline F32 xCamPathBias::RawBias()
 {
@@ -58,15 +54,6 @@ void xCamTransition::Init(zEntTrigger& theVolume)
 
     xASSERT_L(98, this->mCamBlendBias);
 }
-
-#if DEBUG || RELEASE
-void xCamTransition::Reset()
-{
-    if (mType == 1 && mCamBlendBias) {
-        ((xCamPathBias*)mCamBlendBias)->ResetCurve();
-    }
-}
-#endif
 
 void xCamTransition::Init(xBase& data, xDynAsset& asset, size_t)
 {
@@ -201,21 +188,11 @@ void zCamTransition_EventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*, 
     case eEventCameraTransitionBegin:
         ((xCamTransition*)to)->Start();
         break;
-#if DEBUG || RELEASE
-    case eEventCameraTransitionDone:
-#endif
     case eEventEnable:
     case eEventDisable:
         break;
     }
 }
-
-#if DEBUG || RELEASE
-bool debugRenderTransitionCurve = false;
-F32 debugCurveVelocityScale = 0.125f;
-bool tweakUsePlaneMapping = true;
-F32 cBiasSpringTension = 15.0f;
-#endif
 
 xCamPathBias::xCamPathBias(zEntTrigger* triggerEnt)
     : xCamBias()
@@ -225,24 +202,9 @@ xCamPathBias::xCamPathBias(zEntTrigger* triggerEnt)
     mIsActive = false;
     mIsBiDirectional = true;
 
-#if DEBUG || RELEASE
-    mBias.SetTension(cBiasSpringTension);
-#else
     mBias.SetTension(15.0f);
-#endif
 
     ResetCurve();
-
-#if DEBUG || RELEASE
-    static bool tweakAdded = false;
-    if (!tweakAdded) {
-        tweakAdded = true;
-        xTWEAKBOOL("Camera|Debug|Transition Curve Render", &debugRenderTransitionCurve, NULL, NULL, 0);
-        xTWEAK("Camera|Debug|Transition Velocity Scale", &debugCurveVelocityScale, 0.1f, 5.0f, NULL, NULL, 0);
-        xTWEAKBOOL("Camera|Debug|Use Plane on Transition Curve", &tweakUsePlaneMapping, NULL, NULL, 0);
-        xTWEAK("Camera|Debug|Transition Curve Spring Tension", &cBiasSpringTension, 5.0f, 50.0f, NULL, NULL, 0);
-    }
-#endif
 }
 
 void xCamPathBias::ResetCurve()
@@ -292,15 +254,7 @@ void xCamPathBias::ResetCurve()
     F32 curveLength = mCurve->approximate_length(mCurve->numKnots() * 4);
 
     mGuessSpanU = 1.0f / curveLength;
-
-#if DEBUG || RELEASE
-    mRenderIncU = 0.5f / curveLength;
-#endif
 }
-
-#if !DEBUG
-DECOMP_FORCEFLOAT(EPSILON)
-#endif
 
 void xCamPathBias::Start()
 {
@@ -316,24 +270,12 @@ void xCamPathBias::Update(F32 dt)
     const xVec3& testPt = zCamTransitionTarget();
 
     if (mIsActive) {
-#if DEBUG || RELEASE
-        mBias.SetTension(cBiasSpringTension);
-#endif
         CurveIntersectPlane(testPt, mLastU, mLastU);
         mBias = mLastU;
         mBias.Update(dt);
     }
 
     mIsActive = (mTrigger->PointIntersects(testPt) || xabs(mBias.Goal() - mBias.Sprung()) > EPSILON);
-
-#if DEBUG || RELEASE
-    if (mIsActive && debugRenderTransitionCurve) {
-        DebugRender();
-    } else {
-        static S32 i = 0;
-        i++;
-    }
-#endif
 }
 
 void xCamPathBias::Reverse()
@@ -441,67 +383,3 @@ F32 xCamPathBias::CurveIntersectPlane(const xVec3& planePoint, F32& u, F32 guess
     u = t * (hiU - loU) + loU;
     return u;
 }
-
-#if DEBUG || RELEASE
-void xCamPathBias::DebugRender()
-{
-    zEntTriggerDebugDraw(mTrigger);
-
-    const xNurbs* pCurve = mCurve;
-
-    xDrawSetColor(255, 0, 255, 255);
-    
-    F32 step = mRenderIncU;
-    F32 end = pCurve->end();
-    F32 u = pCurve->start();
-
-    xVec3 p0, p1;
-    pCurve->evaluate(u, p0);
-
-    xVec3 end0 = p0;
-    bool p0OutOfBounds = !mTrigger->PointIntersects(p0);
-    
-    while (u < end) {
-        u += step;
-        u = xmin(u, end);
-
-        pCurve->evaluate(u, p1);
-
-        bool p1OutOfBounds = !mTrigger->PointIntersects(p1);
-        if (p0OutOfBounds || p1OutOfBounds) {
-            xDrawSetColor(255, 255, 0, 255);
-        } else {
-            xDrawSetColor(255, 0, 255, 255);
-        }
-
-        xDrawLine(&p0, &p1);
-        
-        p0 = p1;
-        p0OutOfBounds = p1OutOfBounds;
-    }
-    
-    xVec3 end1 = p1;
-
-    xDrawSetColor(255, 255, 255, 255);
-    pCurve->evaluate(mBias.Goal(), p0);
-    xDrawSphere(&p0, 0.1f, 0xC0006);
-
-    end0.y = end1.y = 0.5f * (end0.y + end1.y);
-
-    xVec3 toEnd1 = { end1.x - end0.x, end1.y - end0.y, end1.z - end0.z };
-
-    xVec3 perp;
-    perp.cross(toEnd1, g_Y3);
-    perp.normalize();
-
-    end0.AddScale(perp, 2.0f);
-    end1.AddScale(perp, 2.0f);
-    xDrawSetColor(128, 128, 128, 255);
-    xDrawLine(&end0, &end1);
-
-    xVec3 bead;
-    bead.AddScale(end0, toEnd1, mBias);
-    xDrawSetColor(255, 255, 255, 255);
-    xDrawSphere(&bead, 0.1f, 0xC0006);
-}
-#endif

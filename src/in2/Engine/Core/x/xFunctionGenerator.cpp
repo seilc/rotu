@@ -1,10 +1,8 @@
 #include "xFunctionGenerator.h"
 
-#include "xDebugTweak.h"
 #include "xScene.h"
 #include "xGlobals.h"
 #include "zEvent.h"
-#include "xDebugGraph.h"
 
 namespace {
 
@@ -12,36 +10,6 @@ void FunctionGeneratorEventWrapper(xBase* from, xBase* to, U32 toEvent, const F3
 {
     ((xFunctionGenerator*)to)->HandleEvent(from, toEvent, toParam, toParamWidget, toParamWidgetID);
 }
-
-#if DEBUG || RELEASE
-void FunctionGeneratorExpandTweaks(const tweak_info& info)
-{
-    xFunctionGenerator* fg = (xFunctionGenerator*)info.context;
-
-    char name[128];
-    sprintf(name, "Widgets|Function Generator|%s", xSceneID2Name((xScene*)xglobals->sceneCur, fg->GetAsset()->id));
-
-    fg->AddTweaks(name);
-}
-
-void FunctionGeneratorStartTweak(const tweak_info& info)
-{
-    xFunctionGenerator* fg = (xFunctionGenerator*)info.context;
-
-    if (fg->IsStarted()) {
-        fg->Stop();
-    }
-
-    fg->Start();
-}
-
-void FunctionGeneratorStopTweak(const tweak_info& info)
-{
-    xFunctionGenerator* fg = (xFunctionGenerator*)info.context;
-
-    fg->Stop();
-}
-#endif
 
 }
 
@@ -55,16 +23,6 @@ xFunctionGenerator::xFunctionGenerator(const xFunctionGeneratorAsset* asset)
     link = (xLinkAsset*)((U8*)asset + sizeof(xFunctionGeneratorAsset));
     started = false;
     currentState = false;
-
-#if DEBUG || RELEASE
-    graphName = xSceneID2Name((xScene*)xglobals->sceneCur, asset->id);
-
-    char name[128];
-    sprintf(name, "Widgets|Function Generator|%s", xSceneID2Name((xScene*)xglobals->sceneCur, asset->id));
-
-    static tweak_callback cb = tweak_callback::create_expand(FunctionGeneratorExpandTweaks, NULL);
-    xTWEAKBRANCH(name, &cb, this, 0x2);
-#endif
 }
 
 void xFunctionGenerator::Update(F32 dt)
@@ -129,12 +87,6 @@ void xFunctionGenerator::Update(F32 dt)
             }
         }
     } while (firedAny);
-    
-#if DEBUG || RELEASE
-    xDebugGraphAdd(graphName, currentState ? 1 : 0);
-    xDebugGraphSetOriginValue(graphName, 0.5f);
-    xDebugGraphSetScale(graphName, 1.0f);
-#endif
 
     if (asset->endEnabled && currentTime >= asset->endTime) {
         zEntEvent(this, this, eEventExpired);
@@ -193,70 +145,6 @@ void xFunctionGenerator::Reset()
 {
     started = false;
 }
-
-#if DEBUG || RELEASE
-void xFunctionGenerator::AddTweaks(const char* base)
-{
-    char buffer[128];
-    xFunctionGeneratorAsset* ncasset = (xFunctionGeneratorAsset*)asset;
-
-    sprintf(buffer, "%s|Start Cycle Width", base);
-    xTWEAK(buffer, &ncasset->startCycleWidth, 0.00000001f, 1000000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Middle Cycle Width", base);
-    xTWEAK(buffer, &ncasset->middleCycleWidth, 0.00000001f, 1000000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|End Cycle Width", base);
-    xTWEAK(buffer, &ncasset->endCycleWidth, 0.00000001f, 1000000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Start Pulse Width", base);
-    xTWEAK(buffer, &ncasset->startPulseWidth, 0.0f, 1000000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Middle Pulse Width", base);
-    xTWEAK(buffer, &ncasset->middlePulseWidth, 0.0f, 1000000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|End Pulse Width", base);
-    xTWEAK(buffer, &ncasset->endPulseWidth, 0.0f, 1000000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Middle Time", base);
-    xTWEAK(buffer, &ncasset->middleTime, 0.0f, 1000000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|End Time", base);
-    xTWEAK(buffer, &ncasset->endTime, 0.0f, 1000000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Middle Enabled", base);
-    xTWEAKBOOL(buffer, &ncasset->middleEnabled, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|End Enabled", base);
-    xTWEAKBOOL(buffer, &ncasset->endEnabled, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Override", base);
-    xTWEAKBOOL(buffer, &override, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Current Cycle Width", base);
-    xTWEAK(buffer, &currentCycleWidth, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Current Pulse Width", base);
-    xTWEAK(buffer, &currentPulseWidth, 0.0f, 1000000000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Current Time", base);
-    xTWEAK(buffer, &currentTime, 0.0f, 1000000000.0f, NULL, NULL, 0x3);
-
-    sprintf(buffer, "%s|Current State", base);
-    xTWEAKBOOL(buffer, &currentState, NULL, NULL, 0x3);
-
-    sprintf(buffer, "%s|Current Started", base);
-    xTWEAKBOOL(buffer, &started, NULL, NULL, 0x3);
-
-    sprintf(buffer, "%s|Start", base);
-    static tweak_callback cb1 = tweak_callback::create_change(FunctionGeneratorStartTweak);
-    xTWEAKMESSAGE(buffer, "Go!", &cb1, this, 0x2);
-
-    sprintf(buffer, "%s|Stop", base);
-    static tweak_callback cb2 = tweak_callback::create_change(FunctionGeneratorStopTweak);
-    xTWEAKMESSAGE(buffer, "Go!", &cb2, this, 0x2);
-}
-#endif
 
 void xFunctionGenerator_Init(xBase& data, xDynAsset& asset, size_t)
 {

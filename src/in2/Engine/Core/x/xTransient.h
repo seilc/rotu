@@ -12,13 +12,8 @@ void scene_enter(const xBox& world_box);
 void scene_exit();
 void reset();
 
-#if DEBUG || RELEASE
-void debug_update(F32 dt);
-void debug_render();
-#else
 inline void debug_update(F32 dt) {}
 inline void debug_render() {}
-#endif
 
 }
 

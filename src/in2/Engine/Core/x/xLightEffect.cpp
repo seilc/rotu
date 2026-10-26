@@ -4,7 +4,6 @@
 #include "zBase.h"
 #include "xGlobals.h"
 #include "xScene.h"
-#include "xDebugTweak.h"
 #include "xRand.h"
 
 #include <string.h>
@@ -32,45 +31,7 @@ void xLightEffectFlicker::Init(xBase& data, xDynAsset& asset, size_t asset_size)
     xBaseInit(&data, &asset);
 
     flickerEffect->tasset = (xLightEffectFlickerAsset*)&asset;
-
-#if DEBUG || RELEASE
-    flickerEffect->InitDebugTweak();
-#endif
 }
-
-#if DEBUG || RELEASE
-void xLightEffectFlicker::InitDebugTweak()
-{
-    char name[128];
-    char buffer[128];
-
-    strcpy(effectName, xSceneID2Name((xScene*)xglobals->sceneCur, tasset->id));
-
-    sprintf(name, "Widgets|Light Effects|%s", effectName);
-    xTWEAKBRANCH(name, NULL, NULL, 0x2);
-    
-    sprintf(buffer, "%s|Max Color Variation R", name);
-    xTWEAK(buffer, &tasset->maxColorVariation.r, 0.0f, 1.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Max Color Variation G", name);
-    xTWEAK(buffer, &tasset->maxColorVariation.g, 0.0f, 1.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Max Color Variation B", name);
-    xTWEAK(buffer, &tasset->maxColorVariation.b, 0.0f, 1.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Flicker Color Channels Together", name);
-    xTWEAKFLAG(buffer, &tasset->flags, 0x1, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Constant Flicker Time", name);
-    xTWEAK(buffer, &tasset->flickerRate, 0.0f, 1000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Random Flicker Time", name);
-    xTWEAK(buffer, &tasset->randomFlickerRate, 0.0f, 1000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Blend Time", name);
-    xTWEAK(buffer, &tasset->blendTime, 0.0f, 1000.0f, NULL, NULL, 0x2);
-}
-#endif
 
 void xLightEffectFlicker::StartEffect(xLight& light, bool resetEffect)
 {
@@ -129,51 +90,7 @@ void xLightEffectStrobe::Init(xBase& data, xDynAsset& asset, size_t asset_size)
 
     strobeEffect->tasset = (xLightEffectStrobeAsset*)&asset;
     strobeEffect->tasset->minColor.a = 1.0f;
-
-#if DEBUG || RELEASE
-    strobeEffect->InitDebugTweak();
-#endif
 }
-
-#if DEBUG || RELEASE
-void xLightEffectStrobe::InitDebugTweak()
-{
-    char name[128];
-    char buffer[128];
-
-    strcpy(effectName, xSceneID2Name((xScene*)xglobals->sceneCur, tasset->id));
-
-    sprintf(name, "Widgets|Light Effects|%s", effectName);
-    xTWEAKBRANCH(name, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Min Color R", name);
-    xTWEAK(buffer, &tasset->minColor.r, 0.0f, 1.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Min Color G", name);
-    xTWEAK(buffer, &tasset->minColor.g, 0.0f, 1.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Min Color B", name);
-    xTWEAK(buffer, &tasset->minColor.b, 0.0f, 1.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Fade Up Time", name);
-    xTWEAK(buffer, &tasset->fadeUpTime, 0.0f, 1000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Fade Down Time", name);
-    xTWEAK(buffer, &tasset->fadeDownTime, 0.0f, 1000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Constant Time At Max", name);
-    xTWEAK(buffer, &tasset->timeMax, 0.0f, 1000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Constant Time At Min", name);
-    xTWEAK(buffer, &tasset->timeMin, 0.0f, 1000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Random Time At Max", name);
-    xTWEAK(buffer, &tasset->randomTimeMax, 0.0f, 1000.0f, NULL, NULL, 0x2);
-
-    sprintf(buffer, "%s|Random Time At Min", name);
-    xTWEAK(buffer, &tasset->randomTimeMin, 0.0f, 1000.0f, NULL, NULL, 0x2);
-}
-#endif
 
 void xLightEffectStrobe::StartEffect(xLight& light, bool resetEffect)
 {

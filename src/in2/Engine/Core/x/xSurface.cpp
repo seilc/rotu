@@ -24,7 +24,7 @@ void xSurfaceInit(U16 num_surfs)
     }
 }
 
-DECOMP_FORCEACTIVE("dflt", &xBase::operator=)
+DECOMP_FORCEACTIVE(&xBase::operator=)
 
 void xSurfaceExit()
 {

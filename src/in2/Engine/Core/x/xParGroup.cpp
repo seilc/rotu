@@ -3,8 +3,6 @@
 #include "xDebug.h"
 #include "xCommon.h"
 
-#include "decomp.h"
-
 #define REG_TABLE_MAX 255
 
 static S32 sParGroupRegTableInit = FALSE;
@@ -334,11 +332,3 @@ void xParGroupAddParToDeadList(xParGroup* ps, xPar* p)
 
     ps->m_dead = p;
 }
-
-DECOMP_FORCEACTIVE(
-    "ps->m_dead == 0L",
-    "ps->m_dead == NULL",
-    "ps->m_alive == 0",
-    "ps->m_alive == FALSE",
-    "numPars >= 0"
-)

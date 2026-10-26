@@ -3,7 +3,6 @@
 #include "xSubtitlesAsset.h"
 #include "xFont.h"
 #include "xstransvc.h"
-#include "xDebugTweak.h"
 #include "xMemMgr.h"
 #include "zVar.h"
 
@@ -37,11 +36,6 @@ void xSubTitlesInit()
         subtitleFontHeight = 20.0f;
         break;
     }
-
-#if DEBUG || RELEASE
-    xTWEAK("FX|Subtitles|subtitleFontWidth", &subtitleFontWidth, 0.0f, 100.0f, NULL, NULL, 0);
-    xTWEAK("FX|Subtitles|subtitleFontHeight", &subtitleFontHeight, 0.0f, 100.0f, NULL, NULL, 0);
-#endif
 }
 
 void* xSubTitlesRead(void*, U32 aid, void* indata, U32 insize, U32* outsize)

@@ -140,29 +140,17 @@ void zShowerParticle::Update(pool_list<zShowerParticle>& list, xEnt* owner, zSho
     }
 }
 
-#if DEBUG || RELEASE
-void zShowerParticle::Start(const xVec3& pos, F32 fallSpeed, const xFXRibbon* tweakRibbon)
-#else
 void zShowerParticle::Start(const xVec3& pos, F32 fallSpeed)
-#endif
 {
     time = 0.0f;
     speed = fallSpeed;
     xVec3Copy((xVec3*)&model->Mat->pos, &pos);
     alive = true;
     ribbon = zFXRibbonPoolNew();
-#if DEBUG || RELEASE
-    tweakRibbon->copy_parameters(ribbon);
-#else
     ribbon->set_config(&RIBBON_CONFIG);
-#endif
 }
 
-#if DEBUG || RELEASE
-void zShowerSystem::Setup(xEnt* moveOwner, ConfigType* cfg)
-#else
 void zShowerSystem::Setup(xEnt* moveOwner, const ConfigType* cfg)
-#endif
 {
     owner = moveOwner;
     config = cfg;
@@ -239,11 +227,7 @@ void zShowerSystem::Update(F32 dt)
         if (particleList.size() < particleList.max_size()) {
             particleList.push_front();
             F32 speed = xrand_RandomFloatRange(config->minSpeed, config->maxSpeed);
-#if DEBUG || RELEASE
-            particleList.front().Start(position, speed, &tweakRibbon);
-#else
             particleList.front().Start(position, speed);
-#endif
 
             if (effectTimer > 0.0f) {
                 ResetSpawnTimer();

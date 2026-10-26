@@ -140,12 +140,6 @@ private:
     } blend_speed;
 
 public:
-#if DEBUG || RELEASE
-    struct debug_info;
-
-    debug_info* debug;
-#endif
-
     void set_start_theta(F32 theta)
     {
         start_zone.theta = theta;

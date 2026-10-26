@@ -4,7 +4,6 @@
 #include "xGlobals.h"
 #include "xSndMgr.h"
 #include "zBrainTypes.h"
-#include "zMiniGameManager.h"
 
 struct zGlobalSettings
 {
@@ -14,9 +13,6 @@ struct zGlobalSettings
     F32 DamageInvincibility;
     F32 Gravity;
     U8 AttractModeDuringGameplay;
-#if DEBUG || RELEASE
-    U32 AccelScripts;
-#endif
     F32 CameraFOV;
 };
 
@@ -39,6 +35,7 @@ enum zGlobalDemoType
 struct zAssetPickupTable;
 struct zCutsceneMgr;
 class zEconomics;
+class zMiniGameManager;
 
 struct zGlobals : xGlobals
 {
@@ -68,9 +65,6 @@ struct zGlobals : xGlobals
     zEconomics* economics;
     zMiniGameManager* mgManager;
     bool fmvJustFinished;
-#if DEBUG || RELEASE
-    U32 initialRemyPowerUp[5];
-#endif
 };
 
 extern zGlobals globals;

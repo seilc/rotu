@@ -6,8 +6,6 @@
 #include "zRenderState.h"
 #include "xRenderState.h"
 
-#include "decomp.h"
-
 struct SkyDomeInfo
 {
     xEnt* ent;
@@ -120,5 +118,3 @@ void xSkyDome_Render()
     RwCameraSetFarClipPlane(cam, far_clip);
     RwCameraBeginUpdateWrapper(cam);
 }
-
-DECOMP_FORCEACTIVE("xSkyDome_EntityIsSkyDome(ent)")

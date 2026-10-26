@@ -52,14 +52,6 @@ public:
     virtual void ProjectileCollisionOff();
     virtual void PastUpdateDistCleanup();
     virtual void VisibilityCullCleanup();
-
-#if DEBUG || RELEASE
-    virtual void ForceEnterDeathState();
-#endif
-
-#if DEBUG || RELEASE
-    U8 npc_selection;
-#endif
 };
 
 }

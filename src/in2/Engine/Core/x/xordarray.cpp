@@ -135,20 +135,6 @@ void XOrdSort(st_XORDEREDARRAY* array, XOrdCompareCallback test)
 }
 
 DECOMP_FORCEACTIVE(
-    "idx>=0",
-    "idx<array->cnt",
-    "XOrdArray: InsIdx exceeds array size\n",
-    "array->cnt <= array->max",
-    "i!=0",
-    "index >= 0",
-    "index < array->max",
-    "elt == array->list[index]",
     DEBUG ? "%s(%d) : (XOrdRemove failed to locate element) in '%s'\n" : 0,
-    DEBUG ? "%s(%d) : (Src:Tgt lists sizes differ ... proceeding anyway) in '%s'\n" : 0,
-    "((src->cnt-1) < tgt->max)",
-    "Tgt list can't hold src",
-    "(!(tgt->cnt))",
-    "Tgt list not empty ... just warning ... proceeding",
-    "src != tgt",
-    "XOrdLocate: Failed to find first match\n"
+    DEBUG ? "%s(%d) : (Src:Tgt lists sizes differ ... proceeding anyway) in '%s'\n" : 0
 )

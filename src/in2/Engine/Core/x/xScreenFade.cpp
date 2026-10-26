@@ -67,13 +67,6 @@ void xScreenFade::StartFade()
 
 void xScreenFade::update(F32 seconds)
 {
-#if DEBUG || RELEASE
-    if (xglobals->ForceCutscene) {
-        state = eScreenFadeStateOff;
-        return;
-    }
-#endif
-
     if (zGameIsPaused()) return;
     if (state == eScreenFadeStateOff) return;
 

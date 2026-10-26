@@ -3,8 +3,6 @@
 #include "xDebug.h"
 #include "xMemMgr.h"
 
-#include "decomp.h"
-
 #include <rwcore.h>
 
 void xIMLock(xIMLockContext& context, xIMFormat format, S32 vertCount)
@@ -93,16 +91,6 @@ void xIMLock(xIMLockContext& context, xIMFormat format, S32 vertCount, const xIM
     context.format = format;
 }
 // END RESTORED
-
-DECOMP_FORCEACTIVE(
-    "(params1.cpos != 0) && (((int)params1.cpos & 15) == 0)",
-    "(params1.cuv != 0) && (((int)params1.cuv & 15) == 0)",
-    "(params1.ccolor != 0) && (((int)params1.ccolor & 15) == 0)",
-    "(params2.cpos != 0) && (((int)params2.cpos & 15) == 0)",
-    "(params2.cuv != 0) && (((int)params2.cuv & 15) == 0)",
-    "(params2.ccolor != 0) && (((int)params2.ccolor & 15) == 0)",
-    "((U32)data_buffer - (U32)context1.data) == (alloc_qwords*16)"
-)
 
 void xIMUnlock(xIMLockContext& context)
 {

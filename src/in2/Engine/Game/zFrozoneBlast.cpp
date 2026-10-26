@@ -700,32 +700,32 @@ void zFrozoneBlast::cinfxAnimate(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic
 {
     const cinfx_spray_context* context = (const cinfx_spray_context*)fxrec->input.fxparm;
 
-    const xMat4x3* bone_mat = (const xMat4x3*)&animMat[fxrec->index.idx_bone];
+    const xMat4x3* r4 = (const xMat4x3*)&animMat[fxrec->index.idx_bone];
 
-    xMat4x3 mat;
+    xMat4x3 r1_90;
     if (fxrec->index.idx_bone == 0) {
-        mat = *(const xMat4x3*)animMat;
+        r1_90 = *(const xMat4x3*)animMat;
     } else {
-        xMat4x3Mul(&mat, bone_mat, (const xMat4x3*)animMat);
+        xMat4x3Mul(&r1_90, r4, (const xMat4x3*)animMat);
     }
 
-    xRay3 ray;
-    xMat4x3ToWorld(&ray.origin, &mat, &fxrec->basic.pos_A[0]);
+    xRay3 r1_60;
+    xMat4x3ToWorld(&r1_60.origin, &r1_90, &fxrec->basic.pos_A[0]);
 
-    xVec3 down = { 0.0f, -1.0f, 0.0f };
-    xMat3x3 rot;
-    xMat3x3Euler(&rot, &fxrec->basic.pos_A[1]);
-    xMat3x3RMulVec(&ray.dir, &rot, &down);
-    xMat3x3RMulVec(&ray.dir, &mat, &ray.dir);
-    ray.max_t = context->length;
+    xVec3 r1_1C = { 0.0f, -1.0f, 0.0f };
+    xMat3x3 r1_30;
+    xMat3x3Euler(&r1_30, &fxrec->basic.pos_A[1]);
+    xMat3x3RMulVec(&r1_60.dir, &r1_30, &r1_1C);
+    xMat3x3RMulVec(&r1_60.dir, &r1_90, &r1_60.dir);
+    r1_60.max_t = context->length;
 
-    blastEffect._UpdateStream(fxrec->fxdata.streakdata.streakID, &ray, context->collide);
+    blastEffect._UpdateStream(fxrec->fxdata.streakdata.streakID, &r1_60, context->collide);
 
     if (context->collide) {
-        xVec3 hit;
-        hit.AddScale(ray.origin, ray.dir, context->length);
-        ray.dir.negate();
-        blastEffect._CollisionSplash(&hit, &ray.dir, 1.0f / 30.0f);
+        xVec3 r1_10;
+        r1_10.AddScale(r1_60.origin, r1_60.dir, context->length);
+        r1_60.dir.negate();
+        blastEffect._CollisionSplash(&r1_10, &r1_60.dir, 1.0f / 30.0f);
     }
 }
 

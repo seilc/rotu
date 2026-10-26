@@ -150,19 +150,6 @@ public:
 private:
     S32 group_flags;
     xCamBlend* blender;
-
-#if DEBUG || RELEASE
-public:
-    struct
-    {
-        S32 flags;
-        xColor color[3];
-    } debug;
-
-    virtual void debug_render();
-    virtual void debug_mode_draw();
-    virtual void add_tweaks(const char* prefix);
-#endif
 };
 
 struct xCamGroup

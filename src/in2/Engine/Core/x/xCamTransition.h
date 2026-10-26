@@ -20,10 +20,6 @@ public:
     void Init(const xCamTransitionAsset& asset);
     void Init(zEntTrigger& theVolume);
 
-#if DEBUG || RELEASE
-    void Reset();
-#endif
-
     static void Init(xBase& data, xDynAsset& asset, size_t);
     static void AddTriggerTransition(zEntTrigger& theVolume);
     F32 BlendTime() const;
@@ -53,10 +49,6 @@ public:
     virtual bool DidComplete();
     F32 CurveIntersectPlane(const xVec3& planePoint, F32& u, F32 guess);
 
-#if DEBUG || RELEASE
-    void DebugRender();
-#endif
-
 protected:
     xSpringyF32 mBias;
     F32 mLastU;
@@ -69,9 +61,6 @@ protected:
     S32 mReversed;
     S32 mDirection;
     bool mIsActive;
-#if DEBUG || RELEASE
-    F32 mRenderIncU;
-#endif
 };
 
 void zCamTransition_EventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*, U32);

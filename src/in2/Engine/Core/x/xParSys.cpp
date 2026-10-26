@@ -2,7 +2,6 @@
 
 #include "iParMgr.h"
 #include "xCam.h"
-#include "xDebugTweak.h"
 #include "xFXHighDynamicRange.h"
 #include "xGlobals.h"
 #include "xMemMgr.h"
@@ -11,8 +10,6 @@
 #include "zEvent.h"
 #include "zParSys.h"
 #include "zScene.h"
-
-#include "decomp.h"
 
 #include <string.h>
 
@@ -47,11 +44,6 @@ static const S32 sBlendTable[] = {
 
 static ptank_render_mode_enum ptank_render_mode = PTANK_RENDER_ALL;
 
-#if DEBUG || RELEASE
-static bool ptank_render_mode_registered = false;
-static const char* ptank_render_mode_labels[3] = { "Default", "None", "All" };
-#endif
-
 static xVec3 par_offset_right;
 static xVec3 par_offset_up;
 
@@ -67,29 +59,8 @@ static xParSysInfo sParSysInfo[] = {
     { eParSysRenderFuncInvStreak, iParMgrRenderParSys_InvStreak },
 };
 
-DECOMP_FORCEACTIVE(
-    "xPTankPool.h",
-    "ptank != 0",
-    "%s",
-    "used <= BLOCK_SIZE"
-)
-
 inline bool using_ptank_render(const xParSysAsset& sys)
 {
-#if DEBUG || RELEASE
-    if (!ptank_render_mode_registered) {
-        ptank_render_mode_registered = 1;
-        xTWEAKSELECT(
-            "Particle Emitters|\1Debug|PTank Render Mode",
-            (U32*)&ptank_render_mode, ptank_render_mode_labels,
-            NULL,
-            3,
-            NULL, 
-            NULL,
-            0);
-    }
-#endif
-
     return ptank_render_mode == PTANK_RENDER_ALL ||
         (ptank_render_mode == PTANK_RENDER_DEFAULT && (sys.parFlags & 0x80));
 }
@@ -233,17 +204,12 @@ void xParSysInit(xBase* b, xParSysAsset* tasset)
     t->cmdCount = tasset->cmdCount;
 
     U32 size, i;
-#if DEBUG || RELEASE
-    size = (t->cmdCount <= 8) ? 8 : t->cmdCount;
-    t->cmd = (xParCmd*)xMEMALLOC_L(size * sizeof(xParCmd), 0, eMemMgrTag_Particle, 0, 340);
-#else
     size = t->cmdCount;
     if (size > 0) {
         t->cmd = (xParCmd*)xMEMALLOC_L(size * sizeof(xParCmd), 0, eMemMgrTag_Particle, 0, 0);
     } else {
         t->cmd = NULL;
     }
-#endif
     U8* cmdPtr = (U8*)tasset + sizeof(xParSysAsset);
     for (i = 0; i < t->cmdCount; i++) {
         t->cmd[i].flag = 0x1;
@@ -251,27 +217,6 @@ void xParSysInit(xBase* b, xParSysAsset* tasset)
         cmdPtr += xParCmdGetSize(((xParCmdAsset*)cmdPtr)->type);
     }
 
-#if DEBUG || RELEASE
-    {
-        U32 size, i;
-        size = (t->cmdCount <= 8) ? 8 : t->cmdCount;
-        t->cmd_buffer = (xParCmdAny*)xMEMALLOC_L(size * sizeof(xParCmdAny), 0, eMemMgrTag_Particle, 0, 373);
-        for (i = 0; i < t->cmdCount; i++) {
-            memcpy(&t->cmd_buffer[i], t->cmd[i].tasset, xParCmdGetSize(t->cmd[i].tasset->type));
-            t->cmd[i].tasset = (xParCmdAsset*)&t->cmd_buffer[i];
-        }
-    }
-
-    for (U32 i = t->cmdCount; i < 8; i++) {
-        t->cmd[i].tasset = (xParCmdAsset*)&t->cmd_buffer[i];
-
-        xParCmdMove& cmd = *(xParCmdMove*)t->cmd[i].tasset;
-        cmd.type = 0;
-        cmd.enabled = true;
-        cmd.mode = 0;
-        cmd.dir = 0.0f;
-    }
-#endif
     
     t->group = (xParGroup*)xMEMALLOC_L(sizeof(xParGroup), 0, eMemMgrTag_Particle, 0, 395);
 
@@ -339,8 +284,6 @@ void xParSysExit(xParSys* t)
         xParGroupUnregister(t->group);
     }
 }
-
-DECOMP_FORCEACTIVE("ent", "s")
 
 void xParSysEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*, U32)
 {
@@ -453,14 +396,3 @@ void xParGroupUpdate(xParSys* s, xParGroup* g, F32 dt)
         }
     }
 }
-
-#if DEBUG
-DECOMP_FORCEACTIVE(
-    "SHOW: ALL\n",
-    "SHOW: PAR COUNT\n",
-    "SHOW: ???\n",
-    "b",
-    "(%s) par\n",
-    "(%s) par %d\n"
-)
-#endif

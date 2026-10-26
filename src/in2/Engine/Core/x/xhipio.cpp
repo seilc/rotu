@@ -3,8 +3,6 @@
 #include "xbinio.h"
 #include "xDebug.h"
 
-#include "decomp.h"
-
 #include <string.h>
 
 #define MAX_LOADINST 8
@@ -467,10 +465,6 @@ static S32 HIPLReadFloats(st_HIPLOADDATA* lddata, F32* data, S32 cnt)
 
     return got / 4;
 }
-
-#if DEBUG
-DECOMP_FORCEACTIVE("%s(%d) : (lddata->top >= 0) in '%s'\n")
-#endif
 
 static S32 HIPLReadString(st_HIPLOADDATA* lddata, char* buf)
 {

@@ -8,8 +8,6 @@
 #include "zScene.h"
 #include "xGlobals.h"
 
-#include "decomp.h"
-
 static void xSoundFXPlay(xSoundFX* t);
 static void xSoundFXStop(xSoundFX* t);
 
@@ -71,8 +69,6 @@ void xSoundFXInit(xSoundFX* t, xSoundFXAsset* asset)
 
     xSoundFXSetSoundFXPlaying(t->asset, false);
 }
-
-DECOMP_FORCEACTIVE("ent", "s")
 
 void xSoundFXReset(xSoundFX* ent)
 {

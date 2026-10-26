@@ -3,7 +3,6 @@
 #include "zEvent.h"
 #include "xTRC.h"
 #include "xRumbleManager.h"
-#include "xDebugTweak.h"
 #include "xGlobals.h"
 #include "zScene.h"
 #include "zPlayer.h"
@@ -47,20 +46,6 @@ void emitter_EventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*,
 }
 
 namespace xRumble {
-
-#if DEBUG || RELEASE
-void effectAsset::AddTweaks(const char* prefix)
-{
-    xAUTOTWEAKRANGE(prefix, "time", &time, 0, 100, NULL, NULL, 0, false);
-    xAUTOTWEAKRANGE(prefix, "intensity", &intensity, 0, 1, NULL, NULL, 0, false);
-    xAUTOTWEAKRANGE(prefix, "priority", &priority, 0, 255, NULL, NULL, 0, false);
-    xAUTOTWEAKRANGE(prefix, "param1", &param1, 0, 255, NULL, NULL, 0, false);
-    xAUTOTWEAKRANGE(prefix, "Screen Shake|magnitude", &shakeMagnitude, 0, 100, NULL, NULL, 0, false);
-    xAUTOTWEAKRANGE(prefix, "Screen Shake|cycle max", &shakeCycleMax, 0, 100, NULL, NULL, 0, false);
-    xAUTOTWEAKRANGE(prefix, "Screen Shake|Rot mag", &shakeRotationalMagnitude, 0, 100, NULL, NULL, 0, false);
-    xAUTOTWEAKBOOL(prefix, "Screen Shake|shake Y axis", &shakeY, NULL, NULL, 0, false);
-}
-#endif
 
 F32 effectAsset::GetIntensity(F32 currentTime, F32 totalTime) const
 {
@@ -116,21 +101,7 @@ effect::effect(effectAsset* pAsset)
     if (linkCount) {
         link = (xLinkAsset*)((U8*)pAsset + sizeof(effectAsset));
     }
-
-#if DEBUG || RELEASE
-    AddTweaks();
-#endif
 }
-
-#if DEBUG || RELEASE
-void effect::AddTweaks()
-{
-    char prefix[256];
-    sprintf(prefix, "FX|Rumble|Effect|%s|", xSceneID2Name(xglobals->sceneCur, id));
-    
-    pEffectAsset->AddTweaks(prefix);
-}
-#endif
 
 void boxEmitter::Init(xBase& data, xDynAsset& asset, size_t asset_size)
 {

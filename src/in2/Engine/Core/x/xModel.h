@@ -88,11 +88,6 @@ void xModelRender(xModelInstance* modelInst);
 void xModelSetLightKit(xModelInstance* minst, xLightKit* lightKit, F32 transitionTime);
 RpAtomic* xModelFindAtomic(U32 id, U32* actual_id);
 
-#if DEBUG || RELEASE
-bool xModelRenderLogEnabled();
-void xModelRenderLogSetEntity(xEnt* ent);
-#endif
-
 inline xMat4x3* xModelGetFrame(xModelInstance* model)
 {
     xASSERT_L(855, model);

@@ -6,22 +6,8 @@
 #include "zGameState.h"
 #include "xGlobals.h"
 #include "xShadow.h"
-#include "xDebugTweak.h"
-
-#include "decomp.h"
 
 #include <string.h>
-
-DECOMP_FORCEACTIVE(
-    "FX|Fog|Type",
-    "FX|Fog|Start",
-    "FX|Fog|Stop",
-    "FX|Fog|Density",
-    "FX|Fog|Far Clip"
-)
-#if DEBUG || RELEASE
-DECOMP_FORCEACTIVE((void(*)(const char*, U32*, U32, U32, const tweak_callback*, void*, U32))xDebugAddTweak)
-#endif
 
 #undef RwCameraCreate
 #undef RwCameraBeginUpdate
@@ -49,15 +35,9 @@ static RwCamera* sMainGameCamera = NULL;
 
 namespace {
 
-F32 tweakFarClip = 0.0f;
-
 inline F32 iCameraFogFarClip()
 {
-#if DEBUG || RELEASE
-    return tweakFarClip > 0.0f ? tweakFarClip : xglobals->fog.stop;
-#else
     return xglobals->fog.stop;
-#endif
 }
 
 }
@@ -76,6 +56,13 @@ void iCameraSetOrthoProjection(RwCamera* cam, bool ortho)
         RwCameraBeginUpdateWrapper(camera);
     }
 }
+
+// RESTORED: from TSSM GC
+void iCameraClear(RwCamera* camera, xColor color)
+{
+    RwCameraClear(camera, (RwRGBA*)&color, rwCAMERACLEARIMAGE | rwCAMERACLEARZ | rwCAMERACLEARSTENCIL);
+}
+// END RESTORED
 
 RwCamera* iCameraCreate(S32 width, S32 height, S32 mainGameCamera)
 {
@@ -162,33 +149,10 @@ void iCameraDestroy(RwCamera* camera)
     }
 }
 
-#if DEBUG || RELEASE
-F32 iCameraClearTime = 0.0f;
-F32 iCameraClearTimeLast = 0.0f;
-#endif
-
-namespace {
-
-RwRGBA hotPink = { 128, 0, 128, 255 };
-
-}
-
 void iCameraBegin(RwCamera* cam, S32 clear)
 {
     xASSERT_L(277, cam);
 
-#if DEBUG || RELEASE
-    iTime timeA = iTimeGet();
-
-    if (zGameGetOstrich() != eGameOstrich_PlayingMovie && !xglobals->dumpCutscene) {
-        RwCameraClear(cam, &hotPink, rwCAMERACLEARIMAGE | rwCAMERACLEARZ | rwCAMERACLEARSTENCIL);
-    }
-
-    iTime timeB = iTimeGet();
-
-    iCameraClearTimeLast = iCameraClearTime;
-    iCameraClearTime = iTimeDiffSec(timeA, timeB);
-#else
     if (clear) {
         if (xglobals->fog.type != rwFOGTYPENAFOGTYPE) {
             RwCameraClear(cam, &xglobals->fog.bgcolor, rwCAMERACLEARIMAGE | rwCAMERACLEARZ | rwCAMERACLEARSTENCIL);
@@ -196,7 +160,6 @@ void iCameraBegin(RwCamera* cam, S32 clear)
             RwCameraClear(cam, NULL, rwCAMERACLEARZ);
         }
     }
-#endif
 
     RwCameraSetNearClipPlane(cam, sCameraNearClip);
     RwCameraBeginUpdateWrapper(cam);
@@ -342,14 +305,8 @@ void iCameraUpdateFog(RwCamera*, iTime t)
     F32 a;
     RwRGBA ca, cb, color;
 
-#if DEBUG
-    if (xglobals->fog.type == rwFOGTYPENAFOGTYPE || xglobals->fog_t0 == 0) {
-        return;
-    }
-#else
     if (xglobals->fog.type == rwFOGTYPENAFOGTYPE) return;
     if (xglobals->fog_t0 == 0) return;
-#endif
 
     t = iTimeGet();
 

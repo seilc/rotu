@@ -3,8 +3,6 @@
 #include "iAsync.h"
 #include "iMemMgr.h"
 #include "xDebug.h"
-#include "xDebugGraph.h"
-#include "xDebugTweak.h"
 #include "xFXHighDynamicRange.h"
 #include "xGlobals.h"
 #include "xMemMgr.h"
@@ -12,9 +10,6 @@
 #include "zRenderState.h"
 #include "zScene.h"
 
-#include "decomp.h"
-
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -63,10 +58,6 @@ namespace {
         { MAX_PTANKS_POS_COLOR_SIZE_ROT, rpPTANKDFLAGCNSVTX2TEXCOORDS | rpPTANKDFLAG2DROTATE | rpPTANKDFLAGSIZE | rpPTANKDFLAGCOLOR | rpPTANKDFLAGPOSITION },
         { MAX_PTANKS_POS_COLOR_SIZE_ROT_UV2, rpPTANKDFLAGVTX2TEXCOORDS | rpPTANKDFLAG2DROTATE | rpPTANKDFLAGSIZE | rpPTANKDFLAGCOLOR | rpPTANKDFLAGPOSITION },
     };
-
-#if DEBUG || RELEASE
-    S32 blocks_used[MAX_PGT];
-#endif
 
     void sort_buckets(group_data& group)
     {
@@ -280,15 +271,6 @@ void xPTankPoolSceneEnter()
         S32 size = create_ptanks(*it, want);
         xASSERT_MSG_L(532, (want == size), "Ran out of memory pre-allocating ptank pools.  This is not fatal, but it's bad.");
     }
-
-#if DEBUG || RELEASE
-    const char* prefix = "FX|PTank|";
-    for (S32 i = 0; i < MAX_PGT; i++) {
-        char name[128];
-        sprintf(name, "blocks_used %d", i);
-        xAUTOTWEAKRANGE(prefix, name, &blocks_used[i], 0, 0, NULL, NULL, 0, false);
-    }
-#endif
 }
 
 void xPTankPoolSceneExit()
@@ -300,23 +282,8 @@ void xPTankPoolSceneExit()
             destroy_ptank(p->ptank);
 }
 
-DECOMP_FORCEACTIVE("false")
-
 void xPTankPoolRender()
 {
-#if DEBUG || RELEASE
-    const char* prefix = "FX|PTank|";
-    for (S32 i = 0; i < MAX_PGT; i++) {
-        char name[128];
-        sprintf(name, "FX|PTank|graph|blocks_used %d|", i);
-        xDebugGraphAdd(name, groups[i].used);
-    }
-
-    for (S32 i = 0; i < MAX_PGT; i++) {
-        blocks_used[i] = groups[i].used;
-    }
-#endif
-
     xASSERT_L(594, inited);
     zRenderState(eRenderStateXPTankPool);
     xFXHighDynamicRangeBrighten(true, false);

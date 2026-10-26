@@ -1,16 +1,11 @@
 #include "xEnv.h"
 
 #include "xDebug.h"
-#include "xDebugTweak.h"
 #include "xstransvc.h"
 
 #include <stdio.h>
 
 xEnv* gCurXEnv;
-
-#if DEBUG || RELEASE
-bool debugNoJspsRendering;
-#endif
 
 void xEnvLoadJSPList(xEnv* env, S32 dataType)
 {
@@ -18,10 +13,6 @@ void xEnvLoadJSPList(xEnv* env, S32 dataType)
     void* buf;
     
     xVERBOSE("... entering xEnvLoadJSPList ...\n");
-
-#if DEBUG || RELEASE
-    xTWEAKREMOVE("Debugging Options|JSP Visibility");
-#endif
 
     if (dataType == 0) {
         env->geom = &env->ienv;

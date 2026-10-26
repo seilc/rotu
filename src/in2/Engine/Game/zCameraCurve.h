@@ -21,10 +21,6 @@ private:
     F32 mRenderIncU[2];
     zCamPoolBase* mCamPool;
     const xCam* mCamera;
-
-#if DEBUG || RELEASE
-    S32 mUsageLevel;
-#endif
 };
 
 #endif

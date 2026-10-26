@@ -15,11 +15,6 @@ public:
     void Stop();
     void Reset();
 
-#if DEBUG || RELEASE
-    void AddTweaks(const char* base);
-#endif
-
-    bool IsStarted() const { return started; }
     bool IsEnabled() const { return (baseFlags & k_XBASE_IS_ENABLED) && started; }
     const xFunctionGeneratorAsset* GetAsset() const { return asset; }
     
@@ -28,10 +23,6 @@ private:
     bool started;
     bool currentState;
     bool override;
-
-#if DEBUG || RELEASE
-    const char* graphName;
-#endif
 
     F32 currentCycleWidth;
     F32 currentPulseWidth;

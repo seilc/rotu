@@ -2,7 +2,6 @@
 #define CONTAINERS_H
 
 #include "xDebug.h"
-#include "xDebugTweak.h"
 #include "xMemMgr.h"
 
 #include <string.h>
@@ -107,21 +106,6 @@ public:
         xASSERT_L(174, _buffer != 0);
         clear();
     }
-
-#if DEBUG || RELEASE
-    void tweak_init(size_t size)
-    {
-        xASSERT_L(183, size > 0);
-        size_t power = 0;
-        size++;
-        while (size > 1) { size >>= 1; power++; }
-        _max_size = (1 << power);
-        _max_size_mask = _max_size - 1;
-        _buffer = (T*)xDebugTweak_StaticAlloc(_max_size * sizeof(T));
-        xASSERT_L(190, _buffer != 0);
-        clear();
-    }
-#endif
 
     size_t size() const { return _size; }
     size_t max_size() const { return _max_size - 1; }

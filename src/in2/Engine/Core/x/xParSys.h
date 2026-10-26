@@ -18,9 +18,6 @@ struct xParSys : xBase
     xParGroup* group;
     bool visible;
     RwTexture* txtr_particle;
-#if DEBUG || RELEASE
-    xParCmdAny* cmd_buffer;
-#endif
 };
 
 enum eParSysRenderFunc

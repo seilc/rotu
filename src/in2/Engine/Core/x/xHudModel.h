@@ -28,10 +28,6 @@ public:
     virtual void update(F32 dt);
     virtual void set_params(xModelInstance*& model, render_context& rc, F32 xs, F32 ys, F32 lx, F32 ly);
     virtual void render();
-
-#if DEBUG || RELEASE
-    virtual const char* category() { return "Model"; }
-#endif
 };
 
 struct model_widget::widget_chunk : xBase

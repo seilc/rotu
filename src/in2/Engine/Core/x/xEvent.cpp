@@ -81,14 +81,9 @@ void zEntEvent(xBase* from, U32 fromEvent, xBase* to, U32 toEvent, const F32* to
     reentrantCount++;
     xASSERT_FMT_L(134, reentrantCount < MAX_REENTRANT_COUNT, "Circular links detected!");
 
-    zEventDebugLog(from, fromEvent, to, toEvent, toParam);
-
     if (from && to && from == to && fromEvent == toEvent) {
-        xEventDebugLogDump();
         xASSERT_L(150, fromEvent != toEvent);
     }
-
-    xOutInfo("EVENT", "zEntEvent: %s\n", zEventLogBuf[19]);
 #endif
 
     if (to->baseType != eBaseTypeNPC) {
@@ -147,20 +142,5 @@ void zEntEvent(xBase* from, U32 fromEvent, xBase* to, U32 toEvent, const F32* to
     
 #if DEBUG || RELEASE
     reentrantCount--;
-#endif
-}
-
-void xEventDebugLogDump()
-{
-#if DEBUG || RELEASE
-    iprintf("========================================== EVENT LOG DUMP [BEGIN]\n");
-
-    for (S32 i = 0; i < 20; i++) {
-        if (zEventLogBuf[i]) {
-            iprintf(zEventLogBuf[i]);
-        }
-    }
-
-    iprintf("========================================== EVENT LOG DUMP [END]\n");
 #endif
 }

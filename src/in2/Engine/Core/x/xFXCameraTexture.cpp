@@ -216,7 +216,6 @@ void xFXCameraTexture::render_background()
     xMEMPOPTEMP(vert);
 }
 
-DECOMP_FORCEACTIVE("oldcam != cam")
 DECOMP_FORCEFLOAT(0.5f)
 
 void xFXCameraTexture::setup_subview(RwCamera* src_cam, const xFRect& src_rect, const xFRect& dst_rect)

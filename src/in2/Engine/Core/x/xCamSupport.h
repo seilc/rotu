@@ -16,10 +16,6 @@ public:
 
     config cfg;
 
-#if DEBUG || RELEASE
-    S32 debug_flags;
-#endif
-
     void refresh_dist();
 
     F32 total_distance()
@@ -38,12 +34,6 @@ public:
     }
 
 private:
-#if DEBUG || RELEASE
-    struct debug_context;
-
-    debug_context* debug;
-#endif
-
     struct path_node
     {
         xVec3 loc;

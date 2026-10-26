@@ -46,10 +46,6 @@ struct PKRAssetTOCInfo
     U32 plus_offset;
     U32 size;
     void* mempos;
-#if DEBUG || RELEASE
-    const char* assetname;
-    const char* filename;
-#endif
 };
 
 struct st_HIPLOADDATA;
@@ -74,15 +70,6 @@ struct PKRReadFuncs
     S32(*PkgHasAsset)(st_PACKER_READ_DATA*, U32);
     U32(*PkgTimeStamp)(st_PACKER_READ_DATA*);
     void(*PkgDisconnect)(st_PACKER_READ_DATA*);
-#if DEBUG
-    void(*dbgrpt_stats)(st_PACKER_READ_DATA*);
-    void(*dbgrpt_typeInfo)(st_PACKER_READ_DATA*);
-    void(*dbgrpt_typeTally)(st_PACKER_READ_DATA*);
-    void(*dbgrpt_layers)(st_PACKER_READ_DATA*);
-    void(*dbgrpt_assets)(st_PACKER_READ_DATA*);
-    void(*dbgrpt_kosher)(st_PACKER_READ_DATA*);
-    void(*dbgrpt_loadtimes)(st_PACKER_READ_DATA*, S32);
-#endif
 };
 
 struct st_PACKER_ATOC_NODE
@@ -104,10 +91,6 @@ struct st_PACKER_ATOC_NODE
     st_HIPLOADDATA* ownpkg;
     st_PACKER_READ_DATA* ownpr;
     char name[32];
-#if DEBUG
-    char fullname[128];
-    S64 dbg_loadtime[4];
-#endif
 };
 
 struct st_PACKER_READ_DATA
@@ -132,12 +115,6 @@ struct st_PACKER_READ_DATA
     st_XORDEREDARRAY typelist[129];
     time_t time_made;
     time_t time_mod;
-#if DEBUG
-    S32 dbg_typlodtym_done;
-    F32 dbg_typlodtym[130];
-    F32 dbg_typxformtym[130];
-    S64 dbg_readtime[4];
-#endif
 };
 
 enum en_pkrfindmyass
@@ -153,16 +130,11 @@ PKRReadFuncs* PKRGetReadFuncs(S32 apiver);
 S32 PKRStartup();
 S32 PKRShutdown();
 S32 PKRLoadStep(S32 block);
-st_PACKER_ATOC_NODE* PKR_FindAssetNode(st_PACKER_READ_DATA* pr, U32 aid, S32* assetsize);
-U32 PKRAssetIDFromInst(void* asset_inst);
-#if DEBUG || RELEASE
-en_pkrfindmyass PKRFindMyAsset(st_PACKER_READ_DATA* pr, PKRAssetTOCInfo* tocinfo, const void* ptr_raw);
-#else
+U32 PKRAssetIDFromInst(void* asset_inst); // inferred from BFBB GC, TSSM GC, Rat GC
 inline en_pkrfindmyass PKRFindMyAsset(st_PACKER_READ_DATA*, PKRAssetTOCInfo*, const void*)
 {
     return PKR_FIND_FAILED;
 }
-#endif
 
 void* PKR_getmem(U32 id, S32 amount, U32 aid, S32 align, U32 memtag);
 void PKR_relmem(U32 id, S32 blksize, void* memptr, U32 aid, S32 isTemp);

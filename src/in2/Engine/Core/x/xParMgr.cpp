@@ -5,8 +5,6 @@
 #include "xDebug.h"
 #include "xOutputMgr.h"
 
-#include "decomp.h"
-
 static U32 sFrameCount;
 static S32 sParMgrInit;
 
@@ -24,8 +22,6 @@ void xParMgrInit()
         iParMgrInit();
     }
 }
-
-DECOMP_FORCEACTIVE("numFrames >= 0", "%s")
 
 void xParMgrKillAllParticles()
 {

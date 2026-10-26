@@ -10,9 +10,6 @@ typedef struct _xCounter : xBase
     S16 count;
     U8 state;
     U8 pad;
-#if DEBUG || RELEASE
-    char stats[72];
-#endif
 } xCounter;
 
 void xCounterInit();

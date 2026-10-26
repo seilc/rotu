@@ -6,26 +6,10 @@
 #include "xModel.h"
 #include "xSpacePartitionTree.h"
 
-#include "decomp.h"
-
 #include <string.h>
 
 xLightKitBlendInfo gLastLightKit;
 
-DECOMP_FORCEACTIVE(
-    "\n\r",
-    "intensity=",
-    "color=",
-    "xLightKit.cpp",
-    "lightKit",
-    "%s",
-    "%f",
-    "%f,%f,%f",
-    "matrix=",
-    "%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f",
-    "radius=",
-    "angle="
-)
 xLightKit* xLightKit_Prepare(void* data)
 {
     iAsyncLockRWSentry rw_sentry;
