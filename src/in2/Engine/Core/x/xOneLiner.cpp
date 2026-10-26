@@ -219,7 +219,7 @@ bool xOneLiner::PlaySoundDelayed(F32 delay)
     return false;
 }
 
-inline F32 xOneLiner::CalcTimeToWait() const
+F32 xOneLiner::CalcTimeToWait() const
 {
     return mCycleTime;
 }
