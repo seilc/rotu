@@ -519,7 +519,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xHudUnitMeter.cpp"),
             Object(Matching, "in2/Engine/Core/x/xIni.cpp"),
             Object(Matching, "in2/Engine/Core/x/xJaw.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xJSP.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xJSP.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xLight.cpp"),
             Object(Matching, "in2/Engine/Core/x/xLightKit.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xMath.cpp"),

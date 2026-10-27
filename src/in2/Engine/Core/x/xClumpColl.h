@@ -41,6 +41,13 @@ struct xClumpCollBSPTree
     xClumpCollBSPTriangle* triangles;
 };
 
+struct nodeInfo
+{
+    U32 type;
+    U32 index;
+};
+
+xClumpCollBSPTree* xClumpColl_StaticBufferInit(void* data, U32);
 xClumpCollBSPTree* xClumpColl_ForAllIntersections(xClumpCollBSPTree* tree, RpIntersection* intersection, RpIntersectionCallBackWorldTriangle callBack, void* data);
 
 #endif
