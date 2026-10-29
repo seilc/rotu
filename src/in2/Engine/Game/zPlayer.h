@@ -43,6 +43,11 @@ public:
     S32 index;
     
 public:
+    zPad* GetPad()
+    {
+        return pad;
+    }
+
     virtual void Init(xEntAsset* asset);
     virtual void SceneSetup();
     virtual void SceneEnter(zScene*);
@@ -107,10 +112,11 @@ public:
     virtual bool IsInteractioning();
 
     bool CanSayOneLiner();
+    bool IsUsingLeftHUD();
 
     bool Get_humanPlayer() const
     {
-        return (zPlayerFlags >> 18) & 0x1;
+        return (zPlayerFlags >> 19) & 0x1;
     }
 
     bool Get_floor_collision() const

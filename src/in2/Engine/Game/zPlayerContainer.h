@@ -22,6 +22,16 @@ public:
         return 2;
     }
 
+    zPlayer* GetMrI()
+    {
+        return playerArray[0];
+    }
+
+    zPlayer* GetFrozone()
+    {
+        return playerArray[1];
+    }
+
     bool IsPlayer(xEnt* ptr);
 
 private:

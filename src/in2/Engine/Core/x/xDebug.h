@@ -132,6 +132,8 @@ do {                                                                            
 
 #define xFAIL() xFAIL_L(__LINE__)
 #define xFAIL_FMT(...) xFAIL_FMT_L(__LINE__, __VA_ARGS__)
+#define xFAIL_MSG_L(line, msg) xASSERT_FMT_L(line, (0), msg)
+#define xFAIL_MSG(msg) xFAIL_MSG_L(__LINE__, msg)
 #define xFAIL_ONCE(...) xFAIL_ONCE_L(__LINE__, __VA_ARGS__)
 
 #define _xFAIL_RETURN_IF(line, cond, condstr, retval)                                             \

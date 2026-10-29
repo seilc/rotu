@@ -18,4 +18,7 @@ public:
     virtual void InitActions();
 };
 
+void zPlayerFROCreatePartAtPort(S32 port);
+S32 zPlayerFROGetLastUsedPad();
+
 #endif

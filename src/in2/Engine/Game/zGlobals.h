@@ -35,13 +35,12 @@ enum zGlobalDemoType
 struct zAssetPickupTable;
 struct zCutsceneMgr;
 class zEconomics;
-class zMiniGameManager;
 
 struct zGlobals : xGlobals
 {
     zGlobalSettings settings;
     zCheckPoint checkPoint;
-    U32 playerTag[9];
+    U32 playerTag[2];
     bool playerLoaded;
     bool invertJoystick;
     F32 timeMultiplier;
@@ -63,7 +62,6 @@ struct zGlobals : xGlobals
     S32 cameraAIFocus;
     eBrainType firstPlayerBrainID;
     zEconomics* economics;
-    zMiniGameManager* mgManager;
     bool fmvJustFinished;
 };
 

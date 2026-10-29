@@ -25,4 +25,7 @@ private:
     U8 unk1330[0x80];
 };
 
+void zPlayerMRICreatePartAtPort(S32 port);
+S32 zPlayerMRIGetLastUsedPad();
+
 #endif
