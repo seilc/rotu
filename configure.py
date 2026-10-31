@@ -508,7 +508,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xFog.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xFont.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xFX.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xGrid.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xGrid.cpp"),
             Object(Matching, "in2/Engine/Core/x/xGroup.cpp"),
             Object(Matching, "in2/Engine/Core/x/xHierarchyBound.cpp"),
             Object(Matching, "in2/Engine/Core/x/xhipio.cpp"),
