@@ -587,7 +587,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xTransient.cpp"),
             Object(Matching, "in2/Engine/Core/x/xTRC.cpp"),
             Object(Matching, "in2/Engine/Core/x/xUpdateCull.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xutil.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xutil.cpp"),
             Object(Matching, "in2/Engine/Core/x/xVec3.cpp"),
             Object(Matching, "in2/Engine/Core/x/xVolume.cpp"),
             Object(NonMatching, "in2/Engine/Core/gc/iAnimSKB.cpp"),
