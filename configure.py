@@ -414,6 +414,7 @@ cflags_in2 = [
     "-DRELEASE=0",
     "-DMASTERDEBUG=0",
     "-DMASTER=1",
+    "-prefix prefix.mch",
     "-opt level=4, peep, space",
     "-sdata 64",
     "-sdata2 64",
@@ -425,6 +426,19 @@ cflags_in2_dbg = [
 ]
 
 config.linker_version = "GC/2.6"
+
+# Game code prefix: include/prefix.pch++, precompiled with the game flags into
+# build/<version>/include/prefix.mch (found through -i build/<version>/include) and passed to
+# every game unit with -prefix (cflags_in2).
+config.precompiled_headers = [
+    {
+        "source": "prefix.pch++",
+        "mw_version": config.linker_version,
+        "cflags": ["-lang=c++", *(f for f in cflags_in2 if f != "-prefix prefix.mch")],
+    }
+]
+# decomp.me contexts read the prefix header itself (scratches can't use the .mch).
+config.context_prefixes = {"prefix.mch": Path("include/prefix.pch++")}
 
 
 # Helper function for Dolphin libraries
