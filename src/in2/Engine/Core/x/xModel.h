@@ -102,4 +102,19 @@ inline xModelInstance* xModelInstanceAlloc(RpAtomic* data, void* object, U16 fla
     return xModelInstanceAllocReuse(data, object, flags, boneIndex, boneRemap, NULL);
 }
 
+inline void xModelSetMaterialAlpha(xModelInstance* modelInst, U8 alpha)
+{
+    iModelSetMaterialAlpha(modelInst->Data, alpha);
+}
+
+inline void xModelMaterialMul(xModelInstance* modelInst, F32 rm, F32 gm, F32 bm)
+{
+    iModelMaterialMul(modelInst->Data, rm, gm, bm);
+}
+
+inline void xModelResetMaterial(xModelInstance* modelInst)
+{
+    iModelResetMaterial(modelInst->Data);
+}
+
 #endif
