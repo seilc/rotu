@@ -721,7 +721,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Core/x/xCollideSweptSphere.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCCommon.cpp"),
             Object(Matching, "in2/Engine/Core/x/xScreenFade.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xCollideSphereBox.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xCollideSphereBox.cpp"),
             Object(NonMatching, "in2/Engine/Game/zReticle.cpp"),
             Object(NonMatching, "in2/Engine/Game/zGrass.cpp"),
             Object(Matching, "in2/Engine/Core/x/xFXCameraTexture.cpp"),
