@@ -522,7 +522,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xJSP.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xLight.cpp"),
             Object(Matching, "in2/Engine/Core/x/xLightKit.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xMath.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xMath.cpp"),
             Object(Matching, "in2/Engine/Core/x/xMath2.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xMath3.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xMemMgr.cpp"),

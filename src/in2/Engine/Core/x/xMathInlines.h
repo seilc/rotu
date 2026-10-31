@@ -32,9 +32,103 @@ inline F32 xsqrt(register F32 x)
     return 100000.0f;
 }
 
+inline F32 xlog(F32 x)
+{
+    return std::logf(x);
+}
+
+inline F32 xexp(F32 x)
+{
+    return std::expf(x);
+}
+
+inline F32 xfmod(F32 x, F32 y)
+{
+    return std::fmodf(x, y);
+}
+
+inline F32 xpow(F32 x, F32 y)
+{
+    return std::powf(x, y);
+}
+
+inline F32 xacos(F32 x)
+{
+    if (x > 1.0f) {
+        x = 1.0f;
+    }
+
+    if (x < -1.0f) {
+        x = -1.0f;
+    }
+
+    return std::acosf(x);
+}
+
+inline F32 xasin(F32 x)
+{
+    if (x > 1.0f) {
+        x = 1.0f;
+    }
+
+    if (x < -1.0f) {
+        x = -1.0f;
+    }
+
+    return std::asinf(x);
+}
+
 inline F32 xatan(F32 x)
 {
     return std::atanf(x);
+}
+
+inline F32 xatan2(F32 y, F32 x)
+{
+    return xAngleClampFast(std::atan2f(y, x));
+}
+
+inline void xsqrtfast(F32& o, register F32 fVal)
+{
+    register F32 fRetVal;
+
+    xASSERT(fVal >= 0.0f);
+
+    if (fVal <= 0.0f)
+        o = 0.0f;
+    else
+        asm {
+            frsqrte fRetVal, fVal
+            fres fRetVal, fRetVal
+        }
+
+    o = fRetVal;
+}
+
+inline void xsinfast(F32& fResult, F32 fAngle)
+{
+    F32 fASqr = fAngle * fAngle;
+    fResult = 0.00761f;
+    fResult *= fASqr;
+    fResult -= 0.16605f;
+    fResult *= fASqr;
+    fResult += 1.0f;
+    fResult *= fAngle;
+}
+
+inline void xmax3fast(F32& o, F32 a, F32 b, F32 c); // inferred from BFBB PS2, Rat MAP
+
+inline F32 xinvsqrt(register F32 fVal)
+{
+    register F32 fRetVal;
+
+    xASSERT(fVal > 0.0f);
+
+    asm {
+        frsqrte fRetVal, fVal
+    }
+
+    return fRetVal;
 }
 
 #undef inline
