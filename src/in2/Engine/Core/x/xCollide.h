@@ -48,6 +48,51 @@ struct xCollis
 #define k_HIT_CALC_HDNG ((U32)(1 << 12))
 #define k_HIT_CALC_TRI ((U32)(1 << 13))
 
+U32 xSphereHitsSphere(const xSphere* a, const xSphere* b, xCollis* coll);
+U32 xSphereHitsBox(const xSphere* a, const xBox* b, xCollis* coll);
+U32 xSphereHitsOBB_nu(const xSphere* s, const xBox* b, const xMat4x3* m, xCollis* coll);
+U32 xBoxHitsSphere(const xBox* a, const xSphere* b, xCollis* coll);
+U32 xObbHitsObb(const xBox* a, const xMat4x3* a_mat, const xBox* b, const xMat4x3* b_mat, xCollis* coll);
+U32 xBoxHitsObb(const xBox* a, const xBox* b, const xMat4x3* mat, xCollis* coll);
 xVec3 xCollisTriHit(const xCollis::tri_data& tri, const xModelInstance& model);
+bool xSphereHitsBox(const xVec3& c, F32 r, const xBox& b);
+bool xOBBHitsOBB(const xBox& a, const xMat4x3& amat, const xBox& b, const xMat4x3& bmat);
+U32 xSphereHitsVCylinder(const xSphere* sph, const xCylinder* cyl, xCollis* coll);
+U32 xCylinderHitsSphere(const xCylinder* cyl, const xSphere* sph, xCollis* coll);
+
+inline bool xSphereHitsSphere(const xVec3& loc1, F32 r1, const xVec3& loc2, F32 r2)
+{
+    F32 dist2 = loc2.Distance2(loc1);
+    F32 max_dist = r1 + r2;
+    return dist2 <= max_dist * max_dist;
+}
+
+inline bool xSphereHitsSphere(const xSphere& o1, const xSphere& o2)
+{
+    return xSphereHitsSphere(o1.center, o1.r, o2.center, o2.r);
+}
+
+inline bool xSphereHitsBox(const xSphere& o, const xBox& b)
+{
+    return xSphereHitsBox(o.center, o.r, b);
+}
+
+inline bool xSphereHitsOBB(const xVec3& c, F32 r, const xBox& b, const xMat4x3& mat)
+{
+    xVec3 lc;
+    xMat4x3ToLocal(&lc, &mat, &c);
+    return xSphereHitsBox(lc, r, b);
+}
+
+inline bool xSphereHitsOBB(const xSphere& o, const xBox& b, const xMat4x3& mat)
+{
+    return xSphereHitsOBB(o.center, o.r, b, mat);
+}
+
+inline bool xBoxHitsBox(const xBox& a, const xBox& b)
+{
+    return a.upper.x >= b.lower.x && a.upper.y >= b.lower.y && a.upper.z >= b.lower.z &&
+           a.lower.x <= b.upper.x && a.lower.y <= b.upper.y && a.lower.z <= b.upper.z;
+}
 
 #endif

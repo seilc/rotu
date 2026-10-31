@@ -8,6 +8,14 @@ ldscript_template: config/GIQE78/ldscript.tpl
 
 # Pool references taken minus 4 that dtk attributes to the previous object.
 add_relocations:
+- source: .text:0x8000BE80
+  type: sda21
+  target: "@1046!.sbss2:0x803F62A0"
+  addend: -4
+- source: .text:0x8000C004
+  type: sda21
+  target: "@1096!.sbss2:0x803F62CC"
+  addend: -4
 - source: .text:0x8001AC88
   type: sda21
   target: "@1486!.sbss2:0x803F6440"
