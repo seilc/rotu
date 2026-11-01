@@ -2,8 +2,6 @@
 
 void xEntDriveInit(xEntDrive* drv, xEnt* driven)
 {
-    xASSERT_L(30, drv);
-
     drv->flags = 0;
     drv->driven = driven;
     drv->driver = NULL;
@@ -18,11 +16,6 @@ void xEntDriveInit(xEntDrive* drv, xEnt* driven)
 
 void xEntDriveMount(xEntDrive* drv, xEnt* driver, F32 mt, const xCollis* coll)
 {
-    xASSERT_L(46, drv);
-    xASSERT_L(47, driver);
-    xASSERT_L(48, drv->driven);
-    xASSERT_L(49, drv->driven->frame);
-
     drv->dLoc = 0.0f;
 
     if (driver == drv->oldDriver && drv->influenceOfOldDriver) {
@@ -79,8 +72,6 @@ void xEntDriveMount(xEntDrive* drv, xEnt* driver, F32 mt, const xCollis* coll)
 
 void xEntDriveDismount(xEntDrive* drv, F32 dmt)
 {
-    xASSERT_L(118, drv);
-
     xEnt* pDriver = drv->driver;
     if (!pDriver) {
         return;
@@ -104,14 +95,9 @@ void xEntDriveDismount(xEntDrive* drv, F32 dmt)
 
 void xEntDriveUpdate(xEntDrive* drv, xScene*, F32 dt, const xCollis*)
 {
-    xASSERT_L(150, drv);
-
     if (!drv->oldDriver && !drv->driver) {
         return;
     }
-
-    xASSERT_L(156, drv->driven);
-    xASSERT_L(157, drv->driven->frame);
 
     if (drv->outroTimer > 0.0f) {
         drv->outroTimer -= dt;
@@ -229,8 +215,6 @@ void xEntDriveSimpleInit(xEntDriveSimple* drv, xMat4x3* mat)
 
 void xEntDriveSimpleMount(xEntDriveSimple* drv, xEnt* driver)
 {
-    xASSERT_L(318, driver);
-
     drv->driver = driver;
     xVec3Copy(&drv->lastDrivenPos, &drv->drivenMat->pos);
     xMat4x3ToLocal(&drv->drivenPosInDriver, (xMat4x3*)drv->driver->model->Mat, &drv->lastDrivenPos);

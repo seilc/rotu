@@ -2,22 +2,17 @@
 
 #include "xPar.h"
 #include "iParMgr.h"
-#include "xDebug.h"
-#include "xOutputMgr.h"
 
 static U32 sFrameCount;
 static S32 sParMgrInit;
 
 void xParMgrInit()
 {
-    xTRACE_FUNCTION_L(62, "PAR");
-
     if (!sParMgrInit) {
         xParMemInit();
         iParMgrInit();
         sParMgrInit = TRUE;
     } else {
-        iprintf("killing all particles\n");
         xParMgrKillAllParticles();
         iParMgrInit();
     }
@@ -33,9 +28,6 @@ void xParMgrUpdate(F32 elapsedTime)
 
     iParMgrUpdate(elapsedTime);
     numFrames = 1;
-
-    xASSERT_L(289, numFrames < 100);
-    xASSERT_L(290, sFrameCount < 100);
 
     sFrameCount += numFrames;
 

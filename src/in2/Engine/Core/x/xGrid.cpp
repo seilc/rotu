@@ -4,8 +4,6 @@
 #include "xGlobals.h"
 #include "xMath.h"
 #include "xMemMgr.h"
-#include "xDebug.h"
-#include "xOutputMgr.h"
 
 #include <string.h>
 
@@ -13,8 +11,6 @@ static xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, S32& grx, S32& gr
 
 void xGridBoundInit(xGridBound* gridb, void* data)
 {
-    xASSERT(data);
-
     gridb->data = data;
     gridb->gx = -1;
     gridb->gz = -1;
@@ -27,13 +23,6 @@ void xGridBoundInit(xGridBound* gridb, void* data)
 
 void xGridInit(xGrid* grid, const xBox* bounds, U16 nx, U16 nz, U8 ingrid_id)
 {
-    xASSERT(grid);
-    xASSERT(bounds);
-    xASSERT(ingrid_id);
-    xASSERT(ingrid_id != 0xff);
-
-    xASSERT(nx != 0);
-    xASSERT(nz != 0);
     grid->ingrid_id = ingrid_id;
 
     grid->nx = nx;
@@ -60,25 +49,12 @@ void xGridInit(xGrid* grid, const xBox* bounds, U16 nx, U16 nz, U8 ingrid_id)
 
     grid->iter_active = 0;
     grid->maxr = 0.25f * MIN(grid->csizex, grid->csizez);
-    grid->cells = (xGridBound**)xMEMALLOC((U32)nx * nz * sizeof(xGridBound*), 0, eMemMgrTag_EnvAbstract, 0);
-    xASSERT(grid->cells);
+    grid->cells = (xGridBound**)xMEMALLOC((U32)nx * nz * sizeof(xGridBound*), 0);
     memset(grid->cells, 0, nx * nz * sizeof(xGridBound*));
-
-    xOutInfo("GRID", "initializing grid...\n");
-    xOutInfo("GRID", "... grid divisions:        (x:%5d)              x (z:%5d)\n", nx, nz);
-    xOutInfo("GRID", "... grid dimensions:       (x:%7.1f .. %7.1f) x (z:%7.1f .. %7.1f)\n",
-             grid->minx, grid->maxx, grid->minz, grid->maxz);
-    xOutInfo("GRID", "... grid size:             (x:%7.1f)            x (z:%7.1f)\n",
-             grid->maxx - grid->minx, grid->maxz - grid->minz);
-    xOutInfo("GRID", "... cell size:             (x:%7.1f)            x (z:%7.1f)\n",
-             grid->csizex, grid->csizez);
-    xOutInfo("GRID", "... mem-used:              %d (grid) + %d (grid cells)\n",
-             sizeof(xGrid), nx * nz * sizeof(xGridBound*));
 }
 
 void xGridKill(xGrid* grid)
 {
-    xASSERT(grid);
     xGridEmpty(grid);
 
     grid->cells = NULL;
@@ -88,9 +64,6 @@ void xGridKill(xGrid* grid)
 void xGridEmpty(xGrid* grid)
 {
     xGridBound** head, *curr;
-
-    xASSERT(grid);
-    xASSERT(grid->cells);
 
     for (S32 x = 0; x < grid->nx; x++) {
         for (S32 z = 0; z < grid->nz; z++) {
@@ -117,10 +90,6 @@ void xGridEmpty(xGrid* grid)
 
 S32 xGridAddToCell(xGridBound** cell, xGridBound* gridb)
 {
-    xASSERT(cell);
-    xASSERT(gridb);
-    xASSERT(gridb->data);
-
     if (gridb->head) {
         if (!gridb->grid->iter_active) {
             if (!xGridRemove(gridb)) {
@@ -139,29 +108,19 @@ S32 xGridAddToCell(xGridBound** cell, xGridBound* gridb)
 
 static S32 xGridAdd(xGrid* grid, xGridBound* gridb, S32 x, S32 z)
 {
-    xASSERT(grid);
-    xASSERT(grid->cells);
     xGridBound** cell = grid->cells + z * grid->nx + x;
     return xGridAddToCell(cell, gridb);
 }
 
 S32 xGridAdd(xGrid* grid, xEnt* ent)
 {
-    xASSERT(grid);
-    xASSERT(ent);
-    xASSERT(((xBound*)((&ent->gridb)+1)) == (&ent->bound));
-
     xBound* bound = &ent->bound;
-    xVec3* center = NULL;
+    xVec3* center;
     F32 maxr = grid->maxr;
     if (bound->type == k_XBOUNDTYPE_SPHERE) {
         xSphere* sph = &bound->sph;
         center = &sph->center;
         if (sph->r >= maxr) {
-            xOutInfo("GRID", xFUNCTION_FMT("sphere too large (%f / %f)\n"), sph->r, maxr);
-            xOutInfo("GRID", xFUNCTION_FMT("... c=%6.1f %6.1f %6.1f, r=%6.1f\n"), center->x, center->y,
-                     center->z, sph->r);
-
             S32 r = xGridAddToCell(&grid->other, &ent->gridb);
             if (r) {
                 ent->gridb.grid = grid;
@@ -171,7 +130,6 @@ S32 xGridAdd(xGrid* grid, xEnt* ent)
     } else if (bound->type == k_XBOUNDTYPE_OBB) {
         xBBox* bbox = &bound->box;
         center = &bbox->center;
-        xASSERT(bound->mat);
 
         F32 rx, ry, rz;
         rx = bbox->box.upper.x - bbox->box.lower.x, ry = bbox->box.upper.y - bbox->box.lower.y,
@@ -180,10 +138,6 @@ S32 xGridAdd(xGrid* grid, xEnt* ent)
                    xsqr(ry) * (xsqr(bound->mat->up.x) + xsqr(bound->mat->up.y) + xsqr(bound->mat->up.z)) +
                    xsqr(rz) * (xsqr(bound->mat->at.x) + xsqr(bound->mat->at.y) + xsqr(bound->mat->at.z));
         if (len2 >= 4.0f * maxr * maxr) {
-            xOutInfo("GRID", xFUNCTION_FMT("box too large (%f / %f)\n"), len2, xsqr(maxr));
-            xOutInfo("GRID", xFUNCTION_FMT("... %6.1f %6.1f %6.1f .. %6.1f %6.1f %6.1f\n"), bbox->box.lower.x,
-                     bbox->box.lower.y, bbox->box.lower.z, bbox->box.upper.x, bbox->box.upper.y, bbox->box.upper.z);
-
             S32 r = xGridAddToCell(&grid->other, &ent->gridb);
             if (r) {
                 ent->gridb.grid = grid;
@@ -198,10 +152,6 @@ S32 xGridAdd(xGrid* grid, xEnt* ent)
         rx = bbox->box.upper.x - bbox->box.lower.x, rz = bbox->box.upper.z - bbox->box.lower.z;
         F32 len2 = xsqr(rx) + xsqr(rz);
         if (len2 >= 4.0f * maxr * maxr) {
-            xOutInfo("GRID", xFUNCTION_FMT("box too large (%f / %f)\n"), len2, xsqr(maxr));
-            xOutInfo("GRID", xFUNCTION_FMT("... %6.1f %6.1f %6.1f .. %6.1f %6.1f %6.1f\n"), bbox->box.lower.x,
-                     bbox->box.lower.y, bbox->box.lower.z, bbox->box.upper.x, bbox->box.upper.y, bbox->box.upper.z);
-
             S32 r = xGridAddToCell(&grid->other, &ent->gridb);
             if (r) {
                 ent->gridb.grid = grid;
@@ -209,11 +159,8 @@ S32 xGridAdd(xGrid* grid, xEnt* ent)
             return r;
         }
     } else {
-        xOutErr("GRID", xFUNCTION_FMT("unsupported bound type (%d)\n"), bound->type);
         return FALSE;
     }
-
-    xASSERT(center);
 
     F32 cgridx, cgridz;
     cgridx = center->x - grid->minx, cgridz = center->z - grid->minz;
@@ -233,11 +180,9 @@ S32 xGridAdd(xGrid* grid, xEnt* ent)
 
 S32 xGridRemove(xGridBound* gridb)
 {
-    xASSERT(gridb->data);
-
     if (gridb->head) {
         if (gridb->grid->iter_active) {
-            gridb->deleted = TRUE;
+            gridb->deleted = true;
             return FALSE;
         }
 
@@ -249,13 +194,11 @@ S32 xGridRemove(xGridBound* gridb)
             cur = cur->next;
         }
 
-        xASSERT(cur);
-
         *prev = cur->next;
         cur->next = NULL;
         cur->head = NULL;
         cur->grid = NULL;
-        cur->deleted = FALSE;
+        cur->deleted = false;
         cur->gx = -1;
         cur->gz = -1;
     }
@@ -270,10 +213,6 @@ void xGridUpdate(xGrid* grid, xEnt* ent)
 
     xGridBound* gridb = &ent->gridb;
     if (gridb->oversize != 2 && (dx != gridb->gx || dz != gridb->gz)) {
-        xASSERT_FMT(!gridb->grid->iter_active,
-                      "Object %s is trying to move in the grid while a grid iteration is active. This will produce undesirable results (most likely a crash)",
-                      xSceneID2Name((xScene*)xglobals->sceneCur, ent->id));
-
         xGridBound* cur, **prev;
         prev = gridb->head;
         cur = *prev;
@@ -282,14 +221,12 @@ void xGridUpdate(xGrid* grid, xEnt* ent)
             cur = cur->next;
         }
 
-        xASSERT(cur);
-
         *prev = cur->next;
         cur->head = NULL;
         cur->next = NULL;
         if (cur != gridb) {
             cur->grid = NULL;
-            cur->deleted = FALSE;
+            cur->deleted = false;
             cur->gx = -1;
             cur->gz = -1;
         }
@@ -306,19 +243,14 @@ void xGridUpdate(xGrid* grid, xEnt* ent)
 
 static xGridBound** xGridGetCell(xGrid* grid, const xEnt* ent, S32& grx, S32& grz)
 {
-    xASSERT(ent);
     const xBound* bound = &ent->bound;
     const xVec3* center = xBoundCenter(bound);
-    xASSERT(center);
     xGridGetCell(grid, center->x, center->y, center->z, grx, grz);
     return grid->cells + grz * grid->nx + grx;
 }
 
 void xGridGetCell(xGrid* grid, F32 posx, F32, F32 posz, S32& grx, S32& grz)
 {
-    xASSERT(grid);
-    xASSERT(grid->cells);
-
     F32 pgridx, pgridz;
     pgridx = posx - grid->minx, pgridz = posz - grid->minz;
     pgridx *= grid->inv_csizex, pgridz *= grid->inv_csizez;
@@ -334,8 +266,6 @@ xGridBound* xGridIterFirstCell(xGrid* grid, F32 posx, F32 posy, F32 posz, S32& g
 
 S32 xGridEntIsTooBig(xGrid* grid, const xEnt* ent)
 {
-    xASSERT(grid);
-    xASSERT(ent);
     const xBound* bound = &ent->bound;
     F32 maxr = grid->maxr;
     if (bound->type == k_XBOUNDTYPE_SPHERE) {
@@ -345,7 +275,6 @@ S32 xGridEntIsTooBig(xGrid* grid, const xEnt* ent)
         }
     } else if (bound->type == k_XBOUNDTYPE_OBB) {
         const xBBox* bbox = &bound->box;
-        xASSERT(bound->mat);
 
         F32 rx, ry, rz;
         rx = bbox->box.upper.x - bbox->box.lower.x, ry = bbox->box.upper.y - bbox->box.lower.y,
@@ -365,8 +294,6 @@ S32 xGridEntIsTooBig(xGrid* grid, const xEnt* ent)
         if (len2 >= 4.0f * maxr * maxr) {
             return TRUE;
         }
-    } else {
-        xOutErr("GRID", xFUNCTION_FMT("unsupported bound type (%d)\n"), bound->type);
     }
 
     return FALSE;
@@ -483,10 +410,8 @@ xGridBound* xGridIterFirstCell(xGrid* grid, S32 grx, S32 grz, xGridIterator& it)
 void xGridIterClose(xGridIterator& it)
 {
     if (it.listhead) {
-        xASSERT(*(it.listhead));
         S32& iter_active = (*it.listhead)->grid->iter_active;
         iter_active--;
-        xASSERT(iter_active >= 0);
         if (it.delfound && !iter_active) {
             xGridBound* cur, **prev;
             prev = it.listhead;
@@ -497,7 +422,7 @@ void xGridIterClose(xGridIterator& it)
                     cur->next = NULL;
                     cur->head = NULL;
                     cur->grid = NULL;
-                    cur->deleted = FALSE;
+                    cur->deleted = false;
                     cur->gx = -1;
                     cur->gz = -1;
                     cur = *prev;

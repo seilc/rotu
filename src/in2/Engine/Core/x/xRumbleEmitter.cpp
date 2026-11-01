@@ -19,7 +19,6 @@ void emitter_EventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*,
         S32 startidx = 0;
         while (xTRCPadFindFirst(startidx, TRC_PadActive)) {
             S32 padPort = xTRCPadGetPadPort(startidx);
-            xASSERT_L(51, padPort >= 0 && padPort < k_MAX_TRC_PADS);
             xRumble::Manager::Get().Add(&mPad[padPort], pEffect);
             startidx++;
         }
@@ -27,14 +26,10 @@ void emitter_EventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*,
     }
     case eEventStopRumbleEffect:
     {
-        xASSERT_FMT_L(60, (toParam && (toParam[0] >= 0.0f) && (toParam[0] < 4.0f)),
-                     "No such pad exists, so of course it can't rumble");
-        
         xRumble::emitterBase* pEffect = (xRumble::emitterBase*)to;
         S32 startidx = 0;
         while (xTRCPadFindFirst(startidx, TRC_PadActive)) {
             S32 padPort = xTRCPadGetPadPort(startidx);
-            xASSERT_L(68, padPort >= 0 && padPort < k_MAX_TRC_PADS);
             xRumble::Manager::Get().Stop(&mPad[padPort], pEffect);
             startidx++;
         }
@@ -64,29 +59,24 @@ F32 effectAsset::GetIntensity(F32 currentTime, F32 totalTime) const
     case 2:
         return (1.0f - icos(2.0f * PI * param1 * currentTime)) / 2.0f;
     case 3:
-        xASSERT_FMT_L(119, totalTime >= 0.0f, "You cannot use fade in/out with infinite length effects");
         if (totalTime - currentTime <= param1) {
             return (totalTime - currentTime) / param1;
         } else {
             return 1.0f;
         }
     case 4:
-        xASSERT_FMT_L(130, totalTime >= 0.0f, "You cannot use fade in/out with infinite length effects");
         if (currentTime < param1) {
             return currentTime / param1;
         } else {
             return 1.0f;
         }
     default:
-        xASSERT_FMT_L(140, FALSE, "Invalid rumble type");
         return 0.0f;
     }
 }
 
 void effect::Init(xBase& data, xDynAsset& asset, size_t asset_size)
 {
-    xDynAssetValidate_L(150, asset, xRumble::effectAsset, "effect:Rumble");
-
     new (&data) effect((effectAsset*)&asset);
 }
 
@@ -105,8 +95,6 @@ effect::effect(effectAsset* pAsset)
 
 void boxEmitter::Init(xBase& data, xDynAsset& asset, size_t asset_size)
 {
-    xDynAssetValidate_L(184, asset, xRumble::boxEmitterAsset, "effect:Rumble Box Emitter");
-
     new (&data) boxEmitter((boxEmitterAsset*)&asset);
 }
 
@@ -150,8 +138,6 @@ bool boxEmitter::GetIntensity(const xVec3& playerPos, F32& intensity) const
 
 void sphericalEmitter::Init(xBase& data, xDynAsset& asset, size_t asset_size)
 {
-    xDynAssetValidate_L(236, asset, xRumble::sphericalEmitterAsset, "effect:Rumble Spherical Emitter");
-
     new (&data) sphericalEmitter((sphericalEmitterAsset*)&asset);
 }
 
@@ -167,7 +153,6 @@ sphericalEmitter::sphericalEmitter(sphericalEmitterAsset* pAsset)
     pEffectAsset = (effectAsset*)xSTFindAsset(pAsset->effectID, &size);
 
     radiusSqrd = xsqr(pAsset->radius);
-    xASSERT_FMT_L(248, pAsset->radius, "The radius cannot be 0");
 
     if (linkCount) {
         link = (xLinkAsset*)((U8*)pAsset + sizeof(sphericalEmitterAsset));
@@ -203,7 +188,6 @@ bool sphericalEmitter::GetIntensity(const xVec3& playerPos, F32& intensity) cons
 
 void sphericalEmitter::UpdatePosition(const xVec3& playerPos) const
 {
-    xASSERT_L(291, pAsset);
     pAsset->position = playerPos;
 }
 
@@ -213,7 +197,6 @@ F32 sphericalEmitter::GetTimeLeft()
     S32 startidx = 0;
     while (xTRCPadFindFirst(startidx, TRC_PadActive)) {
         S32 padPort = xTRCPadGetPadPort(startidx);
-        xASSERT(padPort >= 0 && padPort < k_MAX_TRC_PADS);
         timeLeft += Manager::Get().GetRumbleTimeLeft(&mPad[padPort], this);
         startidx++;
     }
@@ -231,12 +214,10 @@ void FreezableObjectEffect::Init(U32 sphereEmitterID)
 {
     mDefaultSphericalEmitterAsset = (sphericalEmitterAsset*)xSTFindAsset(sphereEmitterID, NULL);
     if (!mDefaultSphericalEmitterAsset) {
-        xFAIL_FMT("%s", "Unable to find FREEZABLE_OBJECT_RUMBLE_EMIT. Please repack BOOT.SDF");
         return;
     }
     pEffectAsset = (effectAsset*)xSTFindAsset(mDefaultSphericalEmitterAsset->effectID, NULL);
     if (!pEffectAsset) {
-        xFAIL_FMT("%s", "Unable to find FREEZABLE_OBJECT_RUMBLE. Please repack BOOT.SDF");
         return;
     }
     xBaseInit(this, mDefaultSphericalEmitterAsset);
@@ -261,10 +242,6 @@ bool FreezableObjectEffect::GetIntensity(const xVec3& position, F32& intensity) 
 
     if (mModifiableAsset.onlyRumbleOnY && !xeq(mModifiableAsset.position.y / position.y, 1.0f, 0.1f)) {
         return false;
-    }
-
-    if (mModifiableAsset.onlyOnFloor) {
-        xFAIL_ONCE("%s", "OnlyOnFloor is ignored by the FreezableObject Rumble Effect.");
     }
 
     if (mModifiableAsset.fallOff) {

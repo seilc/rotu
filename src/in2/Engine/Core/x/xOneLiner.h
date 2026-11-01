@@ -13,8 +13,6 @@ public:
     iSndGroupHandle mSoundGroupHdl;
 
     static xOneLiner* sDelayedSound;
-    static bool sDebugIgnoreTime;
-    static bool sDebugIgnoreProb;
 
     static void SceneInit();
     static void SceneReset();

@@ -1,6 +1,5 @@
 #include "xTRC.h"
 
-#include "xDebug.h"
 #include "xFont.h"
 #include "xPad.h"
 #include "xTextAsset.h"
@@ -18,8 +17,7 @@
 #include <string.h>
 #include "xSpacePartitionTree.h"
 
-namespace
-{
+namespace {
 _tagTRCPadInfo gTrcPad[k_MAX_TRC_PADS];
 _tagTRCDiskInfo gTrcDisk;
 const char* k_CONTROLLER_MISSING_MESSAGE;
@@ -54,7 +52,6 @@ _tagTRCPadInfo& xTRCPadGetNextAvailablePad()
             return gTrcPad[i];
         }
     }
-    xFAIL_MSG("No pads available!");
     return gTrcPad[0];
 }
 
@@ -65,7 +62,6 @@ S32 xTRCPadGetArrayIdx(S32 port)
             return i;
         }
     }
-    xFAIL_MSG("No pad id match, return -1 !");
     return -1;
 }
 
@@ -92,7 +88,6 @@ void xTRCPadRestoreAll()
     for (S32 i = 0; i < k_XPAD_MAX; i++) {
         xPad* pad = &mPad[i];
         if (pad->state == ePad_Enabled) {
-            xASSERT(pad->port != -1);
             if (xTRCPadGetPadStatePort(pad->port) == TRC_PadStateMissingDuringGameplay) {
                 xTRCPadSetPressed(pad->port, 1, false);
                 xTRCPadSetStatePadPort(pad->port, TRC_PadInserted);
@@ -105,7 +100,6 @@ void xTRCPadRestoreAll()
 
 void xTRCPadSetState(S32 idx, TRCState state)
 {
-    xASSERT(idx >= 0 && idx < k_MAX_TRC_PADS);
     gTrcPad[idx].state = state;
 }
 
@@ -142,7 +136,6 @@ S32 xTRCPadCountWereActiveTotal()
 
 void xTRCPadSetStatePadPort(S32 port, TRCState state)
 {
-    xASSERT(port >= 0 && port < k_MAX_TRC_PADS);
     for (S32 i = 0; i < k_MAX_TRC_PADS; i++)
         if (port == gTrcPad[i].id)
             gTrcPad[i].state = state;
@@ -150,7 +143,6 @@ void xTRCPadSetStatePadPort(S32 port, TRCState state)
 
 void xTRCPadSetPadStatePort(S32 port, TRCPadState state)
 {
-    xASSERT(port >= 0 && port < k_MAX_TRC_PADS);
     for (S32 i = 0; i < k_MAX_TRC_PADS; i++)
         if (port == gTrcPad[i].id)
             gTrcPad[i].padstate = state;
@@ -158,12 +150,10 @@ void xTRCPadSetPadStatePort(S32 port, TRCPadState state)
 
 bool xTRCPadFindFirst(S32& idx, TRCState state)
 {
-    xASSERT(idx > -1);
     S32 i = -1;
     while (idx < k_MAX_TRC_PADS && state != gTrcPad[idx].state) {
         i = ++idx;
     }
-    xASSERT(i >= -1 && i <= k_MAX_TRC_PADS);
     if (i == k_MAX_TRC_PADS || idx >= k_MAX_TRC_PADS) {
         idx = -1;
         return false;
@@ -173,12 +163,10 @@ bool xTRCPadFindFirst(S32& idx, TRCState state)
 
 bool xTRCPadFindFirstPadState(S32& idx, TRCPadState state)
 {
-    xASSERT(idx > -1);
     S32 i = -1;
     while (idx < k_MAX_TRC_PADS && state != gTrcPad[idx].padstate) {
         i = ++idx;
     }
-    xASSERT(i >= -1 && i <= k_MAX_TRC_PADS);
     if (i == k_MAX_TRC_PADS || idx >= k_MAX_TRC_PADS) {
         idx = -1;
         return false;
@@ -188,25 +176,21 @@ bool xTRCPadFindFirstPadState(S32& idx, TRCPadState state)
 
 bool xTRCPadIsIdx(S32 idx, TRCState state)
 {
-    xASSERT(idx >= 0 && idx < k_MAX_TRC_PADS);
     return state == gTrcPad[idx].state ? true : false;
 }
 
 S32 xTRCPadGetPadPort(S32 idx)
 {
-    xASSERT(idx >= 0 && idx < k_MAX_TRC_PADS);
     return gTrcPad[idx].id;
 }
 
 TRCState xTRCPadGetStateIdx(S32 idx)
 {
-    xASSERT(idx >= 0 && idx < k_MAX_TRC_PADS);
     return gTrcPad[idx].state;
 }
 
 TRCState xTRCPadGetStatePort(S32 port)
 {
-    xASSERT(port >= 0 && port < k_MAX_TRC_PADS);
     for (S32 i = 0; i < k_MAX_TRC_PADS; i++) {
         if (port == gTrcPad[i].id) {
             return gTrcPad[i].state;
@@ -217,7 +201,6 @@ TRCState xTRCPadGetStatePort(S32 port)
 
 TRCPadState xTRCPadGetPadStatePort(S32 port)
 {
-    xASSERT(port >= 0 && port < k_MAX_TRC_PADS);
     for (S32 i = 0; i < k_MAX_TRC_PADS; i++) {
         if (port == gTrcPad[i].id) {
             return gTrcPad[i].padstate;
@@ -249,7 +232,6 @@ bool xTRCPadGetPadPort(S32& idx, TRCState state)
     while (i < k_MAX_TRC_PADS && state != gTrcPad[i].state) {
         idx = gTrcPad[i++].id;
     }
-    xASSERT(idx >= -1 && idx < k_MAX_TRC_PADS);
     if (i == k_MAX_TRC_PADS) {
         return false;
     }
@@ -262,8 +244,7 @@ bool xTRCPadPortWasActive(S32 port)
     return xTRCPadIsPort(port, TRC_PadActive) || xTRCPadIsPort(port, TRC_PadPreInserted) || xTRCPadGetPadStatePort(port) == TRC_PadStateMissingDuringGameplay;
 }
 
-namespace
-{
+namespace {
 bool xTRCIsNextState(S32 i, U32 state)
 {
     return (TRCState)state != gTrcPad[i].state && (TRCState)state == gTrcPad[i + 1].state;
@@ -540,8 +521,6 @@ void xTRCPadGetPressed(TRCState padState, bool& A, bool& B, bool& C, bool& D)
 
 void xTRCPadSetPressed(S32 port, S32 value, bool reverse)
 {
-    xASSERT(port != -1);
-    xASSERT(value > 0);
     if (!reverse)
         mPad[port].pressed |= value;
     else
@@ -608,7 +587,6 @@ static S32 DisplayMessage(S32 port, TRCState state)
 
 void xTRCPadDisplayMessage(S32 pad_id, TRCState)
 {
-    xASSERT(pad_id >= 0 && pad_id < k_MAX_TRC_PADS);
     if (!globals.NoPadCheck) {
         S32 display_message = DisplayMessage(gTrcPad[pad_id].id, gTrcPad[pad_id].state);
         if (display_message) {

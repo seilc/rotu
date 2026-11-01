@@ -31,7 +31,6 @@ struct xCamTransitionAsset : xDynAsset
 
     void Validate() const
     {
-        xASSERT_FMT_L(58, mVersion == VERSION, "Camera Transition Asset version is %d, wanting %d. Repack.", mVersion, VERSION);
     }
 
     xLinkAsset* Links() const

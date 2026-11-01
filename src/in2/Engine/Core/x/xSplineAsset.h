@@ -25,9 +25,6 @@ public:
     xVec3 evaluate(F32 u, S32 d) const;
     void evaluate(F32 u, S32 d, xVec3& point) const;
     xVec3 project_point(const xVec3& point, F32* u, F32* distance, F32 guess) const;
-    void getBoundBox(xBox& box) const;
-    void AddCrossSectionPos(xVec3& lastPos, xVec3& centerLinePos, F32 halfWidth) const;
-    void DrawCrossSection(S32 segments, F32 width) const;
     bool advance_u(F32 start_u, F32 distance, bool forward, F32& new_u) const;
 
     S32 numKnots() const

@@ -15,7 +15,6 @@ static bool xSoundFXWillSendDone(xSoundFX* pSoundFX)
 {
     if (pSoundFX->linkCount > 0) {
         const xLinkAsset* idx = pSoundFX->link;
-        xASSERT_L(62, idx);
 
         for (S32 i = 0; i < pSoundFX->linkCount; i++, idx++) {
             if (idx->srcEvent == eEventDone) {
@@ -34,9 +33,6 @@ void xSoundFXInit(void* t, void* asset)
 
 void xSoundFXInit(xSoundFX* t, xSoundFXAsset* asset)
 {
-    xASSERT_L(80, t);
-    xASSERT_L(81, asset);
-
     xBaseInit(t, asset);
 
     t->eventFunc = xSoundFXEventCB;
@@ -59,12 +55,6 @@ void xSoundFXInit(xSoundFX* t, xSoundFXAsset* asset)
         xSoundFXSetSendsDone(asset, true);
     }
 
-#if DEBUG || RELEASE
-    if (xSndMgrIsLoopedStream(asset->soundAsset) && xSoundFXSendsDone(asset)) {
-        xFAIL_FMT_L(109, "SoundFX '%s' will never send DONE event because it loops", xSTAssetName(t->id));
-    }
-#endif
-
     t->sndHandle = XSNDMGR_INVALID_SND_HANDLE;
 
     xSoundFXSetSoundFXPlaying(t->asset, false);
@@ -72,16 +62,12 @@ void xSoundFXInit(xSoundFX* t, xSoundFXAsset* asset)
 
 void xSoundFXReset(xSoundFX* ent)
 {
-    xASSERT_L(155, ent);
-    xASSERT_L(156, ent->asset);
-
     xBaseReset(ent, ent->asset);
 }
 
 void xSoundFXEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*, U32)
 {
     xSoundFX* t = (xSoundFX*)to;
-    xASSERT_L(204, t);
 
     switch (toEvent) {
     case eEventReset:
@@ -106,14 +92,12 @@ void xSoundFXEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*,
         break;
     case eEventPause:
         while (true) {
-            xFAIL_FMT_L(266, "SoundFX received pause event - event not implemented");
         }
         break;
     case eEventChangeVolume:
     {
         F32 destVolume = toParam[0];
         if (destVolume < 0.0f || destVolume > 1.0f) {
-            xFAIL_FMT_L(281, "SoundFX Change Volume event: Param1-destVolume needs to be between 0.0 and 1.0");
             if (destVolume < 0.0f) {
                 destVolume = 0.0f;
             } else if (destVolume > 1.0f) {
@@ -127,7 +111,6 @@ void xSoundFXEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*,
     {
         F32 startVolume = toParam[0];
         if (startVolume < 0.0f || startVolume > 1.0f) {
-            xFAIL_FMT_L(293, "SoundFX Change Volume event: Param1-startVolume needs to be between 0.0 and 1.0");
             if (startVolume < 0.0f) {
                 startVolume = 0.0f;
             } else if (startVolume > 1.0f) {
@@ -136,7 +119,6 @@ void xSoundFXEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase*,
         }
         F32 destVolume = toParam[1];
         if (destVolume < 0.0f || destVolume > 1.0f) {
-            xFAIL_FMT_L(300, "SoundFX Change Volume event: Param2-destVolume needs to be between 0.0 and 1.0");
             if (destVolume < 0.0f) {
                 destVolume = 0.0f;
             } else if (destVolume > 1.0f) {
@@ -161,7 +143,6 @@ static bool xSoundFXEnsureFreeAudioStream(bool willingToStopMainGameMusic)
     xSndMgrStopPausedSounds(2);
     haveFreeStreamedVoice = iSndGetFreeStreamInfo(0);
     if (haveFreeStreamedVoice) {
-        iprintf("Cancelled Dialog to get a streamed voice\n");
         return true;
     }
 
@@ -170,25 +151,20 @@ static bool xSoundFXEnsureFreeAudioStream(bool willingToStopMainGameMusic)
     }
     haveFreeStreamedVoice = iSndGetFreeStreamInfo(0);
     if (haveFreeStreamedVoice) {
-        iprintf("Cancelled Music to get a streamed voice\n");
         return true;
     }
 
     xSndMgrStopPausedSounds(3);
     haveFreeStreamedVoice = iSndGetFreeStreamInfo(0);
     if (haveFreeStreamedVoice) {
-        iprintf("Cancelled 3D Dialog to get a streamed voice\n");
         return true;
     }
 
-    xFAIL_FMT_L(369, "%s", "No streamed voice available. Some audio may not play.");
     return false;
 }
 
 static void xSoundFXPlay(xSoundFX* t)
 {
-    xASSERT_L(376, xSoundFXIsSoundFXPlaying(t->asset));
-
     if (t->sndHandle != XSNDMGR_INVALID_SND_HANDLE) {
         if (!zGameIsPaused() || !xSndMgrIsDialogPlaying() || xSndMgr_GetGroup(t->asset->soundAsset)->header.eSoundCategory != 2) {
             xSndMgrStop(t->sndHandle);
@@ -199,9 +175,7 @@ static void xSoundFXPlay(xSoundFX* t)
 
     if (xSoundFXIsAttached(t->asset)) {
         xEnt* ent = (xEnt*)zSceneFindObject(t->asset->attachID);
-        if (!ent) {
-            xFAIL_FMT_L(394, "SoundFX '%s' can't find entity %X", xSTAssetName(t->id), t->asset->attachID);
-        } else {
+        if (ent) {
             sndFlags |= 0x800;
             t->sndHandle = xSndMgrPlay(t->asset->soundAsset, sndFlags, xEntGetPos(ent), NULL, ent, NULL, NULL);
         }

@@ -1,12 +1,5 @@
 #include "xSplineAsset.h"
 
-#include "xRenderState.h"
-
-const S32 NURBS_DRAW_MAX = 256;
-
-static RwIm3DVertex gSectionVerts[NURBS_DRAW_MAX];
-static S32 gTotalSectionVerts;
-
 F32 xNurbs::approximate_length(S32 divisions) const
 {
     F32 division_size = (end() - start()) / divisions;
@@ -51,13 +44,9 @@ S32 xNurbs::find_span(F32 u) const
     return mid;
 }
 
-static const S32 MAX_DEGREE = 4;
-
 void xNurbs::find_basis_functions(F32 u, S32 i, F32* N) const
 {
     N[0] = 1.0f;
-
-    xASSERT_L(91, degree <= MAX_DEGREE);
 
     F32 left[5];
     F32 right[5];
@@ -77,8 +66,6 @@ void xNurbs::find_basis_functions(F32 u, S32 i, F32* N) const
 void xNurbs::find_derivative_basis_functions(F32 u, S32 i, S32 order, F32 ders[5][5]) const
 {
     // My brain hurts.
-
-    xASSERT_L(119, degree <= MAX_DEGREE);
 
     F32 ndu[5][5];
     ndu[0][0] = 1.0f;
@@ -170,8 +157,6 @@ xVec3 xNurbs::evaluate(F32 u) const
 
 void xNurbs::evaluate(F32 u, xVec3& point) const
 {
-    xASSERT_L(222, (u >= start()) && (u <= end()));
-
     S32 span = find_span(u);
     F32 N[5];
     find_basis_functions(u, span, N);
@@ -226,8 +211,6 @@ xVec3 xNurbs::project_point(const xVec3& point, F32* u, F32* distance, F32 guess
                 curve_point = test_point;
             }
         }
-
-        xASSERT_L(315, (guess >= start()) && (guess <= end()));
     } else {
         evaluate(guess, curve_point);
         length2 = point.Distance2(curve_point);
@@ -300,94 +283,6 @@ xVec3 xNurbs::project_point(const xVec3& point, F32* u, F32* distance, F32 guess
         *distance = xsqrt(length2);
     }
     return curve_point;
-}
-
-void xNurbs::getBoundBox(xBox& box) const
-{
-    box.upper = box.lower = control[0];
-
-    for (S32 i = 1; i <= controlMaxIndex; i++) {
-        iBoxBoundVec(&box, &box, &control[i]);
-    }
-}
-
-void xNurbs::AddCrossSectionPos(xVec3& lastPos, xVec3& centerLinePos, F32 halfWidth) const
-{
-    xASSERT_ONCE_L(454, (gTotalSectionVerts+2) <= NURBS_DRAW_MAX && "Tight rope is too large to draw!?!?");
-
-    xVec3 dirVec;
-    dirVec.Sub(centerLinePos, lastPos);
-
-    F32 rx = dirVec.x;
-    F32 rz = dirVec.z;
-    dirVec.x = rz;
-    dirVec.z = -rx;
-
-    xVec3 posLeft = centerLinePos;
-    xVec3 posRight = posLeft;
-
-    dirVec *= halfWidth;
-    posLeft -= dirVec;
-    posRight += dirVec;
-
-    RwIm3DVertex* vp = gSectionVerts + gTotalSectionVerts;
-
-    RwIm3DVertexSetPos(vp, posLeft.x, posLeft.y, posLeft.z);
-    RwIm3DVertexSetRGBA(vp, 255, 255, 128, 255);
-    RwIm3DVertexSetNormal(vp, 0.0f, 1.0f, 0.0f);
-    RwIm3DVertexSetUV(vp, 0.0f, 0.0f);
-
-    RwIm3DVertexSetPos(vp + 1, posRight.x, posRight.y, posRight.z);
-    RwIm3DVertexSetRGBA(vp + 1, 255, 255, 128, 255);
-    RwIm3DVertexSetNormal(vp + 1, 0.0f, 1.0f, 0.0f);
-    RwIm3DVertexSetUV(vp + 1, 1.0f, 0.0f);
-
-    gTotalSectionVerts += 2;
-}
-
-void xNurbs::DrawCrossSection(S32 segments, F32 width) const
-{
-    gTotalSectionVerts = 0;
-
-    F32 increment;
-    F32 fstart = start();
-    F32 fend = end();
-
-    if (segments < 0) {
-        increment = 0.05f;
-    } else {
-        increment = (fend - fstart) / segments;
-    }
-
-    xMat3x3 rotMat;
-    xMat3x3Identity(&rotMat);
-
-    F32 halfWidth = 0.5f * width;
-
-    xVec3 centerLinePos;
-    evaluate(fstart, centerLinePos);
-
-    xVec3 lastPos = centerLinePos;
-    AddCrossSectionPos(lastPos, centerLinePos, halfWidth);
-
-    for (F32 curr = fstart + increment; curr <= fend; curr += increment) {
-        evaluate(curr, centerLinePos);
-        AddCrossSectionPos(lastPos, centerLinePos, halfWidth);
-        lastPos = centerLinePos;
-    }
-
-    RwBlendFunction srcBlend, destBlend;
-    xRenderStateBlendModesGet(&srcBlend, &destBlend);
-    
-    RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)NULL);
-    RwRenderStateSet(rwRENDERSTATEVERTEXALPHAENABLE, (void*)FALSE);
-    xRenderStateBlendAndZModesSet(rwBLENDONE, rwBLENDZERO, TRUE, TRUE);
-
-    RwIm3DTransform(gSectionVerts, gTotalSectionVerts, NULL, rwIM3D_VERTEXXYZ | rwIM3D_VERTEXRGBA);
-    RwIm3DRenderPrimitive(rwPRIMTYPETRISTRIP);
-    RwIm3DEnd();
-
-    xRenderStateBlendAndZModesSet(srcBlend, destBlend, TRUE, TRUE);
 }
 
 bool xNurbs::advance_u(F32 start_u, F32 distance, bool forward, F32& new_u) const

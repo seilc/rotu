@@ -1,18 +1,10 @@
 #include "xEvent.h"
 
-#include "xDebug.h"
 #include "xString.h"
-#include "xOutputMgr.h"
 #include "xstransvc.h"
 #include "zScene.h"
 #include "zEnt.h"
 #include "zEvent.h"
-
-#if DEBUG || RELEASE
-static const S32 MAX_REENTRANT_COUNT = 32;
-
-char zEventLogBuf[20][256];
-#endif
 
 S32 zEventLogBufInit;
 U32 gThisPlayer;
@@ -20,8 +12,6 @@ U32 gThisCameraTarget;
 
 void zEntEvent(char* to, U32 toEvent)
 {
-    xASSERT_L(52, to);
-
     U32 id;
     xBase* sendTo;
 
@@ -30,30 +20,22 @@ void zEntEvent(char* to, U32 toEvent)
 
     if (sendTo) {
         zEntEvent(sendTo, toEvent);
-    } else {
-        xOutWarn("EVENT", "zEntEvent unable to find %s\n", to);
     }
 }
 
 void zEntEvent(U32 toID, U32 toEvent)
 {
-    xASSERT_L(77, toID);
-
     xBase* sendTo;
     
     sendTo = zSceneFindObject(toID);
 
     if (sendTo) {
         zEntEvent(sendTo, toEvent);
-    } else {
-        xOutWarn("EVENT", "zEntEvent unable to find object with HashID %x\n", toID);
     }
 }
 
 void zEntEvent(U32 toID, U32 toEvent, F32 toParam0, F32 toParam1, F32 toParam2, F32 toParam3)
 {
-    xASSERT_L(90, toID);
-
     xBase* sendTo;
     F32 toParam[4];
 
@@ -66,25 +48,14 @@ void zEntEvent(U32 toID, U32 toEvent, F32 toParam0, F32 toParam1, F32 toParam2, 
 
     if (sendTo) {
         zEntEvent(sendTo, toEvent, toParam);
-    } else {
-        xOutWarn("EVENT", "zEntEvent unable to find object with HashID %x\n", toID);
     }
 }
 
 void zEntEvent(xBase* from, U32 fromEvent, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget, U32 toParamWidgetID, ForceEvent forceEvent)
 {
-    xFAIL_RETURN_IF_L(127, to == NULL);
-
-#if DEBUG || RELEASE
-    static S32 reentrantCount = 0;
-
-    reentrantCount++;
-    xASSERT_FMT_L(134, reentrantCount < MAX_REENTRANT_COUNT, "Circular links detected!");
-
-    if (from && to && from == to && fromEvent == toEvent) {
-        xASSERT_L(150, fromEvent != toEvent);
+    if (to == NULL) {
+        return;
     }
-#endif
 
     if (to->baseType != eBaseTypeNPC) {
         if (toEvent == eEventDisable) {
@@ -106,12 +77,8 @@ void zEntEvent(xBase* from, U32 fromEvent, xBase* to, U32 toEvent, const F32* to
     }
 
     if (xBaseIsEnabled(to) && to->linkCount) {
-        xASSERT_FMT_L(209, to->link, "to %s", xSTAssetName(to));
-
         const xLinkAsset* idx = to->link;
         for (S32 i = 0; i < to->linkCount; i++, idx++) {
-            xASSERT_L(215, idx);
-
             xBase* sendTo;
 
             if (toEvent != idx->srcEvent) continue;
@@ -139,8 +106,4 @@ void zEntEvent(xBase* from, U32 fromEvent, xBase* to, U32 toEvent, const F32* to
             zEntEvent(to, toEvent, sendTo, idx->dstEvent, idx->param, b, idx->paramWidgetAssetID, FE_NO);
         }
     }
-    
-#if DEBUG || RELEASE
-    reentrantCount--;
-#endif
 }

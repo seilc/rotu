@@ -9,10 +9,6 @@ enum ForceEvent
     FE_NO
 };
 
-#if DEBUG || RELEASE
-extern char zEventLogBuf[20][256];
-#endif
-
 extern S32 zEventLogBufInit;
 extern U32 gThisPlayer;
 extern U32 gThisCameraTarget;

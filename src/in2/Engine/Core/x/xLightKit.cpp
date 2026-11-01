@@ -1,7 +1,6 @@
 #include "xLightKit.h"
 
 #include "iAsync.h"
-#include "xDebug.h"
 #include "xMath.h"
 #include "xModel.h"
 #include "xSpacePartitionTree.h"
@@ -21,18 +20,10 @@ xLightKit* xLightKit_Prepare(void* data)
     currlight = lkit->lightList = (xLightKitLight*)(lkit+1);
     for (i = 0; i < lkit->lightCount; i++) {
         if (currlight->platLight) {
-            iprintf("WARNING:  Light kit previously initalized!!!\n");
             return lkit;
         }
 
-        xASSERT_L(258, currlight->color.red >= 0.0f);
-        xASSERT_L(259, currlight->color.green >= 0.0f);
-        xASSERT_L(260, currlight->color.blue >= 0.0f);
-
         if (currlight->color.red > 1.0f || currlight->color.green > 1.0f || currlight->color.blue > 1.0f) {
-            iprintf("BOGUS LIGHT COLOR:  % 5.2f % 5.2f % 5.2f\n",
-                    currlight->color.red, currlight->color.green, currlight->color.blue);
-            
             RwReal s = MAX3(currlight->color.red, currlight->color.green, currlight->color.blue);
             s = MAX(s, 0.00001f);
             s = 1.0f / s;
@@ -40,9 +31,6 @@ xLightKit* xLightKit_Prepare(void* data)
             currlight->color.red *= s;
             currlight->color.green *= s;
             currlight->color.blue *= s;
-
-            iprintf("corrected to:       % 5.2f % 5.2f % 5.2f\n",
-                    currlight->color.red, currlight->color.green, currlight->color.blue);
         }
 
         switch (currlight->type) {
@@ -61,8 +49,6 @@ xLightKit* xLightKit_Prepare(void* data)
             currlight->platLight = RpLightCreate(rpLIGHTSPOTSOFT);
             break;
         }
-
-        xASSERT_L(296, currlight->platLight);
 
         RpLightSetColor(currlight->platLight, &currlight->color);
 
@@ -106,8 +92,6 @@ xLightKit* xLightKit_Prepare(void* data)
 
     lkit->blended = FALSE;
 
-    xASSERT_FMT_L(340, (numdir<=4)&&(numamb<=1), "ERROR:  Light kit with too many lights  %d dir, %d ambient!\n", numdir, numamb);
-
     return lkit;
 }
 
@@ -132,7 +116,6 @@ S32 xLightKit_Compare(xLightKitBlendInfo& lkitInfo1, xLightKitBlendInfo& lkitInf
 void xLightKit_Enable(const xModelInstance& model, RpWorld* world)
 {
     if (model.LightKitBlend) {
-        xASSERT_L(441, model.BlendDuration);
         xLightKit_Enable(model.LightKit, world, model.LightKitBlend, model.BlendTimeRemaining / model.BlendDuration);
     } else {
         xLightKit_Enable(model.LightKit, world, NULL, 0.0f);
@@ -163,9 +146,6 @@ void xLightKit_Enable(xLightKit* lkit, RpWorld* world, xLightKit* lkit_blend, Rw
 
     if (lkit_blend) {
         if (gLastLightKit.blendPercentage != blendPercentage && gLastLightKit.lightKitBlend != lkit_blend) {
-            xASSERT_L(491, blendPercentage >= 0.0f);
-            xASSERT_L(492, blendPercentage < 1.0f);
-
             for (i = 0; i < lkit->lightCount; i++) {
                 RwRGBAReal blendedColor;
                 blendedColor.alpha = 1.0f;

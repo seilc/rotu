@@ -3,7 +3,6 @@
 
 #include "xBaseAsset.h"
 #include "xLinkAsset.h"
-#include "xDebug.h"
 
 struct xBase;
 
@@ -61,7 +60,6 @@ inline void xBaseValidate(xBase* xb)
 
 inline bool xBaseIsEntity(const xBase* xb)
 {
-    xASSERT_L(130, xb != NULL);
     return xb->baseFlags & k_XBASE_IS_ENTITY;
 }
 

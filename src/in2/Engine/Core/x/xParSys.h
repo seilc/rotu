@@ -32,7 +32,6 @@ enum eParSysRenderFunc
     eParSysRenderFuncCount
 };
 
-xParGroupRenderFunction xParSysGetRenderFunction(S32 which);
 void xParCmdTexInit(xParCmdTex* cmd);
 void xParSysInit(void* b, void* tasset);
 void xParSysInit(xBase* b, xParSysAsset* tasset);

@@ -8,23 +8,8 @@
 
 #include <string.h>
 
-bool xLightEffectIsValid(xBase* base)
-{
-    if (!base) return false;
-
-    switch (base->baseType) {
-    case eBaseTypeLightEffectFlicker:
-    case eBaseTypeLightEffectStrobe:
-        return true;
-    default:
-        return false;
-    }
-}
-
 void xLightEffectFlicker::Init(xBase& data, xDynAsset& asset, size_t asset_size)
 {
-    xDynAssetValidate_L(48, asset, xLightEffectFlickerAsset, "effect:Light Effect Flicker");
-    
     xLightEffectFlicker* flickerEffect = (xLightEffectFlicker*)&data;
     new (flickerEffect) xLightEffectFlicker();
 
@@ -81,8 +66,6 @@ void xLightEffectFlicker::UpdateEffect(xLight& light, F32 dt)
 
 void xLightEffectStrobe::Init(xBase& data, xDynAsset& asset, size_t asset_size)
 {
-    xDynAssetValidate_L(153, asset, xLightEffectStrobeAsset, "effect:Light Effect Strobe");
-
     xLightEffectStrobe* strobeEffect = (xLightEffectStrobe*)&data;
     new (strobeEffect) xLightEffectStrobe();
 
@@ -130,7 +113,6 @@ void xLightEffectStrobe::UpdateEffect(xLight& light, F32 dt)
             xLightSetColor(&light, tasset->minColor, tasset->fadeDownTime);
             break;
         default:
-            xFAIL_FMT_L(244, "%s", "Unknown Strobe Stage");
             break;
         }
     }

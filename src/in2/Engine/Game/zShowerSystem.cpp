@@ -178,7 +178,6 @@ xLightKit* GetGlobalLightKit()
 {
     zEnv* zen = globals.sceneCur->zen;
     if (globals.sceneCur->sceneID != 'MNUS') {
-        xASSERT(zen->easset);
         return (xLightKit*)xSTFindAsset(zen->easset->objectLightKit, NULL);
     }
     return NULL;

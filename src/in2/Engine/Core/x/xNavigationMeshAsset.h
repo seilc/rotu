@@ -6,7 +6,6 @@
 #include "zMeshCircle.h"
 
 static const U8 NO_TRIANGLE = 0xFF;
-static const U32 MAX_TRIANGLES_PER_SUB_MESH = (NO_TRIANGLE-1);
 
 class xNavigationMeshAssetSubMesh
 {
@@ -27,7 +26,9 @@ public:
 
         U32 vertex(S32 i)
         {
-            xFAIL_RETURN_VALUE_IF_L(219, i < 0 || i > 2, 0);
+            if (i < 0 || i > 2) {
+                return 0;
+            }
             return ((U8*)&a)[i];
         }
     };
@@ -80,14 +81,15 @@ public:
 
     F32 getHeight(S32 subMeshIndex, S32 triangle, const xVec3& A) const
     {
-        xASSERT_L(236, subMeshIndex >= 0 && subMeshIndex < numSubMeshes);
         return subMeshes[subMeshIndex].getHeight(triangle, A.x, A.z);
     }
 };
 
 inline F32 xNavigationMeshAssetSubMesh::getHeight(S32 triangle, F32 x, F32 z) const
 {
-    xFAIL_RETURN_VALUE_IF_L(250, triangle < 0 || triangle >= numTriangles, 99999.0f);
+    if (triangle < 0 || triangle >= numTriangles) {
+        return 99999.0f;
+    }
 
     xVec3* a = &vertices[triangles[triangle].a];
     xVec3* b = &vertices[triangles[triangle].b];
@@ -116,8 +118,12 @@ inline F32 xNavigationMeshAssetSubMesh::getHeight(S32 triangle, F32 x, F32 z) co
 
 inline S32 xNavigationMeshAssetSubMesh::GetNeighbor(S32 triangle, S32 neighborNumber) const
 {
-    xFAIL_RETURN_VALUE_IF_L(314, triangle < 0 || triangle >= numTriangles, NO_TRIANGLE);
-    xFAIL_RETURN_VALUE_IF_L(315, neighborNumber < 0 || neighborNumber > 2, NO_TRIANGLE);
+    if (triangle < 0 || triangle >= numTriangles) {
+        return NO_TRIANGLE;
+    }
+    if (neighborNumber < 0 || neighborNumber > 2) {
+        return NO_TRIANGLE;
+    }
     return portal[triangle * 3 + neighborNumber];
 }
 

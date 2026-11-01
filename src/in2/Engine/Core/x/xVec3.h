@@ -2,7 +2,6 @@
 #define XVEC3_H
 
 #include "xMath.h"
-#include "xDebug.h"
 
 #include <rwcore.h>
 
@@ -20,14 +19,9 @@ struct xVec3
 
     static const xVec3 m_Null;
     static const xVec3 m_Ones;
-    static const xVec3 m_NegOnes; // inferred from Incredibles PS2, Rat MAP
     static const xVec3 m_UnitAxisX;
     static const xVec3 m_UnitAxisY;
     static const xVec3 m_UnitAxisZ;
-    static const xVec3 m_HalfVec; // inferred from Incredibles PS2, Rat MAP
-    static const xVec3 m_NegHalfVec; // inferred from Incredibles PS2, Rat MAP
-    static const xVec3 m_DoubleVec; // inferred from Incredibles PS2, Rat MAP
-    static const xVec3 m_NegDoubleVec; // inferred from Incredibles PS2, Rat MAP
 
     xVec3& assign(F32 x, F32 y, F32 z) { this->x = x; this->y = y; this->z = z; return *this; }
     xVec3& assign(F32 v);
@@ -52,7 +46,6 @@ struct xVec3
     F32 normalize()
     {
         F32 len2 = length2();
-        xASSERT_L(86, len2 > 0.f);
 
         F32 len = xsqrt(len2);
         *this *= 1.0f / len;
@@ -87,30 +80,29 @@ struct xVec3
     void Combine(const xVec3& a, F32 scale0, const xVec3& b, F32 scale1);
 };
 
-#define xVec3NormalizeMacro(o, v, outlen)                                                          \
-do {                                                                                               \
-    F32 len2 = xsqr((v)->x) + xsqr((v)->y) + xsqr((v)->z);                                         \
-    if (xeq(len2, 1.0f, EPSILON)) {                                                                \
-        (o)->x = (v)->x;                                                                           \
-        (o)->y = (v)->y;                                                                           \
-        (o)->z = (v)->z;                                                                           \
-        *(outlen) = 1.0f;                                                                          \
-    } else if (xeq(len2, 0.0f, EPSILON)) {                                                         \
-        (o)->x = 0.0f;                                                                             \
-        (o)->y = 1.0f;                                                                             \
-        (o)->z = 0.0f;                                                                             \
-        *(outlen) = 0.0f;                                                                          \
-    } else {                                                                                       \
-        *(outlen) = xsqrt(len2);                                                                   \
-        F32 len_inv = 1.0f / *(outlen);                                                            \
-        (o)->x = (v)->x * len_inv;                                                                 \
-        (o)->y = (v)->y * len_inv;                                                                 \
-        (o)->z = (v)->z * len_inv;                                                                 \
-    }                                                                                              \
-} while (0)
+#define xVec3NormalizeMacro(o, v, outlen)                                                         \
+{                                                                                                 \
+    F32 len2 = xsqr((v)->x) + xsqr((v)->y) + xsqr((v)->z);                                        \
+    if (xeq(len2, 1.0f, EPSILON)) {                                                               \
+        (o)->x = (v)->x;                                                                          \
+        (o)->y = (v)->y;                                                                          \
+        (o)->z = (v)->z;                                                                          \
+        *(outlen) = 1.0f;                                                                         \
+    } else if (xeq(len2, 0.0f, EPSILON)) {                                                        \
+        (o)->x = 0.0f;                                                                            \
+        (o)->y = 1.0f;                                                                            \
+        (o)->z = 0.0f;                                                                            \
+        *(outlen) = 0.0f;                                                                         \
+    } else {                                                                                      \
+        *(outlen) = xsqrt(len2);                                                                  \
+        F32 len_inv = 1.0f / *(outlen);                                                           \
+        (o)->x = (v)->x * len_inv;                                                                \
+        (o)->y = (v)->y * len_inv;                                                                \
+        (o)->z = (v)->z * len_inv;                                                                \
+    }                                                                                             \
+}
 
 F32 xVec3Normalize(xVec3* o, const xVec3* v);
-F32 xVec3NormalizeFast(xVec3* o, const xVec3* v); // inferred from TSSM GC, Rat MAP
 void xVec3Copy(xVec3* o, const xVec3* v);
 F32 xVec3Dot(const xVec3* vec1, const xVec3* vec2);
 
@@ -215,8 +207,6 @@ inline void xVec3::Combine(const xVec3& a, F32 scale0, const xVec3& b, F32 scale
     z = a.z * scale0 + b.z * scale1;
 }
 
-#if !DEBUG
 #include "xVec3Inlines.h"
-#endif
 
 #endif

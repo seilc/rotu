@@ -1,7 +1,6 @@
 #include "xLightVolume.h"
 
 #include "xMemMgr.h"
-#include "xDebug.h"
 #include "iModel.h"
 
 #define MAX_ACTIVE 64
@@ -31,7 +30,6 @@ void xLightVolume::reset_all()
     activity_type* end_act = act + activities_used;
 
     for (; act != end_act; act++) {
-        xASSERT_L(56, act->owner != 0);
         act->owner->activity = 0;
     }
 
@@ -45,17 +43,6 @@ void xLightVolume::create()
 
 bool xLightVolume::activate()
 {
-    xASSERT_L(73, activity == 0);
-
-#if DEBUG || RELEASE
-    activity_type* act = activities;
-    activity_type* end_act = act + activities_used;
-
-    for (; act != end_act; act++) {
-        xASSERT_L(80, (act->owner != this) && "Added light volume more than once.");
-    }
-#endif
-
     if (activities_used >= MAX_ACTIVE) {
         return false;
     }
@@ -69,10 +56,6 @@ bool xLightVolume::activate()
 
 void xLightVolume::deactivate()
 {
-    xASSERT_L(98, activity != 0);
-    xASSERT_L(99, (activity >= activities) && (activity < (activities + activities_used)));
-    xASSERT_L(100, activity->owner == this);
-
     activities_used--;
 
     activity_type* tail_activity = &activities[activities_used];
@@ -84,72 +67,6 @@ void xLightVolume::deactivate()
 
     activity = 0;
 }
-
-// RESTORED: from Incredibles GC
-void xLightVolumeModel::create()
-{
-    model = 0;
-    color = g_WHITE;
-    inside = false;
-    single = false;
-
-    xLightVolume::create();
-}
-
-void xLightVolumeModel::render()
-{
-    xASSERT(model != 0);
-
-    if (single) {
-        render_single(model, 0);
-    } else {
-        xModelInstance* m = model;
-
-        while (m) {
-            if ((m->Flags & 0x401) == 0x1) {
-                render_single(m, 0);
-            }
-
-            m = m->Next;
-        }
-    }
-}
-
-void xLightVolumeModel::render_single(xModelInstance* model, U32 stencil_pass)
-{
-    RpAtomic* atomic = model->Data;
-    RpHAnimHierarchy* hierarchy = iModelGetHierarchy(atomic);
-    RwMatrix* old_anim_mat;
-
-    if (hierarchy) {
-        old_anim_mat = hierarchy->pMatrixArray;
-        hierarchy->pMatrixArray = model->Mat + 1;
-    }
-
-    xMat4x3& mat = *(xMat4x3*)model->Mat;
-    xMat4x3 old_mat;
-
-    if (model->Scale.x != 0.0f) {
-        old_mat = mat;
-        xMat3x3MulScale(&mat, &mat, &model->Scale);
-    }
-
-    RwFrame* frame = RpAtomicGetFrame(atomic);
-    frame->ltm = (RwMatrix&)mat;
-
-    if (!xModelCullSingle(model)) {
-        render_atomic(atomic, color, inside, stencil_pass);
-    }
-
-    if (model->Scale.x != 0.0f) {
-        mat = old_mat;
-    }
-
-    if (hierarchy) {
-        hierarchy->pMatrixArray = old_anim_mat;
-    }
-}
-// END RESTORED
 
 void xLightVolume::render_all()
 {

@@ -1,6 +1,5 @@
 #include "xOneLiner.h"
 
-#include "xDebug.h"
 #include "iTime.h"
 #include "zUIIncredibles.h"
 #include "zConversation.h"
@@ -9,11 +8,6 @@
 #include "xString.h"
 
 xOneLiner* xOneLiner::sDelayedSound;
-
-#if DEBUG || RELEASE
-bool xOneLiner::sDebugIgnoreTime;
-bool xOneLiner::sDebugIgnoreProb;
-#endif
 
 void xOneLiner::SceneInit()
 {
@@ -117,7 +111,6 @@ void xOneLinerList::InitWithSounds(xOneLiner* soundList, U32 maxCheck)
         mNumSounds++;
         soundList++;
     }
-    xASSERT(maxCheck == 0 || maxCheck == mNumSounds);
 }
 
 inline void xOneLiner::Init()

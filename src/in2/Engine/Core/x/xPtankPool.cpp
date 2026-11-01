@@ -2,7 +2,6 @@
 
 #include "iAsync.h"
 #include "iMemMgr.h"
-#include "xDebug.h"
 #include "xFXHighDynamicRange.h"
 #include "xGlobals.h"
 #include "xMemMgr.h"
@@ -73,7 +72,6 @@ namespace {
                 ptank_context** end = bucket + group.buckets_used - 2;
                 for (; bucket < end; ++bucket) {
                     ptank_context* front = *bucket;
-                    xASSERT_L(289, front != 0);
                     const RwTexture* btexture = RpPTankAtomicGetTexture(front->ptank);
                     if (texture == btexture &&
                         it->dst_blend == front->dst_blend &&
@@ -129,14 +127,12 @@ namespace {
 
         S32 total = 0;
         for (group_data* it = groups, *end = it + MAX_PGT; it != end; ++it) {
-            xASSERT_L(348, it->max_size > 0);
             total += it->max_size;
         }
 
         size_t ptanks_size = total * sizeof(ptank_context);
         size_t buckets_size = (total + 2 * MAX_PGT) * sizeof(ptank_context*);
-        U8* mem = (U8*)xMEMALLOC_L(ptanks_size + buckets_size, 0, eMemMgrTag_Particle, 0, 353);
-        xASSERT_L(354, mem != 0);
+        U8* mem = (U8*)xMEMALLOC(ptanks_size + buckets_size, 0);
 
         for (group_data* it = groups, *end = it + MAX_PGT; it != end; ++it) {
             it->size = it->used = it->buckets_used = 0;
@@ -224,7 +220,6 @@ namespace {
         for (ptank_context* it = head; it < end; ++it, ++group.size) {
             it->ptank = create_ptank(group.create_flags);
             if (!it->ptank) {
-                xFAIL_FMT_L(470, "%s", "Ran out of memory allocating PTank");
                 break;
             }
 
@@ -261,21 +256,18 @@ namespace {
 
 void xPTankPoolSceneEnter()
 {
-    xASSERT_L(519, !inited);
     inited = true;
     current_sequence_index = 0;
     init_groups();
 
     for (group_data* it = groups, *end = it + MAX_PGT; it != end; ++it) {
         S32 want = 0.5f + it->max_size;
-        S32 size = create_ptanks(*it, want);
-        xASSERT_MSG_L(532, (want == size), "Ran out of memory pre-allocating ptank pools.  This is not fatal, but it's bad.");
+        create_ptanks(*it, want);
     }
 }
 
 void xPTankPoolSceneExit()
 {
-    xASSERT_L(554, inited);
     inited = false;
     for (group_data* g = groups, *endg = g + MAX_PGT; g != endg; ++g)
         for (ptank_context* p = g->ptanks, *endp = p + g->size; p != endp; ++p)
@@ -284,12 +276,10 @@ void xPTankPoolSceneExit()
 
 void xPTankPoolRender()
 {
-    xASSERT_L(594, inited);
     zRenderState(eRenderStateXPTankPool);
     xFXHighDynamicRangeBrighten(true, false);
 
-    ptank_context* ptanks = (ptank_context*)xMEMPUSHTEMP_L(MAX_PTANKS * sizeof(ptank_context), 0, 606);
-    xASSERT_L(607, ptanks);
+    ptank_context* ptanks = (ptank_context*)xMEMPUSHTEMP(MAX_PTANKS * sizeof(ptank_context));
 
     ptank_context* ptank = ptanks;
     for (group_data* g = groups, *endg = g + MAX_PGT; g != endg; ++g) {
@@ -334,8 +324,6 @@ void xPTankPoolRender()
 
 void ptank_pool::grab_block(ptank_group_type type)
 {
-    xASSERT_L(670, inited);
-
     ptank = NULL;
     group_data& group = groups[type];
 

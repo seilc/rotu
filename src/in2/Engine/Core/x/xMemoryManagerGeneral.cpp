@@ -2,18 +2,8 @@
 
 #include "xMemMgr.h"
 
-#if DEBUG || RELEASE
-#define DoAllocate(size, options, file, function, line) DoAllocate(size, options, file, function, line)
-#define DoReallocate(pointer, size, options, file, function, line) DoReallocate(pointer, size, options, file, function, line)
-#else
-#define DoAllocate(size, options, file, function, line) DoAllocate(size, options)
-#define DoReallocate(pointer, size, options, file, function, line) DoReallocate(pointer, size, options)
-#endif
-
 void xMemoryManagerGeneral::Init(void* start, U32 size, Dir dir, Strategy strategy, bool debugging)
 {
-    xMEMORYMANAGER_ASSERT(size % 16 == 0);
-
     DoInit(start, size, debugging);
 
     freeEnd = freeStart = dir == Up ? (FreeNode*)start : (FreeNode*)xMEMADVANCE(start, (S32)(size - sizeof(FreeNode)));
@@ -34,11 +24,9 @@ void* xMemoryManagerGeneral::GetCurrentEnd() const
         return freeEnd == NULL ? GetArenaStart() : freeEnd + 1;
 }
 
-void* xMemoryManagerGeneral::DoAllocate(U32 size, U32 options, const char*, const char*, S32)
+void* xMemoryManagerGeneral::DoAllocate(U32 size, U32 options)
 {
     size = (size + 15) & ~15;
-
-    xASSERT((options & xMEMORYOPT_ALIGN_MASK) >> xMEMORYOPT_ALIGN_SHIFT <= 4);
 
     FreeNode* node;
 
@@ -75,7 +63,6 @@ void* xMemoryManagerGeneral::DoAllocate(U32 size, U32 options, const char*, cons
             node->size = size;
 
             FreeNode* next = NextBlockOfMemory(node);
-            xASSERT(next == newNode);
 
             if (node == freeEnd) {
                 freeEnd = newNode;
@@ -116,7 +103,6 @@ void* xMemoryManagerGeneral::DoAllocate(U32 size, U32 options, const char*, cons
             node->size -= size + sizeof(FreeNode);
 
             FreeNode* next = NextBlockOfMemory(node);
-            xASSERT(next == newNode);
 
             if (node == freeEnd) {
                 freeEnd = newNode;
@@ -126,8 +112,6 @@ void* xMemoryManagerGeneral::DoAllocate(U32 size, U32 options, const char*, cons
             node = newNode;
         }
     }
-
-    xASSERT(node->size >= size);
 
     if (node->prev)
         node->prev->next = node->next;
@@ -143,8 +127,6 @@ void* xMemoryManagerGeneral::DoAllocate(U32 size, U32 options, const char*, cons
 
     AllocatedNode* allocatedNode = dir == Up ? (AllocatedNode*)node : (AllocatedNode*)xMEMADVANCE(node, -(S32)nodeSize);
     allocatedNode->size = nodeSize;
-
-    xASSERT(nodeSize - size < 65536);
 
     return allocatedNode + 1;
 }
@@ -193,7 +175,7 @@ void xMemoryManagerGeneral::DoFree(void* pointer)
     }
 }
 
-void* xMemoryManagerGeneral::DoReallocate(void* pointer, U32 size, U32 options, const char* file, const char* function, S32 line)
+void* xMemoryManagerGeneral::DoReallocate(void* pointer, U32 size, U32 options)
 {
     bool updateLargestBlock = false;
 
@@ -247,7 +229,7 @@ void* xMemoryManagerGeneral::DoReallocate(void* pointer, U32 size, U32 options, 
         sizeAfterNode = sizeBeforeNode = 0;
 
     if (sizeAfterNode == 0 && sizeBeforeNode == 0) {
-        void* newPointer = DoAllocate(size, options, file, function, line);
+        void* newPointer = DoAllocate(size, options);
         if (newPointer == NULL)
             return NULL;
 
@@ -259,7 +241,6 @@ void* xMemoryManagerGeneral::DoReallocate(void* pointer, U32 size, U32 options, 
 
     const void* dataStart = allocatedNode + 1;
 
-    xASSERT(size > nodeSize);
     U32 neededSize = size - nodeSize;
 
     if ((sizeAfterNode != 0 && dir == Up) || (sizeBeforeNode != 0 && dir == Down)) {
@@ -336,7 +317,7 @@ void* xMemoryManagerGeneral::DoReallocate(void* pointer, U32 size, U32 options, 
         allocatedNode = newAllocatedNode;
         allocatedNode->size += newSpace;
     }
-    
+
     void* dataDest = allocatedNode + 1;
     if (dataDest < dataStart)
         xMemoryCopyUpA128(dataDest, dataStart, size);
@@ -386,9 +367,9 @@ xMemoryManagerGeneral::AllocatedNode* xMemoryManagerGeneral::ShortenNode(Allocat
         newNode = (FreeNode*)(allocatedNode - 1);
         xMemoryCopyDownA128(allocatedNode, oldAllocatedNode, size + sizeof(AllocatedNode));
     }
-    
+
     allocatedNode->size = size;
-    
+
     newNode->next = NULL;
     newNode->prev = NULL;
     newNode->size = nodeSize - size - sizeof(FreeNode);
@@ -418,7 +399,7 @@ xMemoryManagerGeneral::AllocatedNode* xMemoryManagerGeneral::ShortenNode(Allocat
             insertBefore->prev = newNode;
         }
     }
-    
+
     MergeNodes(newNode);
 
     return allocatedNode;

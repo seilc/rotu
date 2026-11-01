@@ -18,25 +18,17 @@ public:
         BestFit
     };
 
-    xMemoryManagerGeneral();
+    xMemoryManagerGeneral() {}
 
     void Init(void* start, U32 size, Dir dir, Strategy strategy, bool debugging);
     void* GetCurrentEnd() const;
 
 protected:
-#if DEBUG || RELEASE
-    virtual void* DoAllocate(U32 size, U32 options, const char*, const char*, S32);
-#else
     virtual void* DoAllocate(U32 size, U32 options);
-#endif
 
     virtual void DoFree(void* pointer);
 
-#if DEBUG || RELEASE
-    virtual void* DoReallocate(void* pointer, U32 size, U32 options, const char* file, const char* function, S32 line);
-#else
     virtual void* DoReallocate(void* pointer, U32 size, U32 options);
-#endif
 
     virtual U32 DoGetBlockSize(void* pointer) const;
 

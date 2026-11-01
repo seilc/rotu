@@ -162,20 +162,8 @@ static void render_par_sprite(void* data, xParGroup* ps)
     iParMgrRenderParSys_Sprite(data, ps);
 }
 
-xParGroupRenderFunction xParSysGetRenderFunction(S32 which)
-{
-    xASSERT_L(262, (which >= 0) && (which < eParSysRenderFuncCount));
-
-    return sParSysInfo[which].func;
-}
-
 void xParCmdTexInit(xParCmdTex* cmd)
 {
-    xASSERT_L(270, cmd->cols > 0);
-    xASSERT_L(271, cmd->rows > 0);
-    xASSERT_L(272, cmd->rows <= 16);
-    xASSERT_L(273, cmd->cols <= 16);
-
     cmd->unit_count = cmd->rows * cmd->cols;
     cmd->unit_width = (cmd->x2 - cmd->x1) / cmd->cols;
     cmd->unit_height = (cmd->y2 - cmd->y1) / cmd->rows;
@@ -206,7 +194,7 @@ void xParSysInit(xBase* b, xParSysAsset* tasset)
     U32 size, i;
     size = t->cmdCount;
     if (size > 0) {
-        t->cmd = (xParCmd*)xMEMALLOC_L(size * sizeof(xParCmd), 0, eMemMgrTag_Particle, 0, 0);
+        t->cmd = (xParCmd*)xMEMALLOC(size * sizeof(xParCmd), 0);
     } else {
         t->cmd = NULL;
     }
@@ -218,9 +206,7 @@ void xParSysInit(xBase* b, xParSysAsset* tasset)
     }
 
     
-    t->group = (xParGroup*)xMEMALLOC_L(sizeof(xParGroup), 0, eMemMgrTag_Particle, 0, 395);
-
-    xASSERT_L(397, t->group);
+    t->group = (xParGroup*)xMEMALLOC(sizeof(xParGroup), 0);
 
     xParGroupInit(t->group);
     xParGroupSetPriority(t->group, tasset->priority);
@@ -253,9 +239,6 @@ void xParSysSetup(xParSys* t)
 
 void xParSysReset(xParSys* t)
 {
-    xASSERT_L(452, t);
-    xASSERT_L(453, t->tasset);
-
     xBaseReset(t, t->tasset);
 
     if (t->group) {
@@ -277,8 +260,6 @@ xBase* xParSysExit(xBase* b, zScene*, void*)
 
 void xParSysExit(xParSys* t)
 {
-    xASSERT_L(479, t);
-
     if (t->group) {
         xParGroupKillAllParticles(t->group);
         xParGroupUnregister(t->group);
@@ -288,8 +269,6 @@ void xParSysExit(xParSys* t)
 void xParSysEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*, U32)
 {
     xParSys* t = (xParSys*)to;
-
-    xASSERT_L(541, to);
 
     switch (toEvent) {
     case eEventReset:
@@ -325,16 +304,12 @@ static void xParGroupUpdateR(xParSys* s, xParGroup* g, F32 dt);
 
 void xParSysUpdate(xBase* to, xScene*, F32 dt)
 {
-    xASSERT_L(585, to);
-
     xParSys* s = (xParSys*)to;
     xParSys* parent = s->parent;
 
     if (s->tasset->renderFunc == eParSysRenderFuncSprite) {
         par_sprite_begin();
     }
-
-    xASSERT_L(593, s);
 
     xParGroup* g = s->group;
     while (g != NULL) {
@@ -359,20 +334,13 @@ void xParSysUpdate(xBase* to, xScene*, F32 dt)
 
 static void xParGroupUpdateR(xParSys* s, xParGroup* g, F32 dt)
 {
-    xASSERT_L(629, s);
-    xASSERT_L(630, g);
-    xASSERT_FMT_L(632, s != s->parent, "Particle system has itself as a parent!");
-    
     if (s->parent) {
         xParGroupUpdateR(s->parent, g, dt);
     }
 
-    xASSERT_L(637, s->group);
-
     if (s->group->m_active) {
         for (U32 i = 0; i < s->cmdCount; i++) {
             xParCmd* cmd = &s->cmd[i];
-            xASSERT_L(645, cmd);
             if (cmd && cmd->tasset) {
                 xParCmdUpdateFunction func = xParCmdGetUpdateFunc(cmd->tasset->type);
                 if (func) {
@@ -387,7 +355,6 @@ void xParGroupUpdate(xParSys* s, xParGroup* g, F32 dt)
 {
     for (U32 i = 0; i < s->cmdCount; i++) {
         xParCmd* cmd = &s->cmd[i];
-        xASSERT_L(664, cmd);
         if (cmd && cmd->tasset) {
             xParCmdUpdateFunction func = xParCmdGetUpdateFunc(cmd->tasset->type);
             if (func) {

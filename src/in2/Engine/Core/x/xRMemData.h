@@ -5,7 +5,6 @@
 
 #include <stddef.h>
 
-#define RMEM_GROWSTUB_SIZE 32
 #define RMEM_GROW_ENABLED (1<<0)
 
 struct xBase;
@@ -20,8 +19,6 @@ struct RyzMemData
 struct RyzMemGrow
 {
     S32 IsEnabled() { return flg_grow & RMEM_GROW_ENABLED; }
-    RyzMemGrow* Resume(xBase* growuser); // inferred from TSSM GC, Rat MAP
-    void Done(); // inferred from TSSM GC, Rat MAP
 
 protected:
     S32 flg_grow;

@@ -1,7 +1,5 @@
 #include "xPar.h"
 
-#include "xDebug.h"
-
 xPar gParPool[XPAR_POOL_MAX];
 xPar* gParDead;
 
@@ -44,8 +42,6 @@ xPar* xParAlloc()
 
 void xParFree(xPar* par)
 {
-    xASSERT_L(100, par);
-
     if (par->m_next) {
         par->m_next->m_prev = par->m_prev;
     }

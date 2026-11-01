@@ -1,10 +1,6 @@
 #ifndef XMATHINLINES_H
 #define XMATHINLINES_H
 
-#if DEBUG
-#define inline
-#endif
-
 inline F32 xsqrt(register F32 x)
 {
     register F32 c_half = 0.5f;
@@ -92,8 +88,6 @@ inline void xsqrtfast(F32& o, register F32 fVal)
 {
     register F32 fRetVal;
 
-    xASSERT(fVal >= 0.0f);
-
     if (fVal <= 0.0f)
         o = 0.0f;
     else
@@ -116,13 +110,9 @@ inline void xsinfast(F32& fResult, F32 fAngle)
     fResult *= fAngle;
 }
 
-inline void xmax3fast(F32& o, F32 a, F32 b, F32 c); // inferred from BFBB PS2, Rat MAP
-
 inline F32 xinvsqrt(register F32 fVal)
 {
     register F32 fRetVal;
-
-    xASSERT(fVal > 0.0f);
 
     asm {
         frsqrte fRetVal, fVal

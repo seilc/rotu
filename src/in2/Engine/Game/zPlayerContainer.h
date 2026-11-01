@@ -1,7 +1,6 @@
 #ifndef ZPLAYERCONTAINER_H
 #define ZPLAYERCONTAINER_H
 
-#include "xDebug.h"
 #include "xEnt.h"
 
 struct zPlayer;
@@ -13,7 +12,6 @@ public:
 
     zPlayer* operator[](S32 index)
     {
-        xASSERT(index >= 0 && index < size());
         return playerArray[index];
     }
 

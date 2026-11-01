@@ -22,7 +22,6 @@ DECOMP_FORCEACTIVE(
     "ComboFadeDir",
     "leftright",
     "updown",
-    DEBUG ? "zCombo.cpp" : 0,
     "Combo%02d",
     "HUD_TEXT_COMBOMESSAGE"
 )

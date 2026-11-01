@@ -2,8 +2,7 @@
 #define XLIGHTEFFECT_H
 
 #include "xBase.h"
-#include "xDynAsset.h"
-#include "xColor.h"
+#include "xLightEffectAsset.h"
 
 struct xLight;
 
@@ -13,17 +12,6 @@ public:
     virtual void StartEffect(xLight& light, bool resetEffect) = 0;
     virtual void StopEffect(xLight& light, bool resetColor) = 0;
     virtual void UpdateEffect(xLight& light, F32 dt) = 0;
-};
-
-struct xLightEffectFlickerAsset : xDynAsset
-{
-    enum { VERSION = 1 };
-
-    xFColor maxColorVariation;
-    F32 flickerRate;
-    F32 randomFlickerRate;
-    F32 blendTime;
-    U32 flags;
 };
 
 class xLightEffectFlicker : xLightEffectBase
@@ -39,19 +27,6 @@ private:
     xLightEffectFlickerAsset* tasset;
 };
 
-struct xLightEffectStrobeAsset : xDynAsset
-{
-    enum { VERSION = 1 };
-
-    xFColor minColor;
-    F32 fadeUpTime;
-    F32 fadeDownTime;
-    F32 timeMax;
-    F32 timeMin;
-    F32 randomTimeMax;
-    F32 randomTimeMin;
-};
-
 class xLightEffectStrobe : xLightEffectBase
 {
 public:
@@ -64,7 +39,5 @@ public:
 private:
     xLightEffectStrobeAsset* tasset;
 };
-
-bool xLightEffectIsValid(xBase* base);
 
 #endif

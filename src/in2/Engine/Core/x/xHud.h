@@ -8,8 +8,6 @@
 
 #include <stddef.h>
 
-struct tweak_info;
-
 namespace xhud {
 
 struct render_context;
@@ -148,11 +146,6 @@ public:
     virtual void render();
     virtual void dispatch(xBase* from, U32 event, const F32* argf, xBase* argw, U32 argwi);
 
-#if DEBUG || RELEASE
-    virtual const char* category();
-    virtual void add_tweaks(const char* type_prefix, const char* object_prefix);
-#endif
-
 private:
     motive_node* _motive_top;
     motive_node* _motive_temp;
@@ -161,13 +154,6 @@ private:
 
 xModelInstance* load_model(U32 id);
 void render_model(xModelInstance& m, const render_context& rc);
-
-#if DEBUG || RELEASE
-void screenToNormalizedX(const tweak_info&, void* value);
-void screenToNormalizedY(const tweak_info&, void* value);
-void normalizedToScreenX(const tweak_info&, void* value);
-void normalizedToScreenY(const tweak_info&, void* value);
-#endif
 
 inline void widget::disable() { flag.enabled = false; }
 

@@ -3,7 +3,6 @@
 
 #include "iPad.h"
 #include "xMath2.h"
-#include "xDebug.h"
 
 #define k_XPAD_MAX 4
 
@@ -65,8 +64,6 @@ void xPadAnalogIsDigital(S32 idx, S32 enable);
 
 inline F32 normalize_analog(S32 v, S32 v_min, S32 v_max, S32 dead_center, S32 dead_min, S32 dead_max)
 {
-    xASSERT_L(248, dead_min > v_min);
-    xASSERT_L(249, dead_max < v_max);
     if (v <= dead_center) {
         if (v >= dead_min) {
             return 0.0f;

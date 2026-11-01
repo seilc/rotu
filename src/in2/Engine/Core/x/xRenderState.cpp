@@ -1,7 +1,6 @@
 #include "xRenderState.h"
 
 #include "xMath.h"
-#include "xDebug.h"
 
 #include <dolphin.h>
 
@@ -23,10 +22,7 @@ void xRenderSceneExit()
 
 void xRenderStateSetZBias(RwReal bias)
 {
-    xASSERT_L(182, (old_near_plane == -HUGE) && (old_far_plane == -HUGE));
-
     RwCamera* cam = RwCameraGetCurrentCamera();
-    xASSERT_L(184, cam != 0);
     if (!cam) return;
 
     static const RwReal bias_scale = 0.005f;
@@ -43,10 +39,7 @@ void xRenderStateSetZBias(RwReal bias)
 
 void xRenderStateResetZBias()
 {
-    xASSERT_L(202, (old_near_plane != -HUGE) && (old_far_plane != -HUGE));
-
     RwCamera* cam = RwCameraGetCurrentCamera();
-    xASSERT_L(204, cam != 0);
     if (!cam) return;
 
     RwCameraEndUpdate(cam);
@@ -98,74 +91,31 @@ void xRenderFixIMEnd()
 
 void xRenderStateBlendModesSet(RwBlendFunction srcBlend, RwBlendFunction destBlend)
 {
-    RwBool ret;
-
-    ret = RwRenderStateSetMacro(rwRENDERSTATESRCBLEND, (void*)srcBlend);
-    if (!ret) {
-        xFAIL_FMT_L(2160, "Unable to set rwRENDERSTATESRCBLEND with value %d", srcBlend);
-    }
-
-    ret = RwRenderStateSetMacro(rwRENDERSTATEDESTBLEND, (void*)destBlend);
-    if (!ret) {
-        xFAIL_FMT_L(2166, "Unable to set rwRENDERSTATEDESTBLEND with value %d", destBlend);
-    }
+    RwRenderStateSetMacro(rwRENDERSTATESRCBLEND, (void*)srcBlend);
+    RwRenderStateSetMacro(rwRENDERSTATEDESTBLEND, (void*)destBlend);
 }
 
 void xRenderStateZModesSet(RwBool ZWrite, RwBool ZTest)
 {
-    RwBool ret;
-
-    ret = RwRenderStateSetMacro(rwRENDERSTATEZWRITEENABLE, (void*)ZWrite);
-    if (!ret) {
-        xFAIL_FMT_L(2176, "Unable to set rwRENDERSTATEZWRITEENABLE with value %d", ZWrite);
-    }
-
-    ret = RwRenderStateSetMacro(rwRENDERSTATEZTESTENABLE, (void*)ZTest);
-    if (!ret) {
-        xFAIL_FMT_L(2182, "Unable to set rwRENDERSTATEZTESTENABLE with value %d", ZTest);
-    }
+    RwRenderStateSetMacro(rwRENDERSTATEZWRITEENABLE, (void*)ZWrite);
+    RwRenderStateSetMacro(rwRENDERSTATEZTESTENABLE, (void*)ZTest);
 }
 
 void xRenderStateBlendAndZModesSet(RwBlendFunction srcBlend, RwBlendFunction destBlend, RwBool ZWrite, RwBool ZTest)
 {
-    RwBool ret;
-
-    ret = RwRenderStateSetMacro(rwRENDERSTATESRCBLEND, (void*)srcBlend);
-    if (!ret) {
-        xFAIL_FMT_L(2193, "Unable to set rwRENDERSTATESRCBLEND with value %d", srcBlend);
-    }
-
-    ret = RwRenderStateSetMacro(rwRENDERSTATEDESTBLEND, (void*)destBlend);
-    if (!ret) {
-        xFAIL_FMT_L(2199, "Unable to set rwRENDERSTATEDESTBLEND with value %d", destBlend);
-    }
-
-    ret = RwRenderStateSetMacro(rwRENDERSTATEZWRITEENABLE, (void*)ZWrite);
-    if (!ret) {
-        xFAIL_FMT_L(2205, "Unable to set rwRENDERSTATEZWRITEENABLE with value %d", ZWrite);
-    }
-
-    ret = RwRenderStateSetMacro(rwRENDERSTATEZTESTENABLE, (void*)ZTest);
-    if (!ret) {
-        xFAIL_FMT_L(2211, "Unable to set rwRENDERSTATEZTESTENABLE with value %d", ZTest);
-    }
+    RwRenderStateSetMacro(rwRENDERSTATESRCBLEND, (void*)srcBlend);
+    RwRenderStateSetMacro(rwRENDERSTATEDESTBLEND, (void*)destBlend);
+    RwRenderStateSetMacro(rwRENDERSTATEZWRITEENABLE, (void*)ZWrite);
+    RwRenderStateSetMacro(rwRENDERSTATEZTESTENABLE, (void*)ZTest);
 }
 
 void xRenderStateBlendModesGet(RwBlendFunction* srcBlend, RwBlendFunction* destBlend)
 {
-    RwBool ret;
-
     if (srcBlend) {
-        ret = RwRenderStateGetMacro(rwRENDERSTATESRCBLEND, (void*)srcBlend);
-        if (!ret) {
-            xFAIL_FMT_L(2225, "Unable to get rwRENDERSTATESRCBLEND with value %d", srcBlend);
-        }
+        RwRenderStateGetMacro(rwRENDERSTATESRCBLEND, (void*)srcBlend);
     }
 
     if (destBlend) {
-        ret = RwRenderStateGetMacro(rwRENDERSTATEDESTBLEND, (void*)destBlend);
-        if (!ret) {
-            xFAIL_FMT_L(2234, "Unable to get rwRENDERSTATEDESTBLEND with value %d", destBlend);
-        }
+        RwRenderStateGetMacro(rwRENDERSTATEDESTBLEND, (void*)destBlend);
     }
 }

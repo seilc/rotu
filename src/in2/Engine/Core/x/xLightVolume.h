@@ -2,8 +2,6 @@
 #define XLIGHTVOLUME_H
 
 #include "xColor.h"
-#include "xModel.h"
-#include "xDebug.h"
 
 #include <rpworld.h>
 
@@ -21,7 +19,6 @@ public:
     virtual void render() = 0;
     virtual void render_immediate_pass(xColor, bool, bool)
     {
-        xASSERT_L(72, false && "Must implement for immediate-mode.");
     }
 
     static void render_all();
@@ -34,19 +31,6 @@ private:
 
     static activity_type* activities;
     static S32 activities_used;
-};
-
-class xLightVolumeModel : public xLightVolume
-{
-public:
-    void create();
-    virtual void render();
-    void render_single(xModelInstance* model, U32 stencil_pass);
-
-    xModelInstance* model;
-    xColor color;
-    bool inside;
-    bool single;
 };
 
 #endif

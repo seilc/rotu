@@ -1,5 +1,4 @@
 #include "xMath.h"
-#include "xDebug.h"
 
 #include "decomp.h"
 
@@ -43,13 +42,7 @@ DECOMP_FORCEFLOAT(0.5f)
 DECOMP_FORCEFLOAT(1.0f)
 DECOMP_FORCEFLOAT(2.0f)
 DECOMP_FORCEFLOAT(0.0f)
-#if !DEBUG
 DECOMP_FORCEACTIVE(xsqrt)
-#endif
-
-#if DEBUG
-#include "xMathInlines.h"
-#endif
 
 DECOMP_FORCEBLOCK((S32 k) { *(F32*)0 = k; })
 
@@ -126,19 +119,6 @@ F32 xDangleClamp(F32 a)
     return b;
 }
 
-// RESTORED: from Incredibles GC
-F32 xDangleClampFast(F32 a)
-{
-    if (a >= PI) {
-        a -= 2.0f * PI;
-    } else if (a < -PI) {
-        a += 2.0f * PI;
-    }
-
-    return a;
-}
-// END RESTORED
-
 static void xBinomInit()
 {
     binom_triangle[0] = 1;
@@ -200,169 +180,6 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
 
     x += dx;
 }
-
-// RESTORED: from Incredibles GC
-void xAccelMove2(F32& x, F32& v, F32 decel, F32 accel, F32 dt, F32 endx, F32 maxv)
-{
-    xASSERT((decel < 0.0f) && (accel > 0.0f));
-
-    F32 offset = endx - x;
-    F32 t1 = (xabs(v) < 0.001f || !xsamesign(offset, v)) ? HUGE : offset / v;
-    F32 t2 = xabs(v / decel);
-    F32 a = (t1 < t2) ? decel : accel;
-
-    if (offset < 0.0f) {
-        a *= -1.0f;
-    }
-
-    const F32 oldv = v;
-    F32 dv, newv, adx;
-    dv = a * dt;
-    newv = v + dv;
-
-    if (xabs(newv) <= maxv) {
-        v = newv;
-        adx = 0.5f * dv * dt;
-    } else if (xabs(v) <= maxv) {
-        v = range_limit(newv, -maxv, maxv);
-        if (oldv != v) {
-            F32 diff = v - oldv;
-            adx = 0.5f * diff * diff / a;
-        } else {
-            adx = 0.0f;
-        }
-    } else if (!xsamesign(newv, dv)) {
-        v = newv;
-        adx = 0.5f * dv * dt;
-    } else {
-        adx = 0.0f;
-    }
-
-    F32 dx = oldv * dt + adx;
-
-    if (t1 > t2) {
-        if (xsamesign(dx, offset) && xabs(dx) > xabs(offset)) {
-            x = endx;
-            v = 0.0f;
-            return;
-        }
-    } else if (!xsamesign(dx, offset)) {
-        x = endx;
-        v = 0.0f;
-        return;
-    }
-
-    x += dx;
-}
-// END RESTORED
-
-// RESTORED: from Incredibles GC, BFBB GC
-F32 xAccelMoveTime(F32 dx, F32 a, F32, F32 maxv)
-{
-    F32 time;
-    F32 atime = maxv / a;
-    F32 adist = atime * (0.5f * a * atime);
-
-    dx *= 0.5f;
-    if (adist < dx) {
-        time = xsqrt(2.0f * dx / a);
-    } else {
-        time = atime + (dx - adist) / maxv;
-    }
-
-    return 2.0f * time;
-}
-// END RESTORED
-
-// RESTORED: from Incredibles GC, TSSM GC, BFBB GC
-void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv)
-{
-    if (xabs(v) > xabs(maxv)) {
-        if (v < 0.0f) {
-            if (a > 0.0f) {
-                a = -a;
-            }
-        } else if (a < 0.0f) {
-            a = -a;
-        }
-
-        a = -a;
-    }
-
-    if (a < 0.0f) {
-        if (maxv > 0.0f) {
-            maxv = -maxv;
-        }
-    } else if (maxv < 0.0f) {
-        maxv = -maxv;
-    }
-
-    F32 diff = maxv - v;
-    F32 dv = a * dt;
-    if (xabs(diff) < xabs(dv)) {
-        x += v * dt + 0.5f * diff * diff / a;
-        v = maxv;
-    } else {
-        x += 0.5f * a * dt * dt + v * dt;
-        v += dv;
-    }
-}
-// END RESTORED
-
-// RESTORED: from Incredibles GC
-void xAccelMoveRange(F32& x, F32& v, F32 accel_min, F32 accel_max, F32 dt, F32 endx, F32 maxv)
-{
-    xASSERT((accel_min < 0.0f) && (accel_max > 0.0f));
-
-    F32 offset = endx - x;
-    F32 t1 = (xabs(v) < 0.001f || !xsamesign(offset, v)) ? HUGE : offset / v;
-    F32 t2 = (v >= 0.0f) ? -v / accel_min : -v / accel_max;
-    F32 a;
-
-    if (t1 >= t2) {
-        a = (offset < 0.0f) ? accel_min : accel_max;
-    } else {
-        a = (offset < 0.0f) ? accel_max : accel_min;
-    }
-
-    const F32 oldv = v;
-    F32 dv, newv, adx;
-    dv = a * dt;
-    newv = v + dv;
-
-    if (xabs(newv) <= maxv) {
-        v = newv;
-        adx = 0.5f * dv * dt;
-    } else if (xabs(v) <= maxv) {
-        v = range_limit(newv, -maxv, maxv);
-        if (oldv != v) {
-            F32 diff = v - oldv;
-            adx = 0.5f * diff * diff / a;
-        } else {
-            adx = 0.0f;
-        }
-    } else if (!xsamesign(newv, dv)) {
-        v = newv;
-        adx = 0.5f * dv * dt;
-    } else {
-        adx = 0.0f;
-    }
-
-    F32 dx = oldv * dt + adx;
-
-    if (t1 > t2) {
-        if (xsamesign(dx, offset) && xabs(dx) > xabs(offset)) {
-            dx = offset;
-            v = 0.0f;
-        }
-    } else if (!xsamesign(dx, offset)) {
-        dx = offset;
-        v = 0.0f;
-    }
-
-    x += dx;
-}
-// END RESTORED
 
 // RESTORED: from Incredibles GC, TSSM GC, BFBB GC
 void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
@@ -437,9 +254,6 @@ void xFuncPiece_Derivative(xFuncPiece* deriv, xFuncPiece* func)
 
 void xFuncPiece_EndPoints(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff)
 {
-    xASSERT(func);
-    xASSERT(pi != pf);
-
     F32 fdiff = ff - fi;
     func->end = pf - pi;
     F32 xfinv = 1.0f / func->end;
@@ -451,9 +265,6 @@ void xFuncPiece_EndPoints(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff)
 
 void xFuncPiece_EndPointsAndSlopes(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff, F32 vi, F32 vf)
 {
-    xASSERT(func);
-    xASSERT(pi != pf);
-
     F32 fdiff = ff - fi;
     func->end = pf - pi;
     F32 xfinv = 1.0f / func->end;
@@ -469,9 +280,6 @@ void xFuncPiece_EndPointsAndSlopes(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32
 
 void xFuncPiece_EndPointsAllInitial(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff, F32 vi, F32 ai)
 {
-    xASSERT(func);
-    xASSERT(pi != pf);
-
     F32 fdiff = ff - fi;
     func->end = pf - pi;
     F32 xfinv = 1.0f / func->end;
@@ -487,9 +295,6 @@ void xFuncPiece_EndPointsAllInitial(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F3
 
 void xFuncPiece_ShiftPiece(xFuncPiece* shift, xFuncPiece* func, F32 newZero)
 {
-    xASSERT(shift);
-    xASSERT(func);
-
     S32 i, j;
     xFuncPiece temp;
 
@@ -518,15 +323,10 @@ void xResponseCurve::reset(U32 values, const void* curve, U32 nodes)
     this->curve = (const inode*)curve;
     _nodes = nodes;
     active_node = 0;
-    xASSERT(valid());
 }
 
 void xResponseCurve::eval_linear(F32 t, F32* value) const
 {
-    xASSERT(value != 0);
-    xASSERT(valid());
-    xASSERT((t >= start_t()) && (t <= end_t()));
-
     F32* end = value + _values;
     size_t stride = _values * sizeof(F32) + sizeof(node);
     find_active_node(t, stride);
@@ -549,10 +349,6 @@ void xResponseCurve::eval_linear(F32 t, F32* value) const
 
 void xResponseCurve::eval_smooth(F32 t, F32* value) const
 {
-    xASSERT(value != 0);
-    xASSERT(valid());
-    xASSERT((t >= start_t()) && (t <= end_t()));
-
     if (_nodes == 2) { eval_linear(t, value); return; }
 
     F32* end = value + _values;

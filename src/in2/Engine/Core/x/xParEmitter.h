@@ -22,8 +22,7 @@ struct xParEmitter : xBase
     F32 rate_fraction;
     F32 rate_fraction_cull;
     U8 emit_flags;
-    U8 tweak_flags;
-    U8 emit_pad[2];
+    U8 emit_pad[3];
     U8 rot[3];
     xModelTag tag;
     F32 oocull_distance_sqr;

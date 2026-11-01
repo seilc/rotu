@@ -5,7 +5,6 @@
 #include "zEvent.h"
 #include "xRand.h"
 #include "zNPCCoverPoint.h"
-#include "xOutputMgr.h"
 
 void xGroupInit(void* b, void* asset)
 {
@@ -29,7 +28,7 @@ void xGroupInit(xBase* b, xGroupAsset* asset)
 
     U32 count = xGroupGetCount(t);
     
-    t->item = (count > 0) ? (xBase**)xMEMALLOC_L(sizeof(xBase*) * count, 0, eMemMgrTag_Scene, 0, 53) : NULL;
+    t->item = (count > 0) ? (xBase**)xMEMALLOC(sizeof(xBase*) * count, 0) : NULL;
     t->last_index = 0;
     t->ptr_last_index = 0;
     t->flg_group = 0;
@@ -37,8 +36,6 @@ void xGroupInit(xBase* b, xGroupAsset* asset)
 
 void xGroupSetup(xGroup* g)
 {
-    xASSERT_L(64, g);
-
     if (g->flg_group & 0x1) return;
 
     U32 count = xGroupGetCount(g);
@@ -57,42 +54,26 @@ void xGroupSetup(xGroup* g)
     }
     
     g->flg_group |= 0x1;
-
-    xASSERT_FMT_L(99, ((XGRP_FLG_HASWIDGET|XGRP_FLG_HASASSET) & g->flg_group) != (
-                       XGRP_FLG_HASWIDGET|XGRP_FLG_HASASSET),
-                 "ERROR:  Group 0x%08x  \"%s\" has both widgets and assets!\n",
-                 g->id, xSTAssetName(g->id));
 }
 
 void xGroupSave(xGroup* ent, xSerial* s)
 {
     xBaseSave(ent, s);
-
-    xASSERT_L(119, ent);
-    xASSERT_L(120, s);
 }
 
 void xGroupLoad(xGroup* ent, xSerial* s)
 {
     xBaseLoad(ent, s);
-
-    xASSERT_L(138, ent);
-    xASSERT_L(139, s);
 }
 
 void xGroupReset(xGroup* ent)
 {
-    xASSERT_L(144, ent);
-    xASSERT_L(145, ent->asset);
-
     xBaseReset(ent, ent->asset);
 }
 
 void xGroupEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget, U32 toParamWidgetID)
 {
     xGroup* g = (xGroup*)to;
-    xASSERT_L(167, g);
-    xASSERT_L(168, g->asset);
 
     switch (toEvent) {
     case eEventReset:
@@ -112,7 +93,6 @@ void xGroupEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBas
         rand = xrand_RandomChoice(g->asset->itemCount);
     }
 
-    U32* idx = (U32*)((U8*)g->asset + sizeof(xGroupAsset));
     switch (toEvent) {
     case eEventNPCRetreatToCover:
         zNPCCoverManageRetreatToCover(from, g, toEvent, toParam, (xGroup*)toParamWidget, toParamWidgetID);
@@ -159,9 +139,6 @@ void xGroupEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBas
                 xBase* b = g->item[i];
                 if (b) {
                     zEntEvent(b, toEvent, toParam, toParamWidget, toParamWidgetID);
-                } else {
-                    xOutWarn("GROUP", "Group %s referencing ### object %08X not found!!\n",
-                             zSceneGetName(g), idx[i]);
                 }
             }
         }
@@ -171,18 +148,12 @@ void xGroupEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBas
 
 U32 xGroupGetCount(xGroup* g)
 {
-    xASSERT_L(279, g);
-    xASSERT_L(280, g->asset);
-
     return g->asset->itemCount;
 }
 
 xBase* xGroupGetItemPtr(xGroup* g, U32 index)
 {
-    xASSERT_L(301, g);
-
     if (!(g->flg_group & 0x1)) {
-        xOutWarn("GROUP", "xGroupGetItemPtr called before xGroupSetup.\n");
         xGroupSetup(g);
     }
 
@@ -191,19 +162,13 @@ xBase* xGroupGetItemPtr(xGroup* g, U32 index)
 
 U32 xGroupGetItem(xGroup* g, U32 index)
 {
-    xASSERT_L(319, g);
-    xASSERT_L(320, g->asset);
-    xASSERT_L(323, index < g->asset->itemCount);
-
     U32* idx = (U32*)((U8*)g->asset + sizeof(xGroupAsset));
     return idx[index];
 }
 
 U32 xGroupGetAny(xGroup* g)
 {
-    xASSERT_L(354, g->asset);
     if (g->asset->itemCount == 0) return 0;
-    xASSERT_L(356, g->last_index < g->asset->itemCount);
 
     U32* ids = (U32*)((U8*)g->asset + sizeof(xGroupAsset));
     U32 id = ids[g->last_index];
@@ -211,13 +176,4 @@ U32 xGroupGetAny(xGroup* g)
     g->last_index = (g->last_index+1) % g->asset->itemCount;
 
     return id;
-}
-
-xBase* xGroupGetAnyRandomPtr(xGroup* g)
-{
-    xASSERT_L(384, g->asset);
-    if (g->asset->itemCount == 0) return NULL;
-
-    U32 idx = xrand_RandomChoice(g->asset->itemCount);
-    return g->item[idx];
 }

@@ -81,6 +81,5 @@ xJSPNodeTree* xJSPNodeTreeBuild(xJSPHeader* jsp);
 xJSPHeader* xJSP_ForAllBoxLeafNodeIntersections(xJSPHeader* hdr, RwBBox* box, xJSPLeafNodeCallback callBack, void* data);
 void xJSP_ApplyLocalLight(xJSPHeader* jsp, RpLight* light);
 void xJSP_ClearLocalLight(xJSPHeader* jsp);
-xVec3* xJSP_GetTriangleVertData(xJSPHeader* jsp, xClumpCollBSPTriangle* tri, xColor* color, xVec3* normal, F32* uv); // inferred from Incredibles GC, Rat MAP
 
 #endif

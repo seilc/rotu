@@ -163,14 +163,6 @@ inline bool xSndMgrIsDialogPlaying()
     return (gSnd.m_uSndMgrFlags >> 1) & 0x1;
 }
 
-inline bool xSndMgrIsLoopedStream(iSndGroupHandle hSound)
-{
-    if (hSound == ISND_INVALID_SND_GROUP_HANDLE) {
-        return false;
-    }
-    return xSndMgr_GetGroup(hSound)->header.uFlags & 0x1;
-}
-
 inline bool xSndMgrIsStream(iSndGroupHandle hSound)
 {
     if (hSound == ISND_INVALID_SND_GROUP_HANDLE) {

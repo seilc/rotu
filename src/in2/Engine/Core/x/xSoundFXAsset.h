@@ -49,16 +49,6 @@ inline bool xSoundFXIsAttached(xSoundFXAsset* pSoundFX)
     return pSoundFX->uFlags & 0x4;
 }
 
-inline bool xSoundFXSendsDone(xSoundFXAsset* pSoundFX)
-{
-    return pSoundFX->uFlags & 0x1;
-}
-
-inline bool xSoundFXIsSoundFXPlaying(xSoundFXAsset* pSoundFX)
-{
-    return pSoundFX->uFlags & 0x2;
-}
-
 inline bool xSoundFXIsHandleSet(xSoundFXAsset* pSoundFX)
 {
     return pSoundFX->uFlags & 0x8;

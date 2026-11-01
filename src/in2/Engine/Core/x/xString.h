@@ -19,7 +19,6 @@ U32 xStrHashCat(U32 prefix, const char* str);
 char* xStrTok(char* string, const char* control, char** nextoken);
 U32 xStrTokCount(const char* string, const char* control, U32* maxsize);
 const char* xStrTokBuffer(const char* string, const char* control, void* buffer);
-const char* xStristr(const char* str1, const char* str2);
 S32 xStricmp(const char* string1, const char* string2);
 S32 xMemicmp(const void* string1, const void* string2, size_t chars);
 char* xStrupr(char* string);

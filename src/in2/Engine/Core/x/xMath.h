@@ -2,7 +2,6 @@
 #define XMATH_H
 
 #include "iMath.h"
-#include "xDebug.h"
 
 #include <cmath>
 
@@ -70,20 +69,13 @@ struct xResponseCurve
         return (inode*)((U8*)curve + index * (_values * sizeof(F32) + sizeof(node)));
     }
 
-    bool valid() const
-    {
-        return curve && _nodes >= 2 && _values;
-    }
-
     F32 start_t() const
     {
-        xASSERT(valid());
         return curve->t;
     }
 
     F32 end_t() const
     {
-        xASSERT(valid());
         return get_node(_nodes - 1)->t;
     }
 
@@ -120,16 +112,10 @@ void xMathInit();
 void xMathExit();
 F32 xatof(const char* x);
 U32 xMathSolveQuadratic(F32 a, F32 b, F32 c, F32* x1, F32* x2);
-U32 xMathSolveCubic(F32 a, F32 b, F32 c, F32 d, F32* x1, F32* x2, F32* x3); // inferred from TSSM GC, Rat MAP
 F32 xAngleClamp(F32 a);
 F32 xAngleClampFast(F32 a);
 F32 xDangleClamp(F32 a);
-F32 xDangleClampFast(F32 a);
 void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv);
-void xAccelMove2(F32& x, F32& v, F32 decel, F32 accel, F32 dt, F32 endx, F32 maxv);
-F32 xAccelMoveTime(F32 dx, F32 a, F32, F32 maxv);
-void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 maxv);
-void xAccelMoveRange(F32& x, F32& v, F32 accel_min, F32 accel_max, F32 dt, F32 endx, F32 maxv);
 void xAccelStop(F32& x, F32& v, F32 a, F32 dt);
 F32 xFuncPiece_Eval(xFuncPiece* func, F32 param, xFuncPiece** iterator);
 void xFuncPiece_Derivative(xFuncPiece* deriv, xFuncPiece* func);
@@ -158,8 +144,6 @@ inline F32 xrmod(F32 ang)
     return ang;
 }
 
-#if !DEBUG
 #include "xMathInlines.h"
-#endif
 
 #endif

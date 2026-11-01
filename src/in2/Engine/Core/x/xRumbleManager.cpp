@@ -7,7 +7,6 @@
 #include <string.h>
 
 #define kMaxRumblingPads 4
-#define RUMBLELIVE_MAXTHRESHOLD 4.0f
 
 namespace xRumble {
 
@@ -33,8 +32,6 @@ void effectInternal::updateCameraShake(F32 intensity)
 
 void effectInternal::EndCameraShake()
 {
-    xASSERT_L(62, cameraEffect);
-
     xCameraFXShakeEnd(cameraEffect, 0.3f);
     cameraEffect = NULL;
     
@@ -99,7 +96,6 @@ void Manager::store(padInfo* pInfo, const emitterBase* pEmitter, effectInternal*
 
 bool Manager::Add(xPad* pad, emitterBase* pEmitter)
 {
-    xASSERT_ONCE_L(119, pEmitter);
     if (!pEmitter) return false;
     if (!pad) return false;
     
@@ -111,15 +107,11 @@ bool Manager::Add(xPad* pad, emitterBase* pEmitter)
     }
     if (counter == 2) return false;
 
-    xASSERT_FMT_L(137, pad->port != -1, "There is no controller inserted/initialized for this pad !");
-    xASSERT_FMT_L(138, (pad->port > -1 && pad->port < kMaxRumblingPads), "Rumbling is not supported for this pad");
     if (pad->port == -1) return false;
 
     padInfo* pInfo = &m_padInfo[pad->port];
     F32 timeToLive = pEmitter->pEffectAsset->time;
     bool rumbleForever = (pEmitter->pEffectAsset->time == 0.0f);
-    xASSERT_FMT_L(149, (!(rumbleForever || timeToLive > RUMBLELIVE_MAXTHRESHOLD )),
-                 "Rumble effect was started with lifetime higher than %f", RUMBLELIVE_MAXTHRESHOLD);
     
     effectInternal* currentExclusive = pInfo->m_currentExclusive;
 
@@ -155,7 +147,6 @@ bool Manager::Add(xPad* pad, emitterBase* pEmitter)
             freeEffect = &pInfo->m_effects[i];
         }
     }
-    xASSERT_FMT_L(184, freeEffect, "number of current rumblings has exceeded the limit.");
     if (freeEffect) {
         store(pInfo, pEmitter, freeEffect, timeToLive, rumbleForever);
     }

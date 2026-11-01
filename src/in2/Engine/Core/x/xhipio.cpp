@@ -1,7 +1,6 @@
 #include "xhipio.h"
 
 #include "xbinio.h"
-#include "xDebug.h"
 
 #include <string.h>
 
@@ -56,8 +55,6 @@ static st_HIPLOADDATA* HIPLCreate(const char* filename, char* dblbuf, S32 bufsiz
     S32 i = 0;
     S32 uselock = -1;
 
-    xVALIDATE_L(232, filename);
-
     for (i = 0; i < MAX_LOADINST; i++) {
         if (!(g_loadlock & (1 << i))) {
             uselock = i;
@@ -66,8 +63,6 @@ static st_HIPLOADDATA* HIPLCreate(const char* filename, char* dblbuf, S32 bufsiz
             break;
         }
     }
-
-    xASSERT_L(243, lddata);
 
     if (lddata) {
         memset(lddata, 0, sizeof(st_HIPLOADDATA));
@@ -127,20 +122,15 @@ static U32 HIPLBaseSector(st_HIPLOADDATA* lddata)
 
 static S32 HIPLSetBypass(st_HIPLOADDATA* lddata, S32 enable, S32 use_async)
 {
-    xVALIDATE_L(337, lddata);
-
     lddata->fli->discardDblBuf(lddata->fli);
 
     if (enable && lddata->bypass) {
-        xWARN("HIP Bypass Enable - already enabled!\n");
         return 0;
     } else if (!enable && !lddata->bypass) {
-        xWARN("HIP Bypass Disable - already disabled!\n");
         return 0;
     }
 
     if (enable) {
-        xVALIDATE_L(354, lddata->bypass_recover == -1);
         lddata->bypass = 1;
         lddata->use_async = use_async;
         lddata->bypass_recover = lddata->fli->position;
@@ -158,18 +148,13 @@ static void HIPLSetSpot(st_HIPLOADDATA* lddata, S32 spot)
 {
     S32 rc = 0;
 
-    xVALIDATE_L(377, lddata);
-    xVALIDATE_L(379, lddata->bypass);
-
     if (!lddata->bypass) {
-        xWARN("HIP Bypass seeking WITHOUT Bypass Enabled!\n");
         return;
     }
 
     lddata->pos = spot;
 
     rc = lddata->fli->seekSpot(lddata->fli, spot);
-    xVALIDATE_L(401, rc);
 }
 
 static U32 HIPLBlockEnter(st_HIPLOADDATA* lddata)
@@ -180,15 +165,11 @@ static U32 HIPLBlockEnter(st_HIPLOADDATA* lddata)
     S32 cnt = 0;
     S32 padit = 0;
 
-    xVALIDATE_L(428, lddata);
-
     if (lddata->bypass) {
-        xWARN("HIP Block Enter with Bypass Enabled!\n");
         return 0;
     }
 
     if (lddata->top >= 0) {
-        xVALIDATE_L(440, lddata->stk[lddata->top].blk_remain >= 0);
         if (lddata->stk[lddata->top].blk_remain <= 0) {
             return 0;
         }
@@ -198,18 +179,13 @@ static U32 HIPLBlockEnter(st_HIPLOADDATA* lddata)
     if (cnt == 0) {
         cid = 0;
     } else {
-        xVALIDATE_L(450, cnt == 1);
-
         cnt = HIPLReadLongs(lddata, &size, -1);
-        xVALIDATE_L(452, cnt == 1);
 
         if (lddata->top >= 0) {
             lddata->stk[lddata->top].blk_remain -= size;
         }
 
         top = &lddata->stk[++lddata->top];
-
-        xASSERT_L(466, lddata->top < MAX_OPENBLK);
 
         top->blk_id = cid;
         top->blk_remain = size;
@@ -225,11 +201,7 @@ static void HIPLBlockExit(st_HIPLOADDATA* lddata)
 {
     st_HIPLOADBLOCK* top = NULL;
 
-    xVALIDATE_L(487, lddata);
-    xVALIDATE_L(488, !lddata->bypass);
-
     if (lddata->bypass) {
-        xWARN("HIP Block Exit with Bypass Enabled!\n");
         return;
     }
 
@@ -245,10 +217,6 @@ static S32 HIPLBlockRead(st_HIPLOADDATA* lddata, void* data, S32 cnt, S32 size)
     S32 got = 0;
     S32 left = 0;
     S32 head = 0;
-
-    xVALIDATE_L(527, lddata);
-    xVALIDATE_L(528, data);
-    xVALIDATE_L(531, !lddata->bypass);
 
     if (lddata->bypass) {
         return 0;
@@ -271,17 +239,11 @@ static S32 HIPLBlockRead(st_HIPLOADDATA* lddata, void* data, S32 cnt, S32 size)
         if (top && cnt > left) {
             cnt = left;
         }
-    } else {
-        xVALIDATE_L(548, cnt > 0);
-        xVALIDATE_L(549, top);
-        xVALIDATE_L(550, cnt <= left);
     }
 
     if (!head && left < cnt) {
         cnt = left;
     }
-
-    xVALIDATE_L(555, (size == 1) || (size == 2) || (size == 4));
 
     if (cnt == 0) {
         got = 0;
@@ -291,10 +253,6 @@ static S32 HIPLBlockRead(st_HIPLOADDATA* lddata, void* data, S32 cnt, S32 size)
         got = lddata->fli->readMShorts(lddata->fli, (S16*)data, cnt);
     } else if (size == 4) {
         got = lddata->fli->readMLongs(lddata->fli, (S32*)data, cnt);
-    }
-
-    if (top && got != cnt) {
-        xVALIDATE_FAIL_L(568);
     }
 
     lddata->pos += got * size;
@@ -311,16 +269,11 @@ static S32 HIPLBypassRead(st_HIPLOADDATA* lddata, void* data, S32 cnt, S32 size)
     S32 got = 0;
     S32 rc = 0;
 
-    xVALIDATE_L(600, lddata);
-    xVALIDATE_L(601, data);
-    xVALIDATE_L(604, lddata->bypass);
-
     if (!lddata->bypass) {
         return 0;
     }
 
     if (lddata->use_async) {
-        xVERBOSE("HIP - Async Read\n");
         rc = HIPLReadAsync(lddata, lddata->pos, (char*)data, cnt, size);
         return rc;
     }
@@ -328,8 +281,6 @@ static S32 HIPLBypassRead(st_HIPLOADDATA* lddata, void* data, S32 cnt, S32 size)
     if (cnt == 0) {
         return 0;
     }
-
-    xVALIDATE_L(617, (size == 1) || (size == 2) || (size == 4));
 
     if (cnt == 0) {
         got = 0;
@@ -341,8 +292,6 @@ static S32 HIPLBypassRead(st_HIPLOADDATA* lddata, void* data, S32 cnt, S32 size)
         got = lddata->fli->readMLongs(lddata->fli, (S32*)data, cnt);
     }
 
-    xVALIDATE_L(630, got == cnt);
-
     return got * size;
 }
 
@@ -350,14 +299,9 @@ static S32 HIPLReadAsync(st_HIPLOADDATA* lddata, S32 pos, char* data, S32 cnt, S
 {
     S32 regok = 0;
 
-    xVALIDATE_L(642, lddata->bypass);
-    xVALIDATE_L(643, lddata->use_async);
-    xVALIDATE_L(644, lddata->asyn_stat == HIP_RDSTAT_NONE);
-
     lddata->asyn_stat = HIP_RDSTAT_NONE;
 
     regok = lddata->fli->asyncMRead(lddata->fli, pos, data, cnt, elesize);
-    xVALIDATE_L(652, regok!=0);
 
     lddata->asyn_stat = HIP_RDSTAT_INPROG;
     return regok;
@@ -368,20 +312,13 @@ static en_READ_ASYNC_STATUS HIPLPollRead(st_HIPLOADDATA* lddata)
     en_READ_ASYNC_STATUS rdstat = HIP_RDSTAT_INPROG;
     en_BIO_ASYNC_ERRCODES pollstat = BINIO_ASYNC_INPROG;
 
-    xVALIDATE_L(665, lddata);
-    xVALIDATE_L(666, lddata->bypass);
-
     if (!lddata->bypass) {
-        xWARN("HIP 'PollRead' WITHOUT Bypass Enabled!\n");
         return HIP_RDSTAT_NOBYPASS;
     }
 
     if (!lddata->use_async) {
-        xWARN("HIP 'PollRead' WITHOUT Aynchronous Enabled!\n");
         return HIP_RDSTAT_NOASYNC;
     }
-
-    xVALIDATE_L(678, lddata->asyn_stat == HIP_RDSTAT_INPROG);
 
     pollstat = lddata->fli->asyncReadStatus(lddata->fli);
     switch (pollstat) {
@@ -397,8 +334,6 @@ static en_READ_ASYNC_STATUS HIPLPollRead(st_HIPLOADDATA* lddata)
         lddata->asyn_stat = HIP_RDSTAT_NONE;
         break;
     default:
-        xWARN("Unknown Bin I/O async read status %d\n", pollstat);
-        xFAIL_FMT_L(700, "%s", "Unknown state - this probably means a request failed");
         lddata->asyn_stat = HIP_RDSTAT_NONE;
         break;
     }
@@ -408,9 +343,6 @@ static en_READ_ASYNC_STATUS HIPLPollRead(st_HIPLOADDATA* lddata)
 
 static S32 HIPLReadBytes(st_HIPLOADDATA* lddata, char* data, S32 cnt)
 {
-    xVALIDATE_L(724, lddata);
-    xVALIDATE_L(725, data);
-
     if (lddata->bypass) {
         return HIPLBypassRead(lddata, data, cnt, 1);
     } else {
@@ -421,9 +353,6 @@ static S32 HIPLReadBytes(st_HIPLOADDATA* lddata, char* data, S32 cnt)
 static S32 HIPLReadShorts(st_HIPLOADDATA* lddata, S16* data, S32 cnt)
 {
     S32 got = 0;
-
-    xVALIDATE_L(732, lddata);
-    xVALIDATE_L(733, data);
 
     if (lddata->bypass) {
         got = HIPLBypassRead(lddata, data, cnt, 2);
@@ -438,9 +367,6 @@ static S32 HIPLReadLongs(st_HIPLOADDATA* lddata, S32* data, S32 cnt)
 {
     S32 got = 0;
 
-    xVALIDATE_L(741, lddata);
-    xVALIDATE_L(742, data);
-
     if (lddata->bypass) {
         got = HIPLBypassRead(lddata, data, cnt, 4);
     } else {
@@ -453,9 +379,6 @@ static S32 HIPLReadLongs(st_HIPLOADDATA* lddata, S32* data, S32 cnt)
 static S32 HIPLReadFloats(st_HIPLOADDATA* lddata, F32* data, S32 cnt)
 {
     S32 got = 0;
-
-    xVALIDATE_L(750, lddata);
-    xVALIDATE_L(751, data);
 
     if (lddata->bypass) {
         got = HIPLBypassRead(lddata, data, cnt, 4);
@@ -470,9 +393,6 @@ static S32 HIPLReadString(st_HIPLOADDATA* lddata, char* buf)
 {
     S32 n = 0;
     char pad = 0;
-
-    xVALIDATE_L(768, lddata);
-    xVALIDATE_L(769, buf);
 
     if (lddata->bypass) {
         while (HIPLBypassRead(lddata, buf + n, 1, sizeof(char))) {

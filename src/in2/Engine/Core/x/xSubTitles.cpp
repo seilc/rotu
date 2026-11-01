@@ -40,7 +40,7 @@ void xSubTitlesInit()
 
 void* xSubTitlesRead(void*, U32 aid, void* indata, U32 insize, U32* outsize)
 {
-    xSubtitlesAsset* pSubTitleAsset = (xSubtitlesAsset*)xMEMALLOC_L(insize, 0, eMemMgrTag_Subtitle, aid, 88);
+    xSubtitlesAsset* pSubTitleAsset = (xSubtitlesAsset*)xMEMALLOC(insize, 0);
     memcpy(pSubTitleAsset, indata, insize);
     *outsize = insize;
     return pSubTitleAsset;
@@ -65,7 +65,6 @@ bool xSubTitlesRender(U32 aid, F32 fTime)
     if (!m_pCurrentAsset) {
         static U32 last_failed_aid = 0;
         if (aid != last_failed_aid) {
-            iprintf("Unable to find subtitles asset id %X\n", aid);
             last_failed_aid = aid;
         }
         return false;
@@ -86,8 +85,6 @@ bool xSubTitlesRender(U32 aid, F32 fTime)
     }
 
     for (; uSearchIndex < m_pCurrentAsset->m_uAssetNumLines; uSearchIndex++) {
-        xASSERT_L(135, fTime < m_pCurrentAsset->m_paSubtitleLines[m_pCurrentAsset->m_uAssetNumLines-1].fStopTime);
-
         if (fTime >= m_pCurrentAsset->m_paSubtitleLines[uSearchIndex].fStartTime &&
             fTime < m_pCurrentAsset->m_paSubtitleLines[uSearchIndex].fStopTime) {
             m_uLastTimeKey = uSearchIndex;

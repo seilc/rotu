@@ -27,11 +27,6 @@ public:
     void setup_subview(RwCamera* src_cam, const xFRect& src_rect, const xFRect& dst_rect);
     void get_subview(xMat4x3& ltm, xVec2& view_window, xVec2& view_offset, RwCamera* src_cam, const xFRect& src_rect, const xFRect& dst_rect) const;
 
-    bool valid()
-    {
-        return cam != 0;
-    }
-
     void set_background(xColor color)
     {
         bgraster = NULL;

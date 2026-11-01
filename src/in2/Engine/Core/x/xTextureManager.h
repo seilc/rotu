@@ -71,7 +71,6 @@ public:
     bool IsReady();
 
     void PlayMovie(U32 assetID, U32 looping, U32 freezeframed, U32 startframe, U32 endframe);
-    void StopMovie();
     bool IsMoviePlaying();
 };
 

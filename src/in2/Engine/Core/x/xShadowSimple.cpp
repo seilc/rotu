@@ -132,8 +132,6 @@ static S32 shadowRayEntCB(xEnt* ent, void* cbdata)
 
 static void xShadowSimple_SceneCollide(xShadowSimpleCache* cache, const xVec3* pos, F32 depth)
 {
-    xASSERT_L(187, cache);
-
     cache->envHeight = HUGE;
     cache->shadowHeight = HUGE;
     cache->castOnEnt = NULL;
@@ -188,9 +186,6 @@ static void xShadowSimple_SceneCollide(xShadowSimpleCache* cache, const xVec3* p
 
 static void xShadowSimple_CalcCorners(xShadowSimpleCache* cache, const xMat4x3* mat, F32 radius, F32 ecc)
 {
-    xASSERT_L(258, cache);
-    xASSERT_L(259, mat);
-
     if (cache->shadowHeight == HUGE) {
         return;
     }
@@ -276,8 +271,6 @@ void xShadowSimple_Init()
         sShadRaster = NULL;
     }
 
-    xASSERT_MSG_L(376, sShadRaster != NULL, "who deleted the default shadow texture 'shadow_round' from boot.hip?!?");
-
     memset(sShadVert, 0, sizeof(sShadVert));
     for (U32 i = 0; i < MAX_SHAD_QUADS; i++) {
         sShadVert[i * 6 + 1].u = 1.0f;
@@ -326,8 +319,6 @@ void xShadowSimple_CacheInit(xShadowSimpleCache* cache, xEnt* ent, U8 alpha)
     for (i = 0; i < n; i++) {
         U32 size;
         sst = (zSimpleShadowTableHeader*)xSTFindAssetByType('SHDW', i, &size);
-
-        xASSERT_FMT_L(435, size == 4+sst->num*sizeof(zSimpleShadow), "zSimpleShadow def mismatch!");
 
         for (j = 0; j < sst->num; j++) {
             zSimpleShadow* table = (zSimpleShadow*)(sst + 1);
@@ -534,8 +525,6 @@ inline S32 XSSC_Add_ShoveIntoQueue(xShadowSimpleCache* cache, const xMat4x3* mat
 
 void xShadowSimple_Add_Expert(xShadowSimpleCache* cache, const xMat4x3* mat_owner, U8 alpha, F32 radius, F32 height, F32 ecc, bool copyMat)
 {
-    xASSERT_L(771, cache);
-
     if (radius > 10.0f) {
         return;
     }
@@ -548,8 +537,6 @@ void xShadowSimple_Add_Expert(xShadowSimpleCache* cache, const xMat4x3* mat_owne
     if (radius < 0.0f && cache->radiusOptional >= 0.0f) {
         radius = cache->radiusOptional;
     }
-
-    xASSERT_L(781, radius>=0.0f);
 
     if (cache->flags & 0x1) {
         cache->flags &= (U16)~0x1;

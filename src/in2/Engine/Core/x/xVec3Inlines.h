@@ -1,12 +1,6 @@
 #ifndef XVEC3INLINES_H
 #define XVEC3INLINES_H
 
-#include "xDebug.h"
-
-#if DEBUG
-#define inline
-#endif
-
 inline void xVec3Init(xVec3* v, F32 _x, F32 _y, F32 _z)
 {
     v->x = _x, v->y = _y, v->z = _z;
@@ -129,13 +123,11 @@ inline void xVec3SMulBy(xVec3& v, F32 s)
 
 inline void xVec3Cross(xVec3* o, const xVec3* a, const xVec3* b)
 {
-    xASSERT_FMT_L(287, o != a && o != b, "Sorry, but the input vector can't be the same as the output vector. You'll get the wrong answer");
     o->x = a->y * b->z - b->y * a->z, o->y = a->z * b->x - b->z * a->x, o->z = a->x * b->y - b->x * a->y;
 }
 
 inline void xVec3Cross(xVec3& o, const xVec3& a, const xVec3& b)
 {
-    xASSERT_FMT_L(292, &o != &a && &o != &b, "Sorry, but the input vector can't be the same as the output vector. You'll get the wrong answer");
     o.x = a.y * b.z - b.y * a.z, o.y = a.z * b.x - b.z * a.x, o.z = a.x * b.y - b.x * a.y;
 }
 
@@ -186,8 +178,6 @@ inline void xVec3Inv(xVec3& v)
     v.y = -v.y;
     v.z = -v.z;
 }
-
-inline void xVec3ScaleC(xVec3* o, const xVec3* v, F32 _x, F32 _y, F32 _z); // inferred from BFBB GC, Rat MAP
 
 inline void xVec3ScaleC(xVec3& o, F32 scale)
 {

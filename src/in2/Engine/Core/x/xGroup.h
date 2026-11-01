@@ -27,6 +27,5 @@ U32 xGroupGetCount(xGroup* g);
 xBase* xGroupGetItemPtr(xGroup* g, U32 index);
 U32 xGroupGetItem(xGroup* g, U32 index);
 U32 xGroupGetAny(xGroup* g);
-xBase* xGroupGetAnyRandomPtr(xGroup* g);
 
 #endif

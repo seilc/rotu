@@ -2,7 +2,6 @@
 #define XMEMMGR_H
 
 #include "iMemMgr.h"
-#include "xDebug.h"
 
 #include <stddef.h>
 #include <new>
@@ -21,10 +20,6 @@ struct xMemPool
     U16 Size;
     U16 NumRealloc;
     U32 Total;
-#if DEBUG
-    U16 Allocated;
-    U16 Pad0;
-#endif
 };
 
 enum eMemMgrTag
@@ -127,70 +122,31 @@ enum xMemStaticType
 
 extern U32 gActiveHeap;
 
-#if DEBUG || RELEASE
-#define xMEMGROWALLOC(size, tag) xMemGrowAlloc(gActiveHeap, (size), (tag))
-#else
-#define xMEMGROWALLOC(size, tag) xMemGrowAlloc(gActiveHeap, (size))
-#endif
+#define xMEMGROWALLOC(size) xMemGrowAlloc(gActiveHeap, (size))
 
-#if DEBUG
-#define xMEMALLOC_L(size, align, tag, assetID, line) xMemAlloc(gActiveHeap, (size), (align), (tag), (assetID), __FILE__, __FUNCTION__, (line))
-#elif RELEASE
-#define xMEMALLOC_L(size, align, tag, assetID, line) xMemAlloc(gActiveHeap, (size), (align), (tag))
-#else
-#define xMEMALLOC_L(size, align, tag, assetID, line) xMemAlloc(gActiveHeap, (size), (align))
-#endif
+#define xMEMALLOC(size, align) xMemAlloc(gActiveHeap, (size), (align))
 
-#define xMEMALLOC(size, align, tag, assetID) xMEMALLOC_L(size, align, tag, assetID, __LINE__)
-
-#if DEBUG
-#define xMEMPUSHTEMP_L(amt, assetID, line) xMemPushTemp((amt), (assetID), __FILE__, __FUNCTION__, (line))
-#else
-#define xMEMPUSHTEMP_L(amt, assetID, line) xMemPushTemp((amt))
-#endif
-
-#define xMEMPUSHTEMP(amt, assetID) xMEMPUSHTEMP_L(amt, assetID, __LINE__)
+#define xMEMPUSHTEMP(amt) xMemPushTemp((amt))
 
 #define xMEMPOPTEMP(pointer) iMemPopTemp((pointer))
 
-#if DEBUG || RELEASE
-void* xMemGrowAlloc(U32 heapID, U32 size, U32 tag);
-#else
 void* xMemGrowAlloc(U32 heapID, U32 size);
-#endif
 
-#if DEBUG
-void* xMemAlloc(U32 heapID, U32 size, S32 align, U32 tag, U32 assetID, const char* file, const char* func, S32 line);
-#elif RELEASE
-void* xMemAlloc(U32 heapID, U32 size, S32 align, U32 tag);
-#else
 void* xMemAlloc(U32 heapID, U32 size, S32 align);
-#endif
 
-#if DEBUG
-inline void* xMemPushTemp(U32 amt, U32, const char* file, const char* func, S32 line)
-{
-    void* ptr = iMemPushTemp(amt);
-    xASSERT_FMT_L(391, ptr, "for %d bytes from %s, in %s line %d", amt, func, file, line);
-    return ptr;
-}
-#else
 inline void* xMemPushTemp(U32 amt)
 {
-    void* ptr = iMemPushTemp(amt);
-    xASSERT_L(425, ptr);
-    return ptr;
+    return iMemPushTemp(amt);
 }
-#endif
 
 inline void* operator new(size_t size, xMemStaticType, U32 tag, U32 assetID = 0)
 {
-    return xMEMALLOC_L(size, 0, tag, assetID, 650);
+    return xMEMALLOC(size, 0);
 }
 
 inline void* operator new[](size_t size, xMemStaticType, U32 tag, U32 assetID = 0)
 {
-    return xMEMALLOC_L(size, 0, tag, assetID, 655);
+    return xMEMALLOC(size, 0);
 }
 
 #endif

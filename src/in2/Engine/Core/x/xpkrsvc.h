@@ -130,7 +130,6 @@ PKRReadFuncs* PKRGetReadFuncs(S32 apiver);
 S32 PKRStartup();
 S32 PKRShutdown();
 S32 PKRLoadStep(S32 block);
-U32 PKRAssetIDFromInst(void* asset_inst); // inferred from BFBB GC, TSSM GC, Rat GC
 inline en_pkrfindmyass PKRFindMyAsset(st_PACKER_READ_DATA*, PKRAssetTOCInfo*, const void*)
 {
     return PKR_FIND_FAILED;

@@ -6,7 +6,6 @@
 #include "zScene.h"
 #include "xutil.h"
 #include "zMenu.h"
-#include "xDebug.h"
 
 #include <bink.h>
 
@@ -43,21 +42,6 @@ static void DefaultFMVPauseSoundCB(bool doPause)
     }
 }
 
-// RESTORED: from TSSM GC
-xFMVPauseSoundCallback xFMVSetPauseSoundCB(xFMVPauseSoundCallback pauseSoundCB)
-{
-    xFMVPauseSoundCallback curCB = sxFMVPauseSoundCB;
-
-    if (!pauseSoundCB) {
-        pauseSoundCB = DefaultFMVPauseSoundCB;
-    }
-
-    sxFMVPauseSoundCB = pauseSoundCB;
-
-    return curCB;
-}
-// END RESTORED
-
 S32 xFMVGetBinkCompliantVolume()
 {
     S32 volume = (S32)(32768.0f * xSndMixerGetOutputVolume(5) * sFMVVolumeScale);
@@ -67,7 +51,6 @@ S32 xFMVGetBinkCompliantVolume()
 RwTexture* xFMVGetTexture(MOVIE* pMovie, U16 looping, U16 freezeframed, U32 startframe, U32 endframe, U32)
 {
     if (!pMovie) {
-        iprintf("NULL MOVIE ERROR ENCOUNTERED\n");
         return NULL;
     }
 
@@ -93,18 +76,14 @@ RwTexture* xFMVGetTexture(MOVIE* pMovie, U16 looping, U16 freezeframed, U32 star
         RwInt32 format = RwRasterGetFormat(pBinkRaster);
         RwInt32 pixformat = format & rwRASTERFORMATPIXELFORMATMASK;
 
-        xASSERT_L(194, pBits);
-
         RwInt32 nDestPitch = RwRasterGetStride(pBinkRaster);
 
         S32 bFailed = BinkCopyToBuffer(pMovie->hBink, pBits, nDestPitch, RwRasterGetHeight(pBinkRaster), 0, 0, BINKCOPYALL | BINKSURFACE32);
-        xASSERT_L(197, !bFailed);
         if (bFailed) {
             return NULL;
         }
 
-        RwRaster* pNullOnErr = RwRasterUnlock(pBinkRaster);
-        xASSERT_L(201, pNullOnErr);
+        RwRasterUnlock(pBinkRaster);
 
         if (pMovie->hBink->Paused != freezeframed) {
             BinkPause(pMovie->hBink, freezeframed);

@@ -1,7 +1,5 @@
 #include "xString.h"
 
-#include "xDebug.h"
-#include "xOutputMgr.h"
 #include "xMath.h"
 
 #include <stdlib.h>
@@ -19,8 +17,6 @@ U32 xStrHash(const char* str)
 
 U32 xStrHash(const char* s, size_t size)
 {
-    xASSERT_L(83, (size == 0) || (s != 0));
-
     U32 value = 0;
     for (size_t i = 0; i < size && *s != '\0'; ++i, ++s) {
         char c = *s;
@@ -32,8 +28,6 @@ U32 xStrHash(const char* s, size_t size)
 
 U32 xStrHashCat(U32 prefix, const char* str)
 {
-    xWARN_INVALID_L(105, "UTIL", str);
-
     U32 i = prefix;
     for (; *str != '\0'; ++str) {
         char c = *str;
@@ -184,27 +178,6 @@ const char* xStrTokBuffer(const char* string, const char* control, void* buffer)
 }
 
 #define xToUpper(c) (((c) >= 'a' && (c) <= 'z') ? (c) - 32 : (c))
-
-const char* xStristr(const char* str1, const char* str2)
-{
-    char* cp = (char*)str1;
-    
-    if (*str2 == '\0') {
-        return str1;
-    }
-
-    while (*cp) {
-        char* s1 = cp;
-        char* s2 = (char*)str2;
-        for (; *s1 && *s2 && (xToUpper(*s1) - xToUpper(*s2)) == 0; s1++, s2++) {}
-        if (*s2 == '\0') {
-            return cp;
-        }
-        ++cp;
-    }
-
-    return NULL;
-}
 
 S32 xStricmp(const char* string1, const char* string2)
 {

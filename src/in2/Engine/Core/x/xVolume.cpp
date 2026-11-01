@@ -1,6 +1,5 @@
 #include "xVolume.h"
 
-#include "xDebug.h"
 #include "xVolumeAsset.h"
 
 void xVolume::Init(xVolumeAsset* asset)
@@ -17,23 +16,17 @@ void xVolume::Init(xVolumeAsset* asset)
 
 void xVolume::Reset()
 {
-    xASSERT_L(38, this->asset);
-
     xBaseReset(this, this->asset);
 }
 
 void xVolume::Save(xSerial* s)
 {
     xBaseSave(this, s);
-
-    xASSERT_L(58, s);
 }
 
 void xVolume::Load(xSerial* s)
 {
     xBaseLoad(this, s);
-
-    xASSERT_L(75, s);
 }
 
 xBound* xVolume::GetBound()

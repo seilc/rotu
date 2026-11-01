@@ -54,13 +54,6 @@ void iCameraSetOrthoProjection(RwCamera* cam, bool ortho)
     }
 }
 
-// RESTORED: from TSSM GC
-void iCameraClear(RwCamera* camera, xColor color)
-{
-    RwCameraClear(camera, (RwRGBA*)&color, rwCAMERACLEARIMAGE | rwCAMERACLEARZ | rwCAMERACLEARSTENCIL);
-}
-// END RESTORED
-
 RwCamera* iCameraCreate(S32 width, S32 height, S32 mainGameCamera)
 {
     iAsyncLockRWSentry rw_sentry;
@@ -70,18 +63,14 @@ RwCamera* iCameraCreate(S32 width, S32 height, S32 mainGameCamera)
     RwRaster* cameraRaster, *zbuffer;
 
     camera = RwCameraCreate();
-    xASSERT_L(150, camera);
 
     cameraFrame = RwFrameCreate();
-    xASSERT_L(154, cameraFrame);
     RwCameraSetFrame(camera, cameraFrame);
 
     cameraRaster = RwRasterCreate(width, height, 0, rwRASTERTYPECAMERA);
-    xASSERT_L(158, cameraRaster != NULL);
     RwCameraSetRaster(camera, cameraRaster);
 
     zbuffer = RwRasterCreate(width, height, 0, rwRASTERTYPEZBUFFER);
-    xASSERT_L(163, zbuffer != NULL);
     RwCameraSetZRaster(camera, zbuffer);
 
     RwCameraSetFarClipPlane(camera, sCameraFarClip);
@@ -92,7 +81,6 @@ RwCamera* iCameraCreate(S32 width, S32 height, S32 mainGameCamera)
     RwCameraSetViewWindow(camera, &vw);
 
     if (mainGameCamera) {
-        xASSERT_L(181, sMainGameCamera == 0);
         iScrFxCameraCreated(camera);
         sMainGameCamera = camera;
     }
@@ -102,8 +90,6 @@ RwCamera* iCameraCreate(S32 width, S32 height, S32 mainGameCamera)
 
 void iCameraDestroy(RwCamera* camera)
 {
-    xASSERT_L(197, camera);
-
     iAsyncLockRWSentry rw_sentry;
     RpWorld* pWorld;
     RwRaster* raster;
@@ -148,8 +134,6 @@ void iCameraDestroy(RwCamera* camera)
 
 void iCameraBegin(RwCamera* cam, S32 clear)
 {
-    xASSERT_L(277, cam);
-
     if (clear) {
         if (xglobals->fog.type != rwFOGTYPENAFOGTYPE) {
             RwCameraClear(cam, &xglobals->fog.bgcolor, rwCAMERACLEARIMAGE | rwCAMERACLEARZ | rwCAMERACLEARSTENCIL);
@@ -164,36 +148,26 @@ void iCameraBegin(RwCamera* cam, S32 clear)
 
 void iCameraEnd(RwCamera* cam)
 {
-    xASSERT_L(336, cam);
-
     iScrFxCameraEndScene(cam);
     RwCameraEndUpdate(cam);
 }
 
 void iCameraShowRaster(RwCamera* cam)
 {
-    xASSERT_L(354, cam);
-
     RwCameraShowRaster(cam, NULL, 0);
 }
 
 void iCameraUpdatePos(RwCamera* cam, xMat4x3* pos)
 {
-    xASSERT_L(383, cam);
-    xASSERT_L(384, pos);
-
     RwFrame* f;
     RwMatrix* m;
 
     f = RwCameraGetFrame(cam);
-    xASSERT_L(387, f);
 
     m = RwFrameGetMatrix(f);
-    xASSERT_L(389, m);
     xMat4x3Copy((xMat4x3*)m, pos);
 
     m = RwFrameGetLTM(f);
-    xASSERT_L(394, m);
     xMat4x3Copy((xMat4x3*)m, pos);
     
     RwFrameOrthoNormalize(f);
@@ -222,9 +196,7 @@ void iCameraSetFOV(RwCamera* cam, F32 fov)
 // RESTORED: speculative
 F32 iCameraGetFOV(RwCamera* cam)
 {
-    xASSERT(cam != 0);
     const RwV2d* vw = RwCameraGetViewWindow(cam);
-    xASSERT(vw != 0);
     F32 angle = xatan(vw->x);
     return 2.0f * (180.0f/PI) * angle;
 }
@@ -232,9 +204,6 @@ F32 iCameraGetFOV(RwCamera* cam)
 
 void iCameraAssignEnv(RwCamera* camera, iEnv* env_geom)
 {
-    xASSERT_L(500, env_geom);
-    xASSERT_L(501, env_geom->world);
-
     iAsyncLockRWSentry rw_sentry;
 
     globalCamera = camera;
