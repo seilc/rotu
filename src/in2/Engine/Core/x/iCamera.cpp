@@ -9,9 +9,6 @@
 
 #include <string.h>
 
-#undef RwCameraCreate
-#undef RwCameraBeginUpdate
-
 // Taken from baworobj.c
 typedef struct RpWorldCameraExt RpWorldCameraExt;
 struct RpWorldCameraExt
