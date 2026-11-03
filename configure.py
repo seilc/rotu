@@ -526,7 +526,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xGroup.cpp"),
             Object(Matching, "in2/Engine/Core/x/xHierarchyBound.cpp"),
             Object(Matching, "in2/Engine/Core/x/xhipio.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xHud.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xHud.cpp"),
             Object(Matching, "in2/Engine/Core/x/xHudFontMeter.cpp"),
             Object(Matching, "in2/Engine/Core/x/xHudMeter.cpp"),
             Object(Matching, "in2/Engine/Core/x/xHudModel.cpp"),

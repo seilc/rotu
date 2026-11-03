@@ -8,4 +8,6 @@ struct zEnt : xEnt
     xAnimTable* atbl;
 };
 
+xModelInstance* zEntRecurseModelInfo(void* info, xEnt* ent);
+
 #endif
