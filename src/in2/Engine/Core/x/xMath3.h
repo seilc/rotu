@@ -125,6 +125,9 @@ void xMat3x3Tolocal(xVec3* o, const xMat3x3* m, const xVec3* v);
 F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at);
 void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll);
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
+void xQuatFromMat(xQuat* q, const xMat3x3* m);
+void xQuatToMat(const xQuat* q, xMat3x3* m);
+void xQuatSlerp(xQuat* o, const xQuat* a, const xQuat* b, F32 t);
 void xMat3x3Euler(xMat3x3* m, const xVec3* ypr);
 
 inline void xMat3x3Copy(xMat3x3* o, const xMat3x3* m)
@@ -159,8 +162,17 @@ inline void xMat3x3MulScale(xMat3x3* o, const xMat3x3* m, xVec3* s)
     return xMat3x3MulScaleC(o, m, s->x, s->y, s->z);
 }
 
-void xMat4x3Copy(xMat4x3* o, const xMat4x3* m);
+inline void xMat4x3Copy(xMat4x3* o, const xMat4x3* m)
+{
+    *o = *m;
+}
+
 void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b);
+
+inline void xMat4x3Identity(xMat4x3* m)
+{
+    xMat4x3Copy(m, &g_I3);
+}
 
 inline void xMat4x3ToWorld(xVec3* o, const xMat4x3* m, const xVec3* v)
 {

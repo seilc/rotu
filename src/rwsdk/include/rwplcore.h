@@ -455,6 +455,16 @@ enum RwTextureAddressMode
 };
 typedef enum RwTextureAddressMode RwTextureAddressMode;
 
+enum RwCullMode
+{
+    rwCULLMODENACULLMODE = 0,
+    rwCULLMODECULLNONE,
+    rwCULLMODECULLBACK,
+    rwCULLMODECULLFRONT,
+    rwCULLMODEFORCEENUMSIZEINT = RWFORCEENUMSIZEINT,
+};
+typedef enum RwCullMode RwCullMode;
+
 enum RwPrimitiveType
 {
     rwPRIMTYPENAPRIMTYPE,
@@ -759,6 +769,10 @@ extern const RwChar* _rwMemoryLastAllocFile;
 extern RwUInt32 _rwMemoryLastAllocLine;
 #endif
 
+#ifdef RWDEBUG
+RwV3d* RwMatrixGetPos(RwMatrix* matrix);
+#endif
+
 RwInt32 RwEngineGetCurrentVideoMode(void);
 RwVideoMode* RwEngineGetVideoModeInfo(RwVideoMode* modeinfo, RwInt32 modeIndex);
 void* RwMemNative32(void* mem, RwUInt32 size);
@@ -785,6 +799,10 @@ void RwV3dSub(RwV3d* out, const RwV3d* ina, const RwV3d* inb);
 
 #ifdef __cplusplus
 }
+#endif
+
+#ifndef RWDEBUG
+#define RwMatrixGetPos(m) (&(m)->pos)
 #endif
 
 #if !(defined(RWDEBUG) || defined(RWSUPPRESSINLINE))

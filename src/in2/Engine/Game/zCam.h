@@ -5,5 +5,13 @@
 
 xVec3& zCamTransitionTarget();
 zCamPlayer* zCamGetDefault();
+xCam* zCamGetPrimary();
+void zCamAdd(xCam& cam, bool force_cut);
+void zCamRemove(xCam& cam, bool force_cut);
+
+inline void zCamTrackGround(bool track)
+{
+    static bool sTrackGround = track;
+}
 
 #endif

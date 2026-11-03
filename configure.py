@@ -505,7 +505,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xCollideFast.cpp"),
             Object(Matching, "in2/Engine/Core/x/xColor.cpp"),
             Object(Matching, "in2/Engine/Core/x/xCounter.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xCutscene.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xCutscene.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xDebug.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xDecal.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xDraw.cpp"),
