@@ -12,4 +12,16 @@ struct xModelAssetInfo
     U32 BrainID;
 };
 
+struct xModelAssetInst
+{
+    U32 ModelID;
+    U16 Flags;
+    U8 Parent;
+    U8 Bone;
+    F32 MatRight[3];
+    F32 MatUp[3];
+    F32 MatAt[3];
+    F32 MatPos[3];
+};
+
 #endif
