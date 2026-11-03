@@ -534,7 +534,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xIni.cpp"),
             Object(Matching, "in2/Engine/Core/x/xJaw.cpp"),
             Object(Matching, "in2/Engine/Core/x/xJSP.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xLight.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xLight.cpp"),
             Object(Matching, "in2/Engine/Core/x/xLightKit.cpp"),
             Object(Matching, "in2/Engine/Core/x/xMath.cpp"),
             Object(Matching, "in2/Engine/Core/x/xMath2.cpp"),

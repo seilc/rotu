@@ -15,6 +15,8 @@ template <class T> struct basic_rect;
 struct xModelInstance;
 struct xModelPool;
 
+static const S32 k_MAX_MODEL_LIGHTS = 4;
+
 struct xModelInstance
 {
     xModelInstance* Next;
@@ -55,8 +57,8 @@ struct xModelInstance
     {
         xVec3* verts;
     } anim_coll;
-    xLight* lights[4];
-    F32 lightsDistance[4];
+    xLight* lights[k_MAX_MODEL_LIGHTS];
+    F32 lightsDistance[k_MAX_MODEL_LIGHTS];
 };
 
 struct xModelPool

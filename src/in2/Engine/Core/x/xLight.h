@@ -6,7 +6,11 @@
 #include "iLight.h"
 
 struct xModelInstance;
+struct xEnv;
 class xLightEffectBase;
+
+#define f_XLIGHT_ON (1u<<0)
+#define f_XLIGHT_USED (1u<<1)
 
 struct xLightEffectFlickerData
 {
@@ -44,17 +48,41 @@ struct xLight : xBase
     };
 };
 
+void xLightResetAll();
+void xLightSceneInit();
+void xLightSceneExit();
+void xLightSceneReset();
+void xLightInit(xBase& data, xDynAsset& asset, size_t asset_size);
+void xLightInit(xBase* b, xLightAsset* tasset);
+void xLightInitTempLights();
+
 xLight* xLightCreateTempInternal(bool useLightCard);
 void xLightDestroyTempInternal(xLight* xl);
 #define xLightCreateTemp(useLightCard) xLightCreateTempInternal((useLightCard))
 #define xLightDestroyTemp(xl) xLightDestroyTempInternal((xl))
+
+void xLightResolveLinks();
+void xLightDestroyAll();
+void xLightDestroy(xLight* xl);
+void xLightReset(xLight* xl);
+void xLightEventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget, U32 toParamWidgetID);
+void xLightUpdateAll(F32 dt);
+void xLightRenderAll();
+void xLightAddLocalEnv(xEnv* env);
+void xLightRemoveLocalEnv(xEnv* env);
+void xLightPrepLocal();
+void xLightAddLocal(xModelInstance* minst);
+void xLightRemoveLocal(xModelInstance* minst);
+void xLightSetEffect(xLight* xl, U32 effectID);
+void xLightResetEffect(xLight* xl);
 void xLightOn(xLight* xl, bool on, F32 transitionTime);
+void xLightToggle(xLight* xl, F32 transitionTime);
 void xLightSetColor(xLight* xl, F32 r, F32 g, F32 b, F32 transitionTime);
 void xLightSetColor(xLight* xl, const xFColor& col, F32 transitionTime);
 void xLightGetColor(xLight* xl, xFColor& col);
 void xLightSetPos(xLight* xl, const xVec3& pos);
 void xLightSetRadius(xLight* xl, F32 radius);
-void xLightAddLocal(xModelInstance* minst);
-void xLightRemoveLocal(xModelInstance* minst);
+void xLightSetLightCardScale(xLight* xl, F32 scale);
+void xLightFlash(const xVec3& pos, const xFColor& color, F32 radius, F32 upTime, F32 maxTime, F32 downTime);
 
 #endif
