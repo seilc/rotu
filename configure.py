@@ -496,7 +496,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xbinio.cpp"),
             Object(Matching, "in2/Engine/Core/x/xBound.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xCam.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xCamFollow.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xCamFollow.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xCamSupport.cpp"),
             Object(Matching, "in2/Engine/Core/x/xClimate.cpp"),
             Object(Matching, "in2/Engine/Core/x/xClumpColl.cpp"),
