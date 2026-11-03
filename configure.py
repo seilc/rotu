@@ -541,7 +541,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Core/x/xMath3.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xMemMgr.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xModel.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xModelBucket.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xModelBucket.cpp"),
             Object(Matching, "in2/Engine/Core/x/xMorph.cpp"),
             Object(Matching, "in2/Engine/Core/x/xMovePoint.cpp"),
             Object(Matching, "in2/Engine/Core/x/xNavigationMeshAsset.cpp"),

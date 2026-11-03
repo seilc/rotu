@@ -121,4 +121,9 @@ inline void xModelResetMaterial(xModelInstance* modelInst)
     iModelResetMaterial(modelInst->Data);
 }
 
+extern S32 xModelBucketEnabled;
+extern S32 xModelAlphaBucketEnabled;
+
+void xModelRenderSingle(xModelInstance* modelInst);
+
 #endif
