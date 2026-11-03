@@ -566,7 +566,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xRumbleManager.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xsavegame.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xScene.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xScreenWarp.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xScreenWarp.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xScrFx.cpp"),
             Object(Matching, "in2/Engine/Core/x/xserializer.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xShadow.cpp"),
