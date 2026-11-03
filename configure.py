@@ -709,7 +709,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zActionLine.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xCollideSpherePolygon.cpp"),
             Object(NonMatching, "in2/Engine/Game/zAsync.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xParticleBatch.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xParticleBatch.cpp"),
             Object(NonMatching, "in2/Engine/Game/zSmoke.cpp"),
             Object(NonMatching, "in2/Engine/Game/zSplash.cpp"),
             Object(NonMatching, "in2/Engine/Game/zIncrediSlam.cpp"),
