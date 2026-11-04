@@ -287,7 +287,7 @@ void xTextureManager::reload(xTextureHandle* pHandle)
     }
 
     pNode->state = xInternalTextureNode::LOADING;
-    pNode->pAssetMemory = RwMallocL(size, rwMEMHINTDUR_NADURATION, 450);
+    pNode->pAssetMemory = RwMalloc(size, rwMEMHINTDUR_NADURATION);
     if (!pNode->pAssetMemory) {
         return;
     }

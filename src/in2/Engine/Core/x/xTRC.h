@@ -37,21 +37,21 @@ typedef enum _tagTRCPadState
     TRC_PadStateMissingDuringLoadSave
 } TRCPadState;
 
-struct _tagTRCPadInfo : _tagiTRCPadInfo
+typedef struct _tagTRCPadInfo : iTRCPadInfo
 {
     S32 id;
     TRCState state;
     TRCPadState padstate;
-};
+} TRCPadInfo;
 
-struct _tagTRCDiskInfo
+typedef struct _tagTRCDiskInfo
 {
     TRCState state;
     TRCState id;
-};
+} TRCDiskInfo;
 
 bool xTRCMemCardCheck();
-_tagTRCPadInfo& xTRCPadGetNextAvailablePad();
+TRCPadInfo& xTRCPadGetNextAvailablePad();
 S32 xTRCPadGetArrayIdx(S32 port);
 void xTRCPadRemove(S32 port);
 void xTRCPadRestoreAll();

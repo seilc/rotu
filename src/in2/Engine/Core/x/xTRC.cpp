@@ -13,19 +13,19 @@
 #include "zMrIncrediblePlayer.h"
 #include "zFrozonePlayer.h"
 #include "zScene.h"
-
-#include <string.h>
 #include "xSpacePartitionTree.h"
 
+#include <string.h>
+
 namespace {
-_tagTRCPadInfo gTrcPad[k_MAX_TRC_PADS];
-_tagTRCDiskInfo gTrcDisk;
+TRCPadInfo gTrcPad[k_MAX_TRC_PADS];
+TRCDiskInfo gTrcDisk;
 const char* k_CONTROLLER_MISSING_MESSAGE;
 const char* k_CONTROLLER_INVALID_MESSAGE;
 
-inline void xTRCSwapPads(_tagTRCPadInfo& pad0, _tagTRCPadInfo& pad1)
+inline void xTRCSwapPads(TRCPadInfo& pad0, TRCPadInfo& pad1)
 {
-    _tagTRCPadInfo temppad;
+    TRCPadInfo temppad;
     temppad.id = pad0.id;
     temppad.state = pad0.state;
     temppad.padstate = pad0.padstate;
@@ -43,7 +43,7 @@ bool xTRCMemCardCheck()
     return false;
 }
 
-_tagTRCPadInfo& xTRCPadGetNextAvailablePad()
+TRCPadInfo& xTRCPadGetNextAvailablePad()
 {
     for (S32 i = 0; i < k_MAX_TRC_PADS; i++) {
         if (gTrcPad[i].state == TRC_Unknown) {
@@ -419,7 +419,7 @@ void xTRCPadInsert(S32 i)
         xTRCPadSetStatePadPort(i, TRC_PadPreInserted);
     }
     else if (xTRCPadIsPort(i, TRC_Unknown)) {
-        _tagTRCPadInfo& trcpad = xTRCPadGetNextAvailablePad();
+        TRCPadInfo& trcpad = xTRCPadGetNextAvailablePad();
         trcpad.id = i;
     }
 }

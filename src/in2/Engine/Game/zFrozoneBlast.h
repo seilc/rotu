@@ -8,7 +8,6 @@ struct xLight;
 struct zCutsceneMgr;
 struct NCINEntry;
 struct RpAtomic;
-struct RwMatrixTag;
 
 struct cinfx_spray_context
 {
@@ -71,7 +70,7 @@ public:
     static void EmitBlastParticles(blastStream& stream, F32 dt);
 
     static void cinfxUpdate(const zCutsceneMgr*, NCINEntry* fxrec, S32 killit);
-    static void cinfxAnimate(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrixTag* animMat, U32, U32, U32&);
+    static void cinfxAnimate(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic*, RwMatrix* animMat, U32, U32, U32&);
     static void cinfxRender(const zCutsceneMgr*, NCINEntry*);
     static void cinfxAddTweaks(const char*, NCINEntry*);
 

@@ -203,49 +203,49 @@ void zOneLinerSystemSetup()
 void zOneLinerSystemReset()
 {
     oneLinerPlayTime = iTimeGetGame() - 20.0f;
-    for (S32 r30 = 0; r30 < 2; r30++) {
-        oneLiners[r30].Reset();
+    for (S32 i = 0; i < 2; i++) {
+        oneLiners[i].Reset();
     }
 }
 
-void zOneLinerSystemPlay(zPlayer* r3, zOneLinerTypes r4)
+void zOneLinerSystemPlay(zPlayer* player, zOneLinerTypes type)
 {
-    F32 f31 = 18.0f * zUIIncrediblesGetGameProgress() + 20.0f;
-    if (iTimeGetGame() - oneLinerPlayTime < f31) {
+    F32 minDelay = 18.0f * zUIIncrediblesGetGameProgress() + 20.0f;
+    if (iTimeGetGame() - oneLinerPlayTime < minDelay) {
         return;
     }
 
-    S32 r28 = 0, r27 = -1;
-    if (r4 < 21) {
-        if (r3->brain_id == 13) {
-            r4 = (zOneLinerTypes)(r4 + 0);
+    S32 count = 0, choice = -1;
+    if (type < 21) {
+        if (player->brain_id == 13) {
+            type = (zOneLinerTypes)(type + 0);
         } else {
-            r4 = (zOneLinerTypes)(r4 + 21);
+            type = (zOneLinerTypes)(type + 21);
         }
     }
 
-    for (S32 r26 = 0; r26 < xglobals->players.size(); r26++) {
-        if (oneLiners[r26].GetSoundGroup(r4) != ISND_INVALID_SND_GROUP_HANDLE && xglobals->players[r26]->CanSayOneLiner()) {
-            r27 = r26;
-            r28++;
+    for (S32 i = 0; i < xglobals->players.size(); i++) {
+        if (oneLiners[i].GetSoundGroup(type) != ISND_INVALID_SND_GROUP_HANDLE && xglobals->players[i]->CanSayOneLiner()) {
+            choice = i;
+            count++;
         }
     }
 
-    bool r0 = false;
-    switch (r28) {
+    bool played = false;
+    switch (count) {
     case 0:
         break;
     case 2:
-        oneLiners[2].GetSoundGroup(r4);
-        r27 = xrand_RandomChoice(3);
-        r0 = oneLiners[r27].PlaySound(r4);
+        oneLiners[2].GetSoundGroup(type);
+        choice = xrand_RandomChoice(3);
+        played = oneLiners[choice].PlaySound(type);
         break;
     case 1:
-        r0 = oneLiners[r27].PlaySound(r4);
+        played = oneLiners[choice].PlaySound(type);
         break;
     }
 
-    if (r0) {
+    if (played) {
         oneLinerPlayTime = iTimeGetGame();
     }
 }

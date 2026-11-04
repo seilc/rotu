@@ -1,8 +1,6 @@
 #ifndef XRENDERSTATE_H
 #define XRENDERSTATE_H
 
-#include "types.h"
-
 #include <rwcore.h>
 #include <rpworld.h>
 

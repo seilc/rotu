@@ -517,4 +517,3 @@ S32 xParticleBatchGroup::create_system(const xParticleBatchSystem& system)
 
     return system_id;
 }
-

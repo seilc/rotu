@@ -47,20 +47,20 @@ public:
     void InitWithSounds(xOneLiner* soundList, U32 maxCheck);
     void Reset();
 
-    bool PlaySound(U32 r4)
+    bool PlaySound(U32 index)
     {
-        if (r4 < mNumSounds) {
-            return mSounds[r4].PlaySound();
+        if (index < mNumSounds) {
+            return mSounds[index].PlaySound();
         }
         return false;
     }
 
-    iSndGroupHandle GetSoundGroup(U32 r4) const
+    iSndGroupHandle GetSoundGroup(U32 index) const
     {
-        if (r4 >= mNumSounds) {
+        if (index >= mNumSounds) {
             return ISND_INVALID_SND_GROUP_HANDLE;
         }
-        return mSounds[r4].GetSoundGroup();
+        return mSounds[index].GetSoundGroup();
     }
 };
 

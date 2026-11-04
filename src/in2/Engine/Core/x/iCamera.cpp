@@ -375,7 +375,7 @@ void iCameraPerformRenderWareHack(RwCamera* camera)
     RpWorldCameraExt* cameraExt;
 
     memSize = rwCAMERADISPLAYSECTORSINCREASE * sizeof(RpWorldSector*);
-    newFrustumSectors = (RpWorldSector**)RwMallocL(memSize, rwMEMHINTDUR_NADURATION, 1663);
+    newFrustumSectors = (RpWorldSector**)RwMalloc(memSize, rwMEMHINTDUR_NADURATION);
     cameraExtOffset = RwCameraGetPluginOffset(rwID_WORLDOBJMODULE);
     cameraExt = WORLDCAMERAEXTFROMCAMERA(camera);
 

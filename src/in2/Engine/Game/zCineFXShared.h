@@ -29,7 +29,7 @@ struct TypeInfo
 struct Callbacks
 {
     void (*fxupd)(const zCutsceneMgr*, NCINEntry*, S32);
-    void (*fxanim)(const zCutsceneMgr*, NCINEntry*, RpAtomic*, RwMatrixTag*, U32, U32, U32&);
+    void (*fxanim)(const zCutsceneMgr*, NCINEntry*, RpAtomic*, RwMatrix*, U32, U32, U32&);
     void (*fxrend)(const zCutsceneMgr*, NCINEntry*);
     void (*tweaks)(const char*, NCINEntry*);
 };
@@ -93,7 +93,7 @@ struct NCINCustom
 
 struct NCINMat
 {
-    RwMatrixTag* mat;
+    RwMatrix* mat;
 };
 
 struct NCINRibbon
