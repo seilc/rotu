@@ -27,6 +27,7 @@ public:
     void GetParams(xCamTransitionParams& params);
     void Start();
     void Completed(bool sendCompletionEvents);
+    xCamBias* BlendBias() { return mCamBlendBias; }
 
 private:
     bool mActive;

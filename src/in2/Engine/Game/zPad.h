@@ -7,6 +7,10 @@ class zPad;
 
 class zPadAnalogControl
 {
+public:
+    F32 GetX();
+    F32 GetY();
+
 private:
     zPad* owner;
     S32 analogIndex;
@@ -22,6 +26,16 @@ public:
     S32 GetPadPort()
     {
         return padPort;
+    }
+
+    zPadAnalogControl* GetAnalog1()
+    {
+        return &analog1;
+    }
+
+    zPadAnalogControl* GetAnalog2()
+    {
+        return &analog2;
     }
 
 private:
