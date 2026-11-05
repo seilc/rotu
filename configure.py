@@ -512,7 +512,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Core/x/xEnt.cpp"),
             Object(Matching, "in2/Engine/Core/x/xEntBoulder.cpp"),
             Object(Matching, "in2/Engine/Core/x/xEntDrive.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xEntMotion.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xEntMotion.cpp"),
             Object(Matching, "in2/Engine/Core/x/xEnv.cpp"),
             Object(Matching, "in2/Engine/Core/x/xEvent.cpp"),
             Object(Matching, "in2/Engine/Core/x/xFactory.cpp"),
