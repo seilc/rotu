@@ -189,6 +189,9 @@ inline void xMat4x3Copy(xMat4x3* o, const xMat4x3* m)
 }
 
 void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b);
+void xMat4x3MoveLocalRight(xMat4x3* m, F32 mag);
+void xMat4x3MoveLocalUp(xMat4x3* m, F32 mag);
+void xMat4x3MoveLocalAt(xMat4x3* m, F32 mag);
 
 inline void xMat4x3Identity(xMat4x3* m)
 {
