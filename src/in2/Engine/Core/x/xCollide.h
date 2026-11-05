@@ -12,16 +12,6 @@ struct xCollis
         U32 index;
         F32 r;
         F32 d;
-
-        // Not present in DWARF, so probably a compiler-generated function, but somehow also appears in its own .text section?
-        // Needed to match xEntDrive.cpp.
-        tri_data& operator=(const tri_data& tri)
-        {
-            index = tri.index;
-            r = tri.r;
-            d = tri.d;
-            return *this;
-        }
     };
 
     U32 flags;
@@ -63,6 +53,8 @@ U32 xSphereHitsVCylinder(const xSphere* sph, const xCylinder* cyl, xCollis* coll
 U32 xCylinderHitsSphere(const xCylinder* cyl, const xSphere* sph, xCollis* coll);
 void xBoxForTriangle(xBox& box, const xVec3& p0, const xVec3& p1, const xVec3& p2);
 U32 xSphereHitsEnv(const xSphere* b, const xEnv* env, xCollis* coll);
+S32 xCapsuleIsectsModelClosestToLine(const xCapsule* c, const xModelInstance* model, xCollis* colls);
+S32 xCapsuleIsectsEnvClosestToLine(const xCapsule* c, const xEnv* env, xCollis* colls);
 U32 xSphereHitsModel(const xSphere* b, const xModelInstance* m, xCollis* coll);
 U32 xRayHitsModel(const xRay3* r, const xModelInstance* m, xCollis* coll);
 U32 xRayHitsEnv(const xRay3* r, const xEnv* env, xCollis* coll);

@@ -151,6 +151,7 @@ public:
     static void coord_to_local(xVec3& c, const xVec3& loc);
     static void orient_to_local(xQuat& o, const xMat3x3& mat);
     static xVec3& convert(xVec3& o, const xCamCoordCylinder& i);
+    static xVec3& convert(xVec3& o, const xCamCoordPolar& i);
     static void spring_interp(F32& s, F32& v, F32 s0, F32 s1, F32 dt, F32 speed, F32 e);
     template <class T, class U>
     static void spring_interp(T& s, U& v, const T& s0, const T& s1, F32 dt, F32 speed);
@@ -180,6 +181,15 @@ inline xVec3& xCam::convert(xVec3& o, const xCamCoordCylinder& i)
     o.x = i.origin.x + i.dist * isin(i.theta);
     o.y = i.origin.y + i.height;
     o.z = i.origin.z + i.dist * icos(i.theta);
+    return o;
+}
+
+inline xVec3& xCam::convert(xVec3& o, const xCamCoordPolar& i)
+{
+    F32 cp = i.dist * icos(i.phi);
+    o.x = i.origin.x + cp * isin(i.theta);
+    o.y = i.origin.y + i.dist * isin(i.phi);
+    o.z = i.origin.z + cp * icos(i.theta);
     return o;
 }
 

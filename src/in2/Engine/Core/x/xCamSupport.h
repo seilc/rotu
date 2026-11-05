@@ -3,6 +3,8 @@
 
 #include "xVec3.h"
 
+struct xCamCoordPolar;
+
 class xCamSupportPath
 {
 public:
@@ -16,6 +18,8 @@ public:
 
     config cfg;
 
+    void prune(S32 start, S32 size);
+    F32 traverse(xVec3& rloc, F32 velmag, F32 dt);
     void refresh_dist();
 
     F32 total_distance()
@@ -47,17 +51,43 @@ private:
     F32 dist;
     F32 subdist;
     F32 weights[31];
+
+    S32 mod_index(S32 index) const
+    {
+        return index & (max_size - 1);
+    }
+
+    static S32 polar_subdivide(path_node* vert, S32 vert_size, const xCamCoordPolar& start, const xCamCoordPolar& end, F32 thresh);
+    static void compute_weights(F32* w, S32 n, F32 s);
 };
 
 class xCamSupportLOSBar
 {
 public:
+    struct config
+    {
+        F32 rail_ymin;
+        F32 rail_ymax;
+        F32 pivot_bar_radius;
+        F32 compress_bar_radius;
+        F32 compress_ball_radius;
+        F32 compress_dist_min;
+    };
+
+    static config cfg;
+
     xVec3 origin;
     xVec3 last_origin;
     xVec3 stern_loc;
     xVec3 last_stern_loc;
     F32 rail_yoffset;
     F32 last_rail_yoffset;
+
+    void reset(const xVec3& origin, const xVec3& stern_loc);
+    void begin_update(const xVec3& origin);
+    void precollide();
+    bool collide_pivot();
+    bool collide_compress();
 };
 
 #endif
