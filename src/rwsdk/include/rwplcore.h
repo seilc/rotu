@@ -738,6 +738,7 @@ struct RwObject
     }                                  \
     MACRO_STOP
 
+#define RWPLUGINOFFSET(_type, _base, _offset) ((_type *)((RwUInt8 *)(_base) + (_offset)))
 #define rwObjectGetParent(object) (((const RwObject *)(object))->parent)
 #define RwRGBAAssign(_target, _source) ( *(_target) = *(_source) )
 #define _RW_S2 ( (float) 8.3333337680e-03 )
@@ -765,8 +766,6 @@ struct RwObject
         (o)->z += (((a)->z) * ( (s)));      \
     }                                       \
     MACRO_STOP
-
-#define RWPLUGINOFFSET(_type, _base, _offset) ((_type *)((RwUInt8 *)(_base) + (_offset)))
 
 #ifdef __cplusplus
 extern "C" {

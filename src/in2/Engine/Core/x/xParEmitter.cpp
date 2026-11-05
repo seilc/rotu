@@ -520,7 +520,6 @@ xPar* xParEmitterEmit(xParEmitter* pe, F32 emit_dt, F32 par_dt)
             add_vel = 0.0f;
         }
 
-
         F32 last_emit_time = -emit_dt;
 
         const xVec3& camPos = zCamGetMatrix().pos;
