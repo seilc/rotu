@@ -6,10 +6,10 @@ xEnv* gCurXEnv;
 
 void xEnvLoadJSPList(xEnv* env, S32 dataType)
 {
-    U32 bufsize;
-    void* buf;
-
     if (dataType == 0) {
+        U32 bufsize;
+        void* buf;
+
         env->geom = &env->ienv;
 
         S32 jsp_count = xSTAssetCountByType('JSP ');

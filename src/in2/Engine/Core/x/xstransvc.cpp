@@ -483,9 +483,8 @@ static char* XST_translate_sid(U32 sid, char* exten, bool local)
     }
 
     strcat(fname, xUtil_idtag2string(sid, 0));
-    if (local) {
+    if (local)
         strcat(fname, g_localCode);
-    }
     strcat(fname, exten);
 
     return fname;
@@ -510,9 +509,8 @@ static char* XST_translate_sid_path(U32 sid, char* exten, bool local)
     strcat(fname, subdir);
     strcat(fname, path_delimiter);
     strcat(fname, xUtil_idtag2string(sid, 0));
-    if (local) {
+    if (local)
         strcat(fname, g_localCode);
-    }
     strcat(fname, exten);
 
     return fname;
@@ -580,9 +578,8 @@ static S32 XST_cnt_locked()
     S32 cnt = 0, i = 0;
 
     for (i = 0; i < STRAN_MAX_SCENES; i++) {
-        if (g_xstdata.loadlock & (1 << i)) {
+        if (g_xstdata.loadlock & (1 << i))
             cnt++;
-        }
     }
 
     return cnt;
@@ -647,9 +644,8 @@ xRegion xSTGetLocalizationEnum()
 
 void xSTAddToDiscLanguageConfig(xRegion region)
 {
-    if (region > eRegionUnknown && region < eRegionCount) {
+    if (region > eRegionUnknown && region < eRegionCount)
         g_localDiscLanguageConfig |= 1 << region;
-    }
 }
 
 U32 xSTGetDiscLanguageConfig()

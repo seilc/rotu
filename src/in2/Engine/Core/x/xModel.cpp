@@ -104,7 +104,6 @@ xModelInstance* xModelInstanceAllocReuse(RpAtomic* data, void* object, U16 flags
     U32 boneCount, matCount;
     xModelPool* curr, *found = NULL;
     xModelInstance* dude;
-    RwMatrix* allocmats;
 
     boneCount = iModelNumBones(data);
     matCount = boneCount + 1 + ((flags & ModelInstance_ChildTransform) != 0);
@@ -118,7 +117,7 @@ xModelInstance* xModelInstanceAllocReuse(RpAtomic* data, void* object, U16 flags
                 dude->Pool = NULL;
                 dude->Mat = NULL;
             } else {
-                allocmats = (RwMatrix*)xMEMALLOC(matCount * sizeof(RwMatrix) + sizeof(xModelInstance), 16);
+                RwMatrix* allocmats = (RwMatrix*)xMEMALLOC(matCount * sizeof(RwMatrix) + sizeof(xModelInstance), 16);
                 dude = (xModelInstance*)(allocmats + matCount);
                 dude->Pool = NULL;
                 dude->Mat = allocmats;
@@ -572,13 +571,12 @@ static RwCamera* CameraCreate(S32 width, S32 height, S32 zBuffer)
 
 static void CameraDestroy(RwCamera* camera)
 {
-    RwRaster* raster;
-    RwFrame* frame;
-
     if (camera) {
+        RwRaster* raster;
+
         _rwFrameSyncDirty();
 
-        frame = RwCameraGetFrame(camera);
+        RwFrame* frame = RwCameraGetFrame(camera);
         if (frame) {
             RwCameraSetFrame(camera, NULL);
 

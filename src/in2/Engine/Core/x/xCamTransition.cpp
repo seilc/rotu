@@ -113,9 +113,8 @@ void xCamTransition::Start()
 
         destCamera = forward ? cameraB : cameraA;
         
-        if (globals.cam->primary && destCamera->id == globals.cam->primary->owner) {
+        if (globals.cam->primary && destCamera->id == globals.cam->primary->owner)
             return;
-        }
         
         break;
     }
@@ -206,9 +205,8 @@ void xCamPathBias::ResetCurve()
     F32 dotRight = normal.dot(mTrigger->frame->mat.right);
     if (xabs(dotAt) > xabs(dotRight)) {
         mMappingPlaneNormal = mTrigger->frame->mat.at;
-        if (dotAt < 0.0f) {
+        if (dotAt < 0.0f)
             mMappingPlaneNormal.negate();
-        }
     } else {
         mMappingPlaneNormal = mTrigger->frame->mat.right;
         if (dotRight < 0.0f) {
@@ -285,7 +283,7 @@ F32 xCamPathBias::CurveIntersectPlane(const xVec3& planePoint, F32& u, F32 guess
 
     F32 distLo = plane.Dist(mCurveEnd0);
     F32 distHi = plane.Dist(mCurveEnd1);
-    if ((distLo < 0.0f ? 1 : 0) == (distHi < 0.0f ? 1 : 0)) {
+    if (xsamesign(distLo, distHi)) {
         if (distLo < 0.0f) {
             u = 1.0f;
         } else {
@@ -309,7 +307,7 @@ F32 xCamPathBias::CurveIntersectPlane(const xVec3& planePoint, F32& u, F32 guess
         distLo = plane.Dist(loPt);
         distHi = plane.Dist(hiPt);
 
-        if ((distLo < 0.0f ? 1 : 0) == (distHi < 0.0f ? 1 : 0) && distLo != 0.0f && distHi != 0.0f) {
+        if (xsamesign(distLo, distHi) && distLo != 0.0f && distHi != 0.0f) {
             loPt = mCurveEnd0;
             hiPt = mCurveEnd1;
             loU = 0.0f;

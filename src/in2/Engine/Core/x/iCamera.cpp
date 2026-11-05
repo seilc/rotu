@@ -92,8 +92,6 @@ void iCameraDestroy(RwCamera* camera)
 {
     iAsyncLockRWSentry rw_sentry;
     RpWorld* pWorld;
-    RwRaster* raster;
-    RwFrame* frame;
 
     iMemMgrEnableRenderWareMemoryHack(true);
     _rwFrameSyncDirty();
@@ -110,7 +108,9 @@ void iCameraDestroy(RwCamera* camera)
     }
 
     if (camera) {
-        frame = RwCameraGetFrame(camera);
+        RwRaster* raster;
+
+        RwFrame* frame = RwCameraGetFrame(camera);
         if (frame) {
             RwCameraSetFrame(camera, NULL);
             RwFrameDestroy(frame);
@@ -316,7 +316,6 @@ void iCameraSetFogRenderStates()
 {
     RwCamera* pCamera;
     iFogParams* pFogParams;
-    RwUInt32 bite_me;
     
     pCamera = RwCameraGetCurrentCamera();
     if (!pCamera) return;
@@ -329,10 +328,10 @@ void iCameraSetFogRenderStates()
         RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)FALSE);
         RwCameraSetFarClipPlane(pCamera, pFogParams->stop);
     } else {
-        bite_me = RWRGBALONG(pFogParams->fogcolor.red,
-                             pFogParams->fogcolor.green,
-                             pFogParams->fogcolor.blue,
-                             pFogParams->fogcolor.alpha);
+        RwUInt32 bite_me = RWRGBALONG(pFogParams->fogcolor.red,
+                                      pFogParams->fogcolor.green,
+                                      pFogParams->fogcolor.blue,
+                                      pFogParams->fogcolor.alpha);
 
         RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)TRUE);
         RwRenderStateSet(rwRENDERSTATEFOGTYPE, (void*)pFogParams->type);

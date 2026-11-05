@@ -43,9 +43,8 @@ void xPadRumbleEnable(S32 idx, S32 enable)
     }
 
     if (enable) {
-        if (p->flags & 0x4) {
+        if (p->flags & 0x4)
             p->flags |= 0x8;
-        }
     } else {
         if (p->flags & 0x8) {
             p->flags ^= 0x8;
@@ -55,9 +54,8 @@ void xPadRumbleEnable(S32 idx, S32 enable)
 
 void xPadClear()
 {
-    for (S32 i = 0; i < k_XPAD_MAX; i++) {
+    for (S32 i = 0; i < k_XPAD_MAX; i++)
         xPadClear(i);
-    }
 }
 
 void xPadClear(S32 idx)
@@ -162,9 +160,8 @@ void xPadUpdateAllPads(F32 time_passed)
 {
     iPadUpdateDataAll();
 
-    for (S32 j = 0; j < k_XPAD_MAX; j++) {
+    for (S32 j = 0; j < k_XPAD_MAX; j++)
         xPadUpdate(j, time_passed);
-    }
 }
 
 void xPadNormalizeAnalog(xPad& pad, S32 inner_zone, S32 outer_zone)

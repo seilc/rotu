@@ -78,11 +78,9 @@ void xSceneSetup(xScene* sc)
 
 void xSceneAddEnt(xScene* sc, xEnt* ent)
 {
-    xTriggerAsset* triggerAsset;
-
     switch (ent->collType) {
     case 0x1:
-        triggerAsset = (xTriggerAsset*)(ent->asset + 1);
+        xTriggerAsset* triggerAsset = (xTriggerAsset*)(ent->asset + 1);
 
         if (triggerAsset->flags & 0x380E) {
             sc->specialTriggers[sc->numSpecialTriggers] = ent;

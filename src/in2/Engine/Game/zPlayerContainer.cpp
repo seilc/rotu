@@ -19,9 +19,8 @@ zPlayerContainer::zPlayerContainer()
 bool zPlayerContainer::IsPlayer(xEnt* ptr)
 {
     for (S32 i = 0; i < 2; i++) {
-        if (playerArray[i] == ptr) {
+        if (playerArray[i] == ptr)
             return true;
-        }
     }
     return false;
 }

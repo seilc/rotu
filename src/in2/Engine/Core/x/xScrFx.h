@@ -55,6 +55,9 @@ struct xCameraFXShakeParams
     bool shakeY;
 };
 
+extern RwTexture* gxFlareTexture;
+extern RwFrame* gxFlareFrame;
+
 void xScrFxInit();
 void xScrFxReset();
 void xScrFxUpdate(RwCamera*, F32 dt);
