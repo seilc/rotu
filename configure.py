@@ -718,7 +718,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zWater.cpp"),
             Object(NonMatching, "in2/Engine/Game/zTimeHandler.cpp"),
             Object(NonMatching, "in2/Engine/Game/zBulletMarkAsset.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xCollideSweptSphere.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xCollideSweptSphere.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCCommon.cpp"),
             Object(Matching, "in2/Engine/Core/x/xScreenFade.cpp"),
             Object(Matching, "in2/Engine/Core/x/xCollideSphereBox.cpp"),

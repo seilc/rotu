@@ -3,6 +3,8 @@
 
 #include "xModel.h"
 
+struct xEnv;
+
 struct xCollis
 {
     struct tri_data
@@ -59,6 +61,8 @@ bool xSphereHitsBox(const xVec3& c, F32 r, const xBox& b);
 bool xOBBHitsOBB(const xBox& a, const xMat4x3& amat, const xBox& b, const xMat4x3& bmat);
 U32 xSphereHitsVCylinder(const xSphere* sph, const xCylinder* cyl, xCollis* coll);
 U32 xCylinderHitsSphere(const xCylinder* cyl, const xSphere* sph, xCollis* coll);
+void xBoxForTriangle(xBox& box, const xVec3& p0, const xVec3& p1, const xVec3& p2);
+U32 xSphereHitsEnv(const xSphere* b, const xEnv* env, xCollis* coll);
 
 inline bool xSphereHitsSphere(const xVec3& loc1, F32 r1, const xVec3& loc2, F32 r2)
 {
