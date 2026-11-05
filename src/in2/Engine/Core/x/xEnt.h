@@ -164,6 +164,12 @@ inline xMat4x3* xEntGetFrame(const xEnt* ent)
     return xModelGetFrame(ent->model);
 }
 
+void xEntInit(xEnt* ent, xEntAsset* asset);
+void xEntSetup(xEnt* ent);
+void xEntReset(xEnt* ent);
+void xEntBeginUpdate(xEnt* ent, xScene*, F32 dt);
+void xEntEndUpdate(xEnt* ent, xScene* sc, F32 dt);
+void xEntCollide(xEnt* ent, xScene* sc, F32 dt);
 void xEntSetupPipeline(xSurface* surf, RpAtomic* model);
 void xEntRestorePipeline(xSurface*, RpAtomic* model);
 void xEntShow(xEnt* ent);

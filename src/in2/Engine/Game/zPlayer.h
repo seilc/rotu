@@ -13,6 +13,7 @@
 #include "zCombat.h"
 
 struct zSlideCam;
+struct zJump;
 struct xModelAssetParam;
 class zInteraction;
 struct xSweptSphere;
@@ -65,8 +66,10 @@ public:
     virtual void Reset();
     virtual bool IsDead() const;
     virtual void Exit();
+    virtual bool IsDoingNuke() const;
     virtual void Save(xSerial* serial);
     virtual void Load(xSerial* serial);
+    virtual void BeforeAnimMatrices(xAnimPlay*, xQuat*, xVec3*, S32);
     virtual bool Damage(const zCombatDamageInfo& damageInfo);
     virtual xEnt* GetCarriedEntity();
     virtual S32* GetHeadBones();
@@ -78,6 +81,8 @@ public:
     virtual void StoreCheckPoint(const zPlayerCheckPoint& theCheckPoint);
     virtual void SetCamera();
     virtual void RenderEffects();
+    virtual void SetJump(zJump* new_jump);
+    virtual U32 JumpCheck() const;
 
     virtual void GiveHealth(S32 hitPoints, bool from_pickup);
     virtual void ResetHealth();
@@ -97,6 +102,9 @@ public:
     virtual void GiveIncrediPower(S16, bool);
     virtual void TakeIncrediPower(F32);
     virtual bool IsSwimming() const;
+    virtual bool IsPunching();
+    virtual bool IsIdle();
+    virtual bool IsFalling();
 
     bool CollisionOn() const
     {
@@ -108,7 +116,6 @@ public:
     virtual xVec3 get_target();
     virtual F32 GetScreenFadeTime();
     virtual F32 StartScreenFadeAt();
-    virtual F32 PredictY(F32 time) const;
 
     S32 GetCollisionSpheres(const xSphere** sphereArray);
 
@@ -137,9 +144,7 @@ public:
     virtual void ParseIni();
     virtual void AddStates(xAnimTable* table);
     virtual void AddTransitions(xAnimTable*);
-    virtual void InitActions() = 0;
     virtual bool CollisionResponse(const xVec3& currentDir, const SphereCollisionResults& sceneCollide, xVec3& responseDpos);
-    virtual bool DefaultCollisionResponse(const xVec3& current_dir, const SphereCollisionResults& scene_collide, xVec3& response_dpos);
     virtual void RegisterCollision(const SphereCollisionResults& sceneCollide);
     virtual bool StayOnGround();
     virtual bool CollideWithNPC();
@@ -147,6 +152,11 @@ public:
     virtual void ReactiveAnimationCollided();
 
 public:
+    xEntDrive* GetDrive()
+    {
+        return &drv;
+    }
+
     struct mblur_data
     {
         xModelBlur::config_data cfg;
@@ -214,11 +224,13 @@ protected:
     S32 enemyKilledCombo;
 
 private:
+    U8 unk908[0x2D0];
     F32 depenetration_velocity;
     xEntShadow entShadow_embedded;
     xShadowSimpleCache simpShadow_embedded;
     U32 loaded_assetid;
     xEntDrive drv;
+    U8 unkD70[0x50];
     U16 parametersSize;
     xModelAssetParam* parameters;
     xEnt* reticleTarget;
@@ -231,9 +243,6 @@ private:
 
 public:
     U32* hitSoundsMap;
-
-private:
-    U8 unkB0C[0x324];
 };
 
 #endif
