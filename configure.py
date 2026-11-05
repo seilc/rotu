@@ -549,7 +549,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xPad.cpp"),
             Object(Matching, "in2/Engine/Core/x/xPar.cpp"),
             Object(NonMatching, "in2/Engine/Core/x/xParCmd.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xParEmitter.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xParEmitter.cpp"),
             Object(Matching, "in2/Engine/Core/x/xParEmitterType.cpp"),
             Object(Matching, "in2/Engine/Core/x/xParGroup.cpp"),
             Object(Matching, "in2/Engine/Core/x/xParMgr.cpp"),
