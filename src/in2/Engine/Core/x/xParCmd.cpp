@@ -699,4 +699,3 @@ void xParCmd_Shaper_Update(xParCmd* c, xParGroup* ps, F32 dt)
         }
     }
 }
-
