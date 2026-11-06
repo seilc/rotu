@@ -23,7 +23,7 @@ void add_tweaks(xCounter& counter)
 
 void xCounterInit()
 {
-    xTWEAKREMOVE("Widgets|Counters");
+    xTWEAK_REMOVE("Widgets|Counters");
 }
 
 void xCounterInit(void* b, void* asset)
