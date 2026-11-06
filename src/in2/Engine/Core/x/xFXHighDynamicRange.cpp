@@ -601,7 +601,7 @@ void xFXHighDynamicRangeRender(RwCamera*)
 
     GXSetDither(GX_TRUE);
 
-    hdr_dump_efb = 0;
+    hdr_dump_efb = FALSE;
 }
 
 void xFXHighDynamicRangeRestoreSettings()

@@ -282,11 +282,11 @@ void xParSysEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*, U32)
         break;
     case eEventOn:
         if (t->group)
-            xParGroupSetActive(t->group, 1);
+            xParGroupSetActive(t->group, TRUE);
         break;
     case eEventOff:
         if (t->group) {
-            xParGroupSetActive(t->group, 0);
+            xParGroupSetActive(t->group, FALSE);
         }
         break;
     }

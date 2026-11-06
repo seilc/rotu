@@ -294,7 +294,7 @@ static S32 xParEmitterCull(xParEmitter* pe, xPar* p)
         else
             return dmag < a->cull_dist_sqr;
     }
-    return 0;
+    return FALSE;
 }
 
 F32 xParInterpCompute(S32 interp_mode, xParInterp* r, F32 time, S32 time_has_elapsed, F32 lastVal)

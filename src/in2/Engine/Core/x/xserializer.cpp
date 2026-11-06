@@ -359,7 +359,7 @@ static void xSER_init_buffers(S32 count, st_SERIAL_PERCID_SIZE* sizeinfo)
     st_SERIAL_PERCID_SIZE* sitmp = NULL;
     st_SERIAL_CLIENTINFO* tmp_clt = NULL;
 
-    XOrdInit(&g_xserdata.cltlist, count, eMemMgrTag_Serializer, 0);
+    XOrdInit(&g_xserdata.cltlist, count, eMemMgrTag_Serializer, FALSE);
     xsd->cltbuf = (st_SERIAL_CLIENTINFO*)xMEMALLOC((U32)count * sizeof(st_SERIAL_CLIENTINFO), 0);
     memset(xsd->cltbuf, 0, count * sizeof(st_SERIAL_CLIENTINFO));
     xsd->cltnext = xsd->cltbuf;

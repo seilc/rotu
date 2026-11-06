@@ -39,7 +39,7 @@ void xPadRumbleEnable(S32 idx, S32 enable)
     xPad* p = &mPad[idx];
 
     if (p->state != 1) {
-        enable = 0;
+        enable = FALSE;
     }
 
     if (enable) {
@@ -70,12 +70,12 @@ S32 xPadUpdate(S32 idx, F32 time_passed)
     U32 new_on = 0;
 
     if (zScene_ScreenAdjustMode()) {
-        xPadAnalogIsDigital(idx, 0);
+        xPadAnalogIsDigital(idx, FALSE);
     }
     else if (zMenuRunning() || zGameIsPaused()) {
-        xPadAnalogIsDigital(idx, 1);
+        xPadAnalogIsDigital(idx, TRUE);
     } else {
-        xPadAnalogIsDigital(idx, 0);
+        xPadAnalogIsDigital(idx, FALSE);
     }
 
     xPad* p = &mPad[idx];

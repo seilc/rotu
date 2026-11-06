@@ -635,7 +635,7 @@ static S32 JSPApplyLightCB(xJSPHeader* jsp, xJSPNodeTreeLeaf* leaf, RwBBox* box,
         }
     }
 
-    return 1;
+    return TRUE;
 }
 
 void xJSP_ApplyLocalLight(xJSPHeader* jsp, RpLight* light)
