@@ -33,7 +33,7 @@ enum ezBlockDir
     ezBlockDir_Around
 };
 
-class zNPCCommon : public zNPCBaseIN2
+class zNPCCommon : public zNPCBase
 {
 public:
     virtual const char* get_type_name() const;

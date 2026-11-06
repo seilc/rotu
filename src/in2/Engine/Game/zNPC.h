@@ -19,7 +19,7 @@ struct zStoredSpawn
 
 namespace zNPC {
 
-class zNPCBaseIN2;
+class zNPCBase;
 struct zNPCAssetIN2;
 
 class zNPCInstance : public xBase
@@ -33,7 +33,7 @@ protected:
         U32 pad : 29;
     };
 
-    zNPCBaseIN2* npc_data;
+    zNPCBase* npc_data;
     U32 type;
     zNPCAssetIN2* npc_asset;
     S32 npc_asset_size;

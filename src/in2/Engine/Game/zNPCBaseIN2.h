@@ -19,14 +19,14 @@ struct zNPCAssetIN2 : xDynAsset
     U32 lightKitID;
 };
 
-class zNPCBaseIN2 : public xEnt
+class zNPCBase : public xEnt
 {
 protected:
     zNPCInstance* inst;
 
 public:
     virtual void change_instance(zNPCInstance* new_inst);
-    virtual ~zNPCBaseIN2();
+    virtual ~zNPCBase();
     virtual void init(zNPCInstance* init_inst);
     virtual void timestep(xScene* xscn, F32 dt);
     virtual void activate();
