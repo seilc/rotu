@@ -193,14 +193,13 @@ void iCameraSetFOV(RwCamera* cam, F32 fov)
     RwCameraSetViewWindow(cam, &vw);
 }
 
-// RESTORED: speculative
+// UNUSED: speculative
 F32 iCameraGetFOV(RwCamera* cam)
 {
     const RwV2d* vw = RwCameraGetViewWindow(cam);
     F32 angle = xatan(vw->x);
     return 2.0f * (180.0f/PI) * angle;
 }
-// END RESTORED
 
 void iCameraAssignEnv(RwCamera* camera, iEnv* env_geom)
 {

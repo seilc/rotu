@@ -26,7 +26,7 @@ struct XGOFTypeInfo
 
 struct xFactory : RyzMemData
 {
-    xFactoryInst* CreateItem(S32 typeID, void* userdata, RyzMemGrow* callerzgrow);
+    xFactoryInst* CreateItem(S32 typeID, void* userdata, RyzMemGrow* callerzgrow); // UNUSED
 
 protected:
     XGOFTypeInfo* infopool;

@@ -25,7 +25,7 @@ struct xBound
 
 struct xCollis;
 
-void xBoundMakeSphere(xBound& b, const xVec3& center, F32 radius);
+void xBoundMakeSphere(xBound& b, const xVec3& center, F32 radius); // UNUSED
 void xBoundUpdate(xBound* b);
 void xBoundGetBox(xBox& box, const xBound& bound);
 void xBoundGetCylinder(xCylinder& o, const xBound& bound);

@@ -26,7 +26,7 @@ void xHierarchyBoundInit(xHierarchyBound* bound, const xHierarchyBoundInitData* 
     memset(bound->nodes + count, 0, sizeof(xHierarchyNode) * extraBounds);
 }
 
-// RESTORED: from Rat GC
+// UNUSED: ported from Rat GC
 void xHierarchyBoundDraw(const xHierarchyBound* bound, U8 mR, U8 mG, U8 mB, U8 mA, U8 sR, U8 sG, U8 sB, U8 sA, S8 hilight, U8 hR, U8 hG, U8 hB, U8 hA)
 {
     xDrawSetColor(mR, mG, mB, mA);
@@ -43,7 +43,6 @@ void xHierarchyBoundDraw(const xHierarchyBound* bound, U8 mR, U8 mG, U8 mB, U8 m
         }
     }
 }
-// END RESTORED
 
 bool xHierarchyBoundTest(const xHierarchyBound* bound, xSweptSphere* sphere, U16* boundUserData, S8* subsphere, bool skipMasterCheck)
 {

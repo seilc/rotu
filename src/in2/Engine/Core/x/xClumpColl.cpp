@@ -171,7 +171,7 @@ void xClumpColl_InstancePointers(xClumpCollBSPTree*, RpClump*)
 {
 }
 
-// RESTORED: speculative
+// UNUSED: speculative
 xClumpCollBSPTree* xClumpColl_ForAllLeafNodes(xClumpCollBSPTree* tree, xClumpCollBSPLeafCB callBack, void* data)
 {
     S32 nStack;
@@ -204,7 +204,6 @@ xClumpCollBSPTree* xClumpColl_ForAllLeafNodes(xClumpCollBSPTree* tree, xClumpCol
 
     return tree;
 }
-// END RESTORED
 
 xClumpCollBSPTree* xClumpColl_ForAllBoxLeafNodeIntersections(xClumpCollBSPTree* tree, RwBBox* box, xClumpCollBSPLeafCB callBack, void* data)
 {

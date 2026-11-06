@@ -18,9 +18,9 @@ void quicksort_int(void* base, size_t num, size_t width, size_t key_offset);
 void quicksort_uint(void* base, size_t num, size_t width, size_t key_offset);
 void quicksort_float(void* base, size_t num, size_t width, size_t key_offset);
 void quicksort_istr(void* base, size_t num, size_t width, size_t key_offset);
-void isort_int(void* base, size_t num, size_t width, size_t key_offset);
+void isort_int(void* base, size_t num, size_t width, size_t key_offset); // UNUSED
 void isort_float(void* base, size_t num, size_t width, size_t key_offset);
-void isort_istr(void* base, size_t num, size_t width, size_t key_offset);
+void isort_istr(void* base, size_t num, size_t width, size_t key_offset); // UNUSED
 
 template <class T, class V, class C>
 T binary_find(T first, T last, const V& value, C cmp)

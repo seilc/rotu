@@ -53,7 +53,7 @@ struct zScene : xScene
 typedef xBase*(*zSceneCallback)(xBase*, zScene*, void*);
 
 xBase* zSceneFindObject(U32 gameID);
-bool zSceneUpdateAsset(xBase& sceneObject, void* asset, U32 assetSize);
+bool zSceneUpdateAsset(xBase& sceneObject, void* asset, U32 assetSize); // UNUSED
 const char* zSceneGetName(xBase* b);
 void zSceneForAllBase(zSceneCallback func, S32 baseType, void* data);
 U32 zScene_ScreenAdjustMode();

@@ -83,12 +83,11 @@ void xCam::create()
     debug_init();
 }
 
-// RESTORED: speculative
+// UNUSED: speculative
 bool xCam::blendingTo() const
 {
     return blending() && blender->dst == this;
 }
-// END RESTORED
 
 void xCamGroup::create()
 {
@@ -342,13 +341,14 @@ F32 xCamScreen::world_to_screen(xVec3& screen_loc, const xVec3& world_loc) const
     return rz;
 }
 
-// RESTORED: speculative
+// UNUSED: speculative
 struct plane_type
 {
     xVec3 norm;
     F32 dist;
 };
 
+// UNUSED: speculative
 void xCamScreen::create_frustum_planes(xVec4* frust_planes, const xMat4x3& ltm, const xVec2& view_offset, const xVec2& view_window, F32 near_plane, F32 far_plane)
 {
     plane_type* planes = (plane_type*)frust_planes;
@@ -415,7 +415,6 @@ void xCamScreen::create_frustum_planes(xVec4* frust_planes, const xMat4x3& ltm, 
     planes[5].norm.normalize();
     planes[5].dist = planes[5].norm.dot(corners[3]);
 }
-// END RESTORED
 
 void xCamTimeBias::Init(F32 blendTime)
 {
@@ -660,7 +659,7 @@ void xCamBlend::blend_orient(F32 s)
     }
 }
 
-// RESTORED: from Rat GC
+// UNUSED: ported from Rat GC
 void xCamDebug::create()
 {
     xCam::create();
@@ -668,6 +667,7 @@ void xCamDebug::create()
     orient_type = XCAM_ORIENT_EULER;
 }
 
+// UNUSED: ported from Rat GC
 void xCamDebug::start()
 {
     xCam::start();
@@ -678,6 +678,7 @@ void xCamDebug::start()
     spatial.orient.euler.roll = 0.0f;
 }
 
+// UNUSED: ported from Rat GC
 void xCamDebug::update(xScene&, F32 dt)
 {
     F32 turn_mult = 1.0f + (cfg.slow_turn - 1.0f) * slow_input;
@@ -706,4 +707,3 @@ void xCamDebug::update(xScene&, F32 dt)
 
     coord_to_world(mat.pos, spatial.coord.cart);
 }
-// END RESTORED

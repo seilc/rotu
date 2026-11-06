@@ -20,7 +20,7 @@ void iCameraShowRaster(RwCamera* cam);
 void iCameraUpdatePos(RwCamera* cam, xMat4x3* pos);
 F32 iCameraGetAspectRatio();
 void iCameraSetFOV(RwCamera* cam, F32 fov);
-F32 iCameraGetFOV(RwCamera* cam);
+F32 iCameraGetFOV(RwCamera* cam); // UNUSED
 void iCameraAssignEnv(RwCamera* camera, iEnv* env_geom);
 void iCamGetViewMatrix(RwCamera* camera, xMat4x3* view_matrix);
 void iCameraSetNearFarClip(F32 nearPlane, F32 farPlane);

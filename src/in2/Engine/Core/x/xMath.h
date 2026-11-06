@@ -127,7 +127,7 @@ F32 xAngleClamp(F32 a);
 F32 xAngleClampFast(F32 a);
 F32 xDangleClamp(F32 a);
 void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv);
-void xAccelStop(F32& x, F32& v, F32 a, F32 dt);
+void xAccelStop(F32& x, F32& v, F32 a, F32 dt); // UNUSED
 F32 xFuncPiece_Eval(xFuncPiece* func, F32 param, xFuncPiece** iterator);
 void xFuncPiece_Derivative(xFuncPiece* deriv, xFuncPiece* func);
 void xFuncPiece_EndPoints(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F32 ff);

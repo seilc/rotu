@@ -254,7 +254,7 @@ static void set_sample_offsets(U16 curSizeX, U16 curSizeY)
     GXLoadTexMtxImm(matrix, GX_TEXMTX3, GX_MTX2x4);
 }
 
-// RESTORED: from Rat GC
+// UNUSED: ported from Rat GC
 static void debug_render_card(void* tex, F32 x, F32 y, F32 w, F32 h)
 {
     GXTexObj tobj ATTRIBUTE_ALIGN(16);
@@ -274,7 +274,6 @@ static void debug_render_card(void* tex, F32 x, F32 y, F32 w, F32 h)
     GXTexCoord2f32(1.0f, 1.0f);
     GXEnd();
 }
-// END RESTORED
 
 void xFXHighDynamicRangeRender(RwCamera*)
 {

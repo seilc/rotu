@@ -20,7 +20,7 @@
     if ((s) < 0.0f) { if ((x) > 0.0f) (x) = -(x); }                                               \
     else { if ((x) < 0.0f) (x) = -(x); }
 
-// RESTORED: from Rat GC, Incredibles GC
+// UNUSED: ported from Rat GC, Incredibles GC
 void xCamSupportPath::prune(S32 start, S32 size)
 {
     S32 old_used = used;
@@ -48,6 +48,7 @@ void xCamSupportPath::prune(S32 start, S32 size)
     }
 }
 
+// UNUSED: ported from Rat GC, Incredibles GC
 F32 xCamSupportPath::traverse(xVec3& rloc, F32 velmag, F32 dt)
 {
     if (dist < 0.0f) {
@@ -114,6 +115,7 @@ F32 xCamSupportPath::traverse(xVec3& rloc, F32 velmag, F32 dt)
     return velmag;
 }
 
+// UNUSED: ported from Rat GC, Incredibles GC
 void xCamSupportPath::refresh_dist()
 {
     dist = 0.0f;
@@ -127,6 +129,7 @@ void xCamSupportPath::refresh_dist()
     }
 }
 
+// UNUSED: ported from Rat GC, Incredibles GC
 S32 xCamSupportPath::polar_subdivide(path_node* vert, S32 vert_size, const xCamCoordPolar& start, const xCamCoordPolar& end, F32 thresh)
 {
     path_node head, tail;
@@ -196,6 +199,7 @@ S32 xCamSupportPath::polar_subdivide(path_node* vert, S32 vert_size, const xCamC
     }
 }
 
+// UNUSED: ported from Rat GC, Incredibles GC
 void xCamSupportPath::compute_weights(F32* w, S32 n, F32 s)
 {
     F32 start_efrac = 1.0f;
@@ -221,7 +225,6 @@ void xCamSupportPath::compute_weights(F32* w, S32 n, F32 s)
         sum += w[i + 1] + w[i + 1];
     w[0] += 1.0f - sum;
 }
-// END RESTORED
 
 xCamSupportLOSBar::config xCamSupportLOSBar::cfg;
 
@@ -244,7 +247,7 @@ static const S32 MAX_ENT_CACHE_SIZE = 256;
 ent_cache_entry ent_cache[MAX_ENT_CACHE_SIZE];
 S32 ent_cache_size;
 
-// RESTORED: from Rat GC, Incredibles GC
+// UNUSED: ported from Rat GC, Incredibles GC
 struct cache_entity_callback
 {
     ent_cache_entry* cache;
@@ -281,9 +284,8 @@ struct cache_entity_callback
         return true;
     }
 };
-// END RESTORED
 
-// RESTORED: speculative
+// UNUSED: speculative
 bool pivot_depen_bar(xVec3& cap_offset, xVec3& impact, xVec3& rot_axis, const xCapsule& cap, F32 impact_t, F32, const xVec3& tohit)
 {
     cap_offset.assign(cap.end.x - cap.start.x, cap.end.y - cap.start.y, cap.end.z - cap.start.z);
@@ -312,7 +314,6 @@ bool pivot_depen_bar(xVec3& cap_offset, xVec3& impact, xVec3& rot_axis, const xC
 
     return true;
 }
-// END RESTORED
 
 F32 arc_sphere_to_plane(const xMat4x3& circle_mat, F32 Rc, F32 Rs, const xVec3& Nplane, F32 Dplane)
 {

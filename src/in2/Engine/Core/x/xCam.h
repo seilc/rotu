@@ -137,7 +137,7 @@ public:
 
     bool started() const { return flags & 0x1; }
     bool blending() const { return blender != NULL; }
-    bool blendingTo() const;
+    bool blendingTo() const; // UNUSED
 
     virtual xCam* get_final_dest() { return this; }
     virtual zCamSplineCommonMix* get_common_mix() { return NULL; }
@@ -173,7 +173,7 @@ public:
     static void coord_to_world(xVec3& loc, const xCamCoordCylinder& c);
     static void coord_to_world(xVec3& loc, const xCamCoordSphere& c);
     static void orient_to_local(xQuat& o, const xMat3x3& mat);
-    static void orient_to_local(xCamOrientEuler& o, const xMat3x3& mat);
+    static void orient_to_local(xCamOrientEuler& o, const xMat3x3& mat); // UNUSED
     static void orient_to_world(xMat3x3& mat, const xQuat& o);
     static void orient_to_world(xMat3x3& mat, const xCamOrientEuler& o);
     static xVec3& convert(xVec3& o, const xCamCoordCylinder& i);
@@ -260,7 +260,7 @@ struct xCamScreen
     void set_world_matrix(const xMat4x3& mat);
     void set_fov(F32 fov);
     F32 world_to_screen(xVec3& screen_loc, const xVec3& world_loc) const;
-    static void create_frustum_planes(xVec4* frust_planes, const xMat4x3& ltm, const xVec2& view_offset, const xVec2& view_window, F32 near_plane, F32 far_plane);
+    static void create_frustum_planes(xVec4* frust_planes, const xMat4x3& ltm, const xVec2& view_offset, const xVec2& view_window, F32 near_plane, F32 far_plane); // UNUSED
 
     RwCamera* icam;
     F32 fov;
@@ -351,9 +351,9 @@ struct xCamDebug : xCam
         F32 slow_move;
     };
 
-    virtual void create();
-    virtual void start();
-    virtual void update(xScene&, F32 dt);
+    virtual void create(); // UNUSED
+    virtual void start(); // UNUSED
+    virtual void update(xScene&, F32 dt); // UNUSED
 
     config cfg;
     xVec2 dpad;
@@ -385,12 +385,11 @@ inline void xCam::orient_to_local(xQuat& o, const xMat3x3& mat)
     xQuatFromMat(&o, &mat);
 }
 
-// RESTORED: from Rat GC
+// UNUSED: ported from Rat GC
 inline void xCam::orient_to_local(xCamOrientEuler& o, const xMat3x3& mat)
 {
     xMat3x3GetEuler(&mat, (xVec3*)&o);
 }
-// END RESTORED
 
 inline void xCam::orient_to_world(xMat3x3& mat, const xQuat& o)
 {

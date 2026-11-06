@@ -220,14 +220,13 @@ public:
 
     widget(const asset& a);
 
-    // RESTORED: from Rat MAP
+    // UNUSED: speculative
     ~widget() {}
-    // END RESTORED
 
     static void init_base(xBase& data, const xBaseAsset& asset, size_t chunk_size);
     static void scene_enter();
     static void disable_all(bool destroy_widgets);
-    static void setup_all();
+    static void setup_all(); // UNUSED
     static void update_all(F32 dt);
     static void render_all();
     static void cb_dispatch(xBase* from, xBase* to, U32 event, const F32* argf, xBase* argw, U32 argwi);

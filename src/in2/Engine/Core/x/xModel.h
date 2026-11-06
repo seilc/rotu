@@ -114,7 +114,7 @@ void xModelEvalSingle(xModelInstance* modelInst, xBox* combinedAnimBound);
 void xModelEval(xModelInstance* modelInst);
 void xModelRenderSingle(xModelInstance* modelInst);
 void xModelRender(xModelInstance* modelInst);
-void xModelRender2D(xModelInstance* modelInst, basic_rect<F32>* sr, xVec3* from, xVec3* to, F32);
+void xModelRender2D(xModelInstance* modelInst, basic_rect<F32>* sr, xVec3* from, xVec3* to, F32); // UNUSED
 void xModelRender2D(const xModelInstance& model, const basic_rect<F32>& r, const xVec3& from, const xVec3& to);
 void xModel_SceneEnter(RpWorld* world);
 void xModel_SceneExit(RpWorld* world);

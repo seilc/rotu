@@ -4,7 +4,7 @@
 #include "zCamPlayer.h"
 
 xVec3& zCamTransitionTarget();
-zCamPlayer* zCamGetDefault();
+zCamPlayer* zCamGetDefault(); // UNUSED
 xCam* zCamGetPrimary();
 void zCamAdd(xCam& cam, bool force_cut);
 void zCamRemove(xCam& cam, bool force_cut);

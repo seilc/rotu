@@ -4,7 +4,7 @@
 #include "xMath3.h"
 #include "xQuickCull.h"
 
-// RESTORED: speculative
+// UNUSED: speculative
 void xBoundMakeSphere(xBound& b, const xVec3& center, F32 radius)
 {
     b.type = k_XBOUNDTYPE_SPHERE;
@@ -12,7 +12,6 @@ void xBoundMakeSphere(xBound& b, const xVec3& center, F32 radius)
     b.sph.r = radius;
     xQuickCullForSphere(&b.qcd, &b.sph);
 }
-// END RESTORED
 
 void xBoundUpdate(xBound* b)
 {

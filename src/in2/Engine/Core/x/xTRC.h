@@ -84,7 +84,7 @@ void xTRCRender();
 void xTRCReset();
 void xTRCPadGetPressed(TRCState padState, bool& A, bool& B, bool& C, bool& D);
 void xTRCPadSetPressed(S32 port, S32 value, bool reverse);
-void xTRCPadDisplayMessage(S32 pad_id, TRCState);
+void xTRCPadDisplayMessage(S32 pad_id, TRCState); // UNUSED
 void xTRCDisk(TRCState state);
 void render_mem_card_no_space(S32 needed, S32 available, S32 neededFiles, bool enabled);
 void RenderText(const char* text, bool enabled);

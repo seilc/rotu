@@ -18,9 +18,9 @@ public:
 
     config cfg;
 
-    void prune(S32 start, S32 size);
-    F32 traverse(xVec3& rloc, F32 velmag, F32 dt);
-    void refresh_dist();
+    void prune(S32 start, S32 size); // UNUSED
+    F32 traverse(xVec3& rloc, F32 velmag, F32 dt); // UNUSED
+    void refresh_dist(); // UNUSED
 
     F32 total_distance()
     {
@@ -57,8 +57,8 @@ private:
         return index & (max_size - 1);
     }
 
-    static S32 polar_subdivide(path_node* vert, S32 vert_size, const xCamCoordPolar& start, const xCamCoordPolar& end, F32 thresh);
-    static void compute_weights(F32* w, S32 n, F32 s);
+    static S32 polar_subdivide(path_node* vert, S32 vert_size, const xCamCoordPolar& start, const xCamCoordPolar& end, F32 thresh); // UNUSED
+    static void compute_weights(F32* w, S32 n, F32 s); // UNUSED
 };
 
 class xCamSupportLOSBar

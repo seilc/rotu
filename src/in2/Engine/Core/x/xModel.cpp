@@ -419,7 +419,7 @@ void xModelRender(xModelInstance* modelInst)
     }
 }
 
-// RESTORED: speculative
+// UNUSED: speculative
 void xModelRender2D(xModelInstance* modelInst, basic_rect<F32>* sr, xVec3* from, xVec3* to, F32)
 {
     RwCamera* camera;
@@ -476,7 +476,6 @@ void xModelRender2D(xModelInstance* modelInst, basic_rect<F32>* sr, xVec3* from,
     iModelRender(modelInst->Data, modelInst->Mat);
     *modelInst->Mat = tmp2;
 }
-// END RESTORED
 
 void xModelRender2D(const xModelInstance& model, const basic_rect<F32>& r, const xVec3& from, const xVec3& to)
 {
