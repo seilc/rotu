@@ -114,9 +114,8 @@ void xFXCameraTexture::begin_render(S32 clear_flags, U32 fbmsk_write, U32, F32 n
     globals.currWorld = world;
 
     oldcam = RwCameraGetCurrentCamera();
-    if (oldcam) {
+    if (oldcam)
         RwCameraEndUpdate(oldcam);
-    }
 
     old_near_plane = old_far_plane = 0.0f;
 
@@ -132,9 +131,8 @@ void xFXCameraTexture::begin_render(S32 clear_flags, U32 fbmsk_write, U32, F32 n
         RwCameraSetFarClipPlane(cam, far_plane);
     }
 
-    if (fbmsk_write != iDrawGetFBMSK()) {
+    if (fbmsk_write != iDrawGetFBMSK())
         iDrawSetFBMSK(fbmsk_write, 0xFFFFFFFF, true);
-    }
 
     cam->frameBuffer->width--;
     cam->frameBuffer->height--;
@@ -288,9 +286,8 @@ bool xFXFastRaster::clip_rect(xFRect& dst_rect, RwRaster* dst_raster)
     S32 w = dst_w;
     S32 h = dst_h;
 
-    if (!::clip_rect(x, y, w, h, width, height)) {
+    if (!::clip_rect(x, y, w, h, width, height))
         return false;
-    }
 
     if (x != dst_x)
         dst_rect.x = 1/16.0f * x;
@@ -301,9 +298,8 @@ bool xFXFastRaster::clip_rect(xFRect& dst_rect, RwRaster* dst_raster)
     if (y != dst_y)
         dst_rect.y = 1/16.0f * y;
 
-    if (h != dst_h) {
+    if (h != dst_h)
         dst_rect.h = 1/16.0f * h;
-    }
 
     return true;
 }

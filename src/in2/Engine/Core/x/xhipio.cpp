@@ -88,9 +88,8 @@ static st_HIPLOADDATA* HIPLCreate(const char* filename, char* dblbuf, S32 bufsiz
         if (fli) {
             lddata->fli = fli;
             lddata->base_sector = fli->basesector;
-            if (dblbuf && bufsize > 0) {
+            if (dblbuf && bufsize > 0)
                 fli->setDoubleBuf(fli, dblbuf, bufsize);
-            }
         } else {
             HIPLDestroy(lddata);
             lddata = NULL;
@@ -168,9 +167,8 @@ static U32 HIPLBlockEnter(st_HIPLOADDATA* lddata)
     }
 
     if (lddata->top >= 0) {
-        if (lddata->stk[lddata->top].blk_remain <= 0) {
+        if (lddata->stk[lddata->top].blk_remain <= 0)
             return 0;
-        }
     }
 
     cnt = HIPLReadLongs(lddata, (S32*)&cid, -1);
@@ -178,9 +176,8 @@ static U32 HIPLBlockEnter(st_HIPLOADDATA* lddata)
     else {
         cnt = HIPLReadLongs(lddata, &size, -1);
 
-        if (lddata->top >= 0) {
+        if (lddata->top >= 0)
             lddata->stk[lddata->top].blk_remain -= size;
-        }
 
         top = &lddata->stk[++lddata->top];
 
