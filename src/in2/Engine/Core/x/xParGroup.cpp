@@ -103,7 +103,8 @@ void xParGroupSetActive(xParGroup* ps, U32 isActive)
 
 void xParGroupKillAllParticles(xParGroup* ps)
 {
-    xPar* i = NULL, *tmp = NULL;
+    xPar* i = NULL;
+    xPar* tmp = NULL;
 
     i = ps->m_root;
     while (i) {
@@ -192,15 +193,13 @@ void xParGroupAddParP(xParGroup* ps, xPar* p)
             p->m_prev = prev;
             p->m_next = test;
 
-            if (test) {
+            if (test)
                 test->m_prev = p;
-            }
 
-            if (prev) {
+            if (prev)
                 prev->m_next = p;
-            } else {
+            else
                 ps->m_root = p;
-            }
 
             sSortID = 0;
             sSortDistance = 0.0f;
@@ -239,9 +238,8 @@ xPar* xParGroupAddPar(xParGroup* ps)
         if (ps->m_dead) {
             p = ps->m_dead;
             ps->m_dead = p->m_next;
-            if (ps->m_dead) {
+            if (ps->m_dead)
                 ps->m_dead->m_prev = NULL;
-            }
         } else {
             p = NULL;
         }

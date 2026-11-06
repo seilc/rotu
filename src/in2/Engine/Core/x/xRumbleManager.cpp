@@ -96,18 +96,25 @@ void Manager::store(padInfo* pInfo, const emitterBase* pEmitter, effectInternal*
 
 bool Manager::Add(xPad* pad, emitterBase* pEmitter)
 {
-    if (!pEmitter) return false;
-    if (!pad) return false;
+    if (!pEmitter) {
+        return false;
+    }
+    if (!pad) {
+        return false;
+    }
     
     S32 counter = 0;
     for (S32 i = 0; i < xglobals->players.size(); i++) {
-        if (xglobals->players[i]->IsDead() && pEmitter->pEffectAsset->id != xStrHash("VibrationSet")) {
+        if (xglobals->players[i]->IsDead() && pEmitter->pEffectAsset->id != xStrHash("VibrationSet"))
             counter++;
-        }
     }
-    if (counter == 2) return false;
+    if (counter == 2) {
+        return false;
+    }
 
-    if (pad->port == -1) return false;
+    if (pad->port == -1) {
+        return false;
+    }
 
     padInfo* pInfo = &m_padInfo[pad->port];
     F32 timeToLive = pEmitter->pEffectAsset->time;
@@ -168,7 +175,9 @@ bool Manager::Stop(xPad* pad, emitterBase* pEmitter)
 
 void Manager::Update(xPad* pad, const xVec3& playerPos, F32 timeElapsed, bool bPauseState)
 {
-    if (!pad || pad->port >= kMaxRumblingPads) return;
+    if (!pad || pad->port >= kMaxRumblingPads) {
+        return;
+    }
 
     padInfo* pInfo = &m_padInfo[pad->port];
     for (U32 i = 0; i < 16; i++) {
@@ -197,9 +206,8 @@ void Manager::Update(xPad* pad, const xVec3& playerPos, F32 timeElapsed, bool bP
     } else {
         for (U32 i = 0; i < 16; i++) {
             if (pInfo->m_effects[i].rumbleForever || pInfo->m_effects[i].timeToLive > 0.0f) {
-                if (!bPauseState || pInfo->m_effects[i].pEmitter->pEffectAsset->rumbleInPause) {
+                if (!bPauseState || pInfo->m_effects[i].pEmitter->pEffectAsset->rumbleInPause)
                     intensity += pInfo->m_effects[i].GetIntensity(playerPos);
-                }
             } else if (pInfo->m_effects[i].cameraEffect) {
                 pInfo->m_effects[i].EndCameraShake();
             }

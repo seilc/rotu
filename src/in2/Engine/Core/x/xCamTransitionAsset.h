@@ -33,10 +33,7 @@ struct xCamTransitionAsset : xDynAsset
     {
     }
 
-    xLinkAsset* Links() const
-    {
-        return linkCount ? (xLinkAsset*)(this + 1) : NULL;
-    }
+    xLinkAsset* Links() const { return linkCount ? (xLinkAsset*)(this + 1) : NULL; }
 };
 
 #endif

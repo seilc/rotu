@@ -20,11 +20,10 @@ void pool_list_base::push_back()
 
 void pool_list_base::create(S32 node_size, S32 max_size, U32 memtag, void* buffer)
 {
-    if (!buffer) {
+    if (!buffer)
         this->buffer = xMEMALLOC(node_size * max_size, 0);
-    } else {
+    else
         this->buffer = buffer;
-    }
 
     _max_size = max_size;
     reset(node_size);
@@ -39,8 +38,7 @@ void pool_list_base::reset(S32 node_size)
     tail.next = 0;
     stack = (node_base*)buffer;
 
-    U8* mem = (U8*)buffer;
-    U8* end_mem = mem + (_max_size-1) * node_size;
+    U8* mem = (U8*)buffer, *end_mem = mem + (_max_size-1) * node_size;
     for (; mem != end_mem; mem += node_size)
         ((node_base*)mem)->next = (node_base*)(mem + node_size);
     ((node_base*)mem)->next = 0;
@@ -74,8 +72,7 @@ pool_list_base::node_base* pool_list_base::erase(node_base* it)
 
 pool_list_base::node_base* pool_list_base::erase(node_base* first, node_base* last)
 {
-    node_base* n = first;
-    node_base* end = last;
+    node_base* n = first, *end = last;
 
     n->prev->next = end;
     end->prev = n->prev;

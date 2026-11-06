@@ -26,19 +26,13 @@ bool xFXCameraTexture::create(S32 w, S32 h, bool need_zwrite, S32 bpp, S32 zbpp)
     this->h = h;
 
     cam = RwCameraCreateWrapper();
-    if (!cam) {
-        destroy();
-        return false;
-    }
+    if (!cam) { destroy(); return false; }
 
     RwBBox bbox;
     bbox.sup.x = bbox.sup.y = bbox.sup.z = 100000.0f;
     bbox.inf.x = bbox.inf.y = bbox.inf.z = -100000.0f;
     world = RpWorldCreate(&bbox);
-    if (!world) {
-        destroy();
-        return false;
-    }
+    if (!world) { destroy(); return false; }
 
     RpWorldAddCamera(world, cam);
     RwCameraSetFrame(cam, RwFrameCreate());
@@ -50,29 +44,21 @@ bool xFXCameraTexture::create(S32 w, S32 h, bool need_zwrite, S32 bpp, S32 zbpp)
     RwCameraSetNearClipPlane(cam, 0.3f);
     RwCameraSetFarClipPlane(cam, 10000.0f);
 
-    if (!RwCameraGetFrame(cam)) {
-        destroy();
-        return false;
-    }
+    if (!RwCameraGetFrame(cam)) { destroy(); return false; }
 
     RwUInt32 rasterFlags;
 
     rasterFlags = rwRASTERTYPECAMERATEXTURE;
     raster = RwRasterCreate(w, h, bpp, rasterFlags);
-    if (!raster) {
-        destroy();
-        return false;
-    }
+    if (!raster) { destroy(); return false; }
 
     if (!RwCameraSetRaster(cam, raster)) {
-        destroy();
-        return false;
+        destroy(); return false;
     }
 
     texture = RwTextureCreate(raster);
     if (!texture) {
-        destroy();
-        return false;
+        destroy(); return false;
     }
 
     RwTextureSetFilterMode(texture, rwFILTERLINEAR);
@@ -80,10 +66,7 @@ bool xFXCameraTexture::create(S32 w, S32 h, bool need_zwrite, S32 bpp, S32 zbpp)
     if (need_zwrite) {
         rasterFlags = rwRASTERTYPECAMERATEXTURE | rwRASTERDONTALLOCATE;
         zraster = RwRasterCreate(w, h, zbpp, rasterFlags);
-        if (!zraster) {
-            destroy();
-            return false;
-        }
+        if (!zraster) { destroy(); return false; }
     }
 
     max_tw = log2ceil(w);
@@ -96,15 +79,13 @@ void xFXCameraTexture::destroy()
 {
     _rwFrameSyncDirty();
 
-    if (texture) {
+    if (texture)
         RwTextureDestroy(texture);
-    } else if (raster) {
+    else if (raster)
         RwRasterDestroy(raster);
-    }
 
-    if (zraster) {
+    if (zraster)
         RwRasterDestroy(zraster);
-    }
 
     if (cam) {
         RwFrame* tmpframe = RwCameraGetFrame(cam);
@@ -117,9 +98,8 @@ void xFXCameraTexture::destroy()
         RwCameraDestroy(cam);
     }
 
-    if (world) {
+    if (world)
         RpWorldDestroy(world);
-    }
 
     cam = 0;
     raster = 0;
@@ -141,16 +121,14 @@ void xFXCameraTexture::begin_render(S32 clear_flags, U32 fbmsk_write, U32, F32 n
     old_near_plane = old_far_plane = 0.0f;
 
     if (near_plane > 0.0f) {
-        if (oldcam) {
+        if (oldcam)
             old_near_plane = RwCameraGetNearClipPlane(oldcam);
-        }
         RwCameraSetNearClipPlane(cam, near_plane);
     }
 
     if (far_plane > 0.0f) {
-        if (oldcam) {
+        if (oldcam)
             old_far_plane = RwCameraGetFarClipPlane(oldcam);
-        }
         RwCameraSetFarClipPlane(cam, far_plane);
     }
 
@@ -170,9 +148,8 @@ void xFXCameraTexture::begin_render(S32 clear_flags, U32 fbmsk_write, U32, F32 n
 
     RwCameraBeginUpdateWrapper(cam);
 
-    if ((clear_flags & rwCAMERACLEARIMAGE) && bgraster) {
+    if ((clear_flags & rwCAMERACLEARIMAGE) && bgraster)
         render_background();
-    }
 }
 
 void xFXCameraTexture::end_render()
@@ -184,13 +161,11 @@ void xFXCameraTexture::end_render()
     RwCameraEndUpdate(cam);
 
     if (oldcam) {
-        if (old_near_plane > 0.0f) {
+        if (old_near_plane > 0.0f)
             RwCameraSetNearClipPlane(oldcam, old_near_plane);
-        }
 
-        if (old_far_plane > 0.0f) {
+        if (old_far_plane > 0.0f)
             RwCameraSetFarClipPlane(oldcam, old_far_plane);
-        }
 
         RwCameraBeginUpdateWrapper(oldcam);
     }
@@ -286,27 +261,16 @@ namespace {
 inline bool clip_rect(S32& x, S32& y, S32& w, S32& h, S32 wclip, S32 hclip)
 {
     if (w <= 0 || x >= wclip || x + w <= 0 ||
-        h <= 0 || y >= hclip || y + h <= 0) {
+        h <= 0 || y >= hclip || y + h <= 0)
         return false;
-    }
 
-    if (x < 0) {
-        w += x;
-        x = 0;
-    }
+    if (x < 0) { w += x; x = 0; }
 
-    if (x + w > wclip) {
-        w = wclip - x;
-    }
+    if (x + w > wclip) w = wclip - x;
 
-    if (y < 0) {
-        h += y;
-        y = 0;
-    }
+    if (y < 0) { h += y; y = 0; }
 
-    if (y + h > hclip) {
-        h = hclip - y;
-    }
+    if (y + h > hclip) h = hclip - y;
 
     return true;
 }
@@ -317,9 +281,7 @@ bool xFXFastRaster::clip_rect(xFRect& dst_rect, RwRaster* dst_raster)
 {
     S32 width = dst_raster->width * 16;
     S32 height = dst_raster->height * 16;
-    S32 dst_x = 16.0f * dst_rect.x;
-    S32 dst_w = 16.0f * dst_rect.w;
-    S32 dst_y = 16.0f * dst_rect.y;
+    S32 dst_x = 16.0f * dst_rect.x, dst_w = 16.0f * dst_rect.w, dst_y = 16.0f * dst_rect.y;
     S32 dst_h = 16.0f * dst_rect.h;
     S32 x = dst_x;
     S32 y = dst_y;
@@ -330,17 +292,14 @@ bool xFXFastRaster::clip_rect(xFRect& dst_rect, RwRaster* dst_raster)
         return false;
     }
 
-    if (x != dst_x) {
+    if (x != dst_x)
         dst_rect.x = 1/16.0f * x;
-    }
 
-    if (w != dst_w) {
+    if (w != dst_w)
         dst_rect.w = 1/16.0f * w;
-    }
 
-    if (y != dst_y) {
+    if (y != dst_y)
         dst_rect.y = 1/16.0f * y;
-    }
 
     if (h != dst_h) {
         dst_rect.h = 1/16.0f * h;
@@ -351,30 +310,23 @@ bool xFXFastRaster::clip_rect(xFRect& dst_rect, RwRaster* dst_raster)
 
 bool xFXFastRaster::clip_rect(xFRect& dst_rect, RwRaster* dst_raster, xFRect& src_rect)
 {
-    F32 oldx = dst_rect.x;
-    F32 oldw = dst_rect.w;
-    F32 oldy = dst_rect.y;
-    F32 oldh = dst_rect.h;
+    F32 oldx = dst_rect.x, oldw = dst_rect.w;
+    F32 oldy = dst_rect.y, oldh = dst_rect.h;
 
-    if (!clip_rect(dst_rect, dst_raster)) {
+    if (!clip_rect(dst_rect, dst_raster))
         return false;
-    }
 
-    if (dst_rect.x != oldx) {
+    if (dst_rect.x != oldx)
         src_rect.x += src_rect.w / oldw * (dst_rect.x - oldx);
-    }
 
-    if (dst_rect.w != oldw) {
+    if (dst_rect.w != oldw)
         src_rect.w += src_rect.w / oldw * (dst_rect.w - oldw);
-    }
 
-    if (dst_rect.y != oldy) {
+    if (dst_rect.y != oldy)
         src_rect.y += src_rect.h / oldh * (dst_rect.y - oldy);
-    }
 
-    if (dst_rect.h != oldh) {
+    if (dst_rect.h != oldh)
         src_rect.h += src_rect.h / oldh * (dst_rect.h - oldh);
-    }
 
     return true;
 }

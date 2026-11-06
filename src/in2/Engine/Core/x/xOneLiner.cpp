@@ -39,7 +39,8 @@ inline bool xOneLiner::NoInhibitions() const
 inline bool xOneLiner::IsProbable() const
 {
     U32 probBits = mFlags & 0x3F80;
-    if (probBits == 0) return true;
+    if (probBits == 0)
+        return true;
 
     F32 prob = 0.01f * (probBits >> 7);
     return (prob > xrand_RandomFloat());
@@ -51,11 +52,10 @@ bool xOneLiner::PlaySoundCore()
         F32 timeNow = iTimeGetGame();
         
         F32 timeToPlay;
-        if (mFlags & 0x40) {
+        if (mFlags & 0x40)
             timeToPlay = mSoonestTimeToPlay;
-        } else {
+        else
             timeToPlay = mSoonestTimeToPlay + 45.0f * zUIIncrediblesGetGameProgress();
-        }
 
         if (timeNow >= timeToPlay) {
             if (!sDelayedSound && IsProbable()) {

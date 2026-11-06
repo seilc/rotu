@@ -24,15 +24,11 @@ inline S32 log2ceil(S32 value)
 {
     S32 power = 0;
 
-    S32 v = value;
-    while (v > 1) {
-        v >>= 1;
+    for (S32 v = value; v > 1; v >>= 1)
         power++;
-    }
 
-    if ((1 << power) < value) {
+    if ((1 << power) < value)
         power++;
-    }
 
     return power;
 }
@@ -43,7 +39,7 @@ T range_limit(T v, T minv, T maxv)
     return v <= minv ? minv : (v >= maxv ? maxv : v);
 }
 
-static const S32 MAX_BINOM_SIZE = 528;
+enum { MAX_BINOM_SIZE = 528 };
 extern S32 binom_triangle[MAX_BINOM_SIZE];
 
 inline S32 xBinom(S32 n, S32 r)

@@ -98,7 +98,7 @@ void xLightEffectStrobe::UpdateEffect(xLight& light, F32 dt)
     xLightEffectStrobeData& strobeData = light.strobeData;
 
     strobeData.time -= dt;
-    if (strobeData.time <= 0.0f) {
+    if (strobeData.time <= 0.0f)
         switch (strobeData.stage) {
         case 0:
             strobeData.stage = 1;
@@ -113,5 +113,4 @@ void xLightEffectStrobe::UpdateEffect(xLight& light, F32 dt)
         default:
             break;
         }
-    }
 }

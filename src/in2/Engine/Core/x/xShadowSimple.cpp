@@ -270,9 +270,8 @@ void xShadowSimple_Init()
     RwTexture* tex = (RwTexture*)xSTFindAsset(SHADOW_ROUND_ID, NULL);
     if (tex) {
         sShadRaster = RwTextureGetRaster(tex);
-    } else {
+    } else
         sShadRaster = NULL;
-    }
 
     memset(sShadVert, 0, sizeof(sShadVert));
     for (U32 i = 0; i < MAX_SHAD_QUADS; i++) {
@@ -335,14 +334,12 @@ void xShadowSimple_CacheInit(xShadowSimpleCache* cache, xEnt* ent, U8 alpha)
                 }
             }
 
-            if (raster) {
+            if (raster)
                 break;
-            }
         }
 
-        if (raster) {
+        if (raster)
             break;
-        }
     }
     
     if (!raster || raster == (RwRaster*)0xDEADBEEF) {
@@ -409,9 +406,7 @@ void xShadowSimple_Render()
         RwRaster* raster = sShadRasters[i / 6];
 
         j = i;
-        while (j < sShadVertCount && sShadRasters[j / 6] == raster) {
-            j += 6;
-        }
+        while (j < sShadVertCount && sShadRasters[j / 6] == raster) j += 6;
 
         RwRenderStateSet(rwRENDERSTATETEXTURERASTER, (void*)raster);
         xIMRenderLegacy(sShadVert + i, j - i, NULL, rwPRIMTYPETRILIST);
@@ -537,9 +532,8 @@ void xShadowSimple_Add_Expert(xShadowSimpleCache* cache, const xMat4x3* mat_owne
     if (radius >= 0.0f) {
         cache->radiusOptional = radius;
     }
-    if (radius < 0.0f && cache->radiusOptional >= 0.0f) {
+    if (radius < 0.0f && cache->radiusOptional >= 0.0f)
         radius = cache->radiusOptional;
-    }
 
     if (cache->flags & 0x1) {
         cache->flags &= (U16)~0x1;
@@ -567,20 +561,20 @@ void xShadowSimple_Add_Expert(xShadowSimpleCache* cache, const xMat4x3* mat_owne
 
         if ((cache->flags & 0x8) && (ownerMoved || cache->castOnEnt)) {
             XSSC_Add_NudgeItAndFudgeIt(cache, mat_owner);
-        } else if (cache->shadowHeight != HUGE && (ownerMoved || cache->castOnEnt)) {
+        }
+        else if (cache->shadowHeight != HUGE && (ownerMoved || cache->castOnEnt)) {
             XSSC_Add_NudgeItAndFudgeIt(cache, mat_owner);
             if (ownerMoved) {
                 cache->envHeight = HUGE;
             }
         }
 
-        if (ownerMoved) {
+        if (ownerMoved)
             cache->collPriority += 6;
-        } else if (cache->castOnEnt) {
+        else if (cache->castOnEnt)
             cache->collPriority += 3;
-        } else {
+        else
             cache->collPriority += 2;
-        }
 
         S32 added = XSSC_Add_ShoveIntoQueue(cache, mat_owner, radius, height, ecc, copyMat);
         if (!added) {

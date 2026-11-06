@@ -242,7 +242,7 @@ struct ent_cache_entry
     xEnt* ent;
 };
 
-static const S32 MAX_ENT_CACHE_SIZE = 256;
+#define MAX_ENT_CACHE_SIZE 256
 
 ent_cache_entry ent_cache[MAX_ENT_CACHE_SIZE];
 S32 ent_cache_size;

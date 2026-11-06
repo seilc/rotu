@@ -7,7 +7,8 @@
 void xHierarchyBoundInit(xHierarchyBound* bound, const xHierarchyBoundInitData* init, F32 masterRadius, U32 extraBounds, F32 scale)
 {
     U32 count = 0;
-    while (init[count].bone >= -1) count++;
+    while (init[count].bone >= -1)
+        count++;
     bound->count = count;
 
     bound->nodes = (xHierarchyNode*)xMEMALLOC(sizeof(xHierarchyNode) * (count + extraBounds), 0);
@@ -34,13 +35,11 @@ void xHierarchyBoundDraw(const xHierarchyBound* bound, U8 mR, U8 mG, U8 mB, U8 m
 
     xDrawSetColor(sR, sG, sB, sA);
     for (U32 i = 0; i < bound->count; i++) {
-        if ((S32)i == hilight) {
+        if ((S32)i == hilight)
             xDrawSetColor(hR, hG, hB, hA);
-        }
         xDrawSphere(&bound->nodes[i].sphere, 0xC0006);
-        if ((S32)i == hilight) {
+        if ((S32)i == hilight)
             xDrawSetColor(sR, sG, sB, sA);
-        }
     }
 }
 
@@ -54,12 +53,10 @@ bool xHierarchyBoundTest(const xHierarchyBound* bound, xSweptSphere* sphere, U16
 
     for (U32 i = 0; i < bound->count; i++) {
         if (xSweptSphereToSphere(sphere, &bound->nodes[i].sphere)) {
-            if (boundUserData) {
+            if (boundUserData)
                 *boundUserData = bound->nodes[i].userData;
-            }
-            if (subsphere) {
+            if (subsphere)
                 *subsphere = i;
-            }
             return true;
         }
     }

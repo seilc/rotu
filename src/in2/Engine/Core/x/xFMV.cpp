@@ -78,9 +78,8 @@ RwTexture* xFMVGetTexture(MOVIE* pMovie, U16 looping, U16 freezeframed, U32 star
         RwInt32 nDestPitch = RwRasterGetStride(pBinkRaster);
 
         S32 bFailed = BinkCopyToBuffer(pMovie->hBink, pBits, nDestPitch, RwRasterGetHeight(pBinkRaster), 0, 0, BINKCOPYALL | BINKSURFACE32);
-        if (bFailed) {
+        if (bFailed)
             return NULL;
-        }
 
         RwRasterUnlock(pBinkRaster);
 

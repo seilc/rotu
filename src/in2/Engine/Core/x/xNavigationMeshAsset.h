@@ -5,7 +5,7 @@
 #include "xMath3.h"
 #include "zMeshCircle.h"
 
-static const U8 NO_TRIANGLE = 0xFF;
+enum { NO_TRIANGLE = 0xFF };
 
 class xNavigationMeshAssetSubMesh
 {

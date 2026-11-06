@@ -40,11 +40,10 @@ void xCounterInit(xBase* b, xCounterAsset* asset)
     t->eventFunc = xCounterEventCB;
     t->asset = asset;
 
-    if (t->linkCount) {
+    if (t->linkCount)
         t->link = (xLinkAsset*)((U8*)t->asset + sizeof(xCounterAsset));
-    } else {
+    else
         t->link = NULL;
-    }
 
     t->state = 0;
     t->count = asset->count;
@@ -93,7 +92,8 @@ void xCounterEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase* 
         t->count--;
         if (t->count <= 0) {
             zEntEvent(t, t, eEventExpired);
-        } else if (t->count > 0 && t->count <= 20) {
+        }
+        else if (t->count > 0 && t->count <= 20) {
             zEntEvent(t, t, eEventCount1 + (U32)(t->count - 1));
         }
         break;
@@ -101,7 +101,8 @@ void xCounterEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase* 
         t->count++;
         if (t->count <= 0) {
             zEntEvent(t, t, eEventExpired);
-        } else if (t->count > 0 && t->count <= 20) {
+        }
+        else if (t->count > 0 && t->count <= 20) {
             zEntEvent(t, t, eEventCount1 + (U32)(t->count - 1));
         }
         break;
@@ -118,9 +119,8 @@ void xCounterEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase* 
         if (toParamWidget && toParamWidget->baseType == eBaseTypeCounter) {
             xCounter* paramCounter = (xCounter*)toParamWidget;
             t->count = paramCounter->count;
-        } else {
+        } else
             t->count = toParam[0];
-        }
         break;
     case eEventSetCounterToCurrentLevel:
         t->count = zUIIncrediblesGetCurrentSceneNumber();
@@ -128,19 +128,19 @@ void xCounterEventCB(xBase*, xBase* to, U32 toEvent, const F32* toParam, xBase* 
     case eEventSetCounterToLevelStatus:
     {
         U32 level = ((xCounter*)toParamWidget)->count;
-        if (zUIIncrediblesSceneIsCompleted(level)) {
+        if (zUIIncrediblesSceneIsCompleted(level))
             t->count = 2;
-        } else if (zUIIncrediblesSceneIsUnlocked(level)) {
+        else if (zUIIncrediblesSceneIsUnlocked(level))
             t->count = 1;
-        } else {
+        else
             t->count = 0;
-        }
         break;
     }
     default:
         if (toEvent >= eEventCount1 && toEvent <= eEventCount20) {
             t->count = toEvent - (eEventCount1 - 1);
-        } else if (toEvent == eEventCount0) {
+        }
+        else if (toEvent == eEventCount0) {
             t->count = 0;
         }
         break;

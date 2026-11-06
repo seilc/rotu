@@ -73,22 +73,23 @@ static void par_sprite_begin()
 
 static void par_sprite_update(xParSys& sys, xParGroup& group)
 {
-    if (!using_ptank_render(*sys.tasset)) {
+    if (!using_ptank_render(*sys.tasset))
         return;
-    }
 
     U32 pivot = sys.tasset->parFlags;
     xVec3 offset_right, offset_up;
     if (pivot & 0x8) {
         offset_right = par_offset_right;
-    } else if (pivot & 0x20) {
+    }
+    else if (pivot & 0x20) {
         offset_right.Negate(par_offset_right);
     } else {
         offset_right = 0.0f;
     }
     if (pivot & 0x10) {
         offset_up.Negate(par_offset_up);
-    } else if (pivot & 0x40) {
+    }
+    else if (pivot & 0x40) {
         offset_up = par_offset_up;
     } else {
         offset_up = 0.0f;
@@ -120,14 +121,11 @@ static void par_sprite_update(xParSys& sys, xParGroup& group)
         RwSphere worldsph;
         worldsph.center = (RwV3d&)p->m_pos;
         worldsph.radius = p->m_size;
-        if (RwCameraFrustumTestSphere(xglobals->screen->icam, &worldsph) == rwSPHEREOUTSIDE) {
-            continue;
-        }
+        if (RwCameraFrustumTestSphere(xglobals->screen->icam, &worldsph) == rwSPHEREOUTSIDE) continue;
         
         pool.next();
-        if (!pool.valid()) {
+        if (!pool.valid())
             break;
-        }
 
         xVec3& loc = *pool.pos;
         loc = p->m_pos;
@@ -181,18 +179,16 @@ void xParSysInit(xBase* b, xParSysAsset* tasset)
     t->eventFunc = xParSysEventCB;
     t->tasset = tasset;
 
-    if (t->linkCount > 0) {
+    if (t->linkCount > 0)
         t->link = (xLinkAsset*)((U8*)(t->tasset + 1) + tasset->cmdSize);
-    } else {
+    else
         t->link = NULL;
-    }
 
     t->visible = tasset->parFlags & 0x1;
     t->cmdCount = tasset->cmdCount;
 
     U32 size, i;
-    size = t->cmdCount;
-    if (size > 0) {
+    if ((size = t->cmdCount) > 0) {
         t->cmd = (xParCmd*)xMEMALLOC(size * sizeof(xParCmd), 0);
     } else {
         t->cmd = NULL;
@@ -276,20 +272,17 @@ void xParSysEventCB(xBase*, xBase* to, U32 toEvent, const F32*, xBase*, U32)
         break;
     case eEventVisible:
         t->visible = 1;
-        if (t->group) {
+        if (t->group)
             xParGroupSetVisibility(t->group, t->visible);
-        }
         break;
     case eEventInvisible:
         t->visible = 0;
-        if (t->group) {
+        if (t->group)
             xParGroupSetVisibility(t->group, t->visible);
-        }
         break;
     case eEventOn:
-        if (t->group) {
+        if (t->group)
             xParGroupSetActive(t->group, 1);
-        }
         break;
     case eEventOff:
         if (t->group) {

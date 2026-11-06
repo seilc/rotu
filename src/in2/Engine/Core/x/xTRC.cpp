@@ -212,9 +212,8 @@ bool xTRCPadIsPort(S32 port, TRCState state)
         if (port == gTrcPad[i].id) {
             if (state == gTrcPad[i].state) {
                 return true;
-            } else {
+            } else
                 return false;
-            }
         }
     }
     if (state == TRC_Unknown) {
@@ -480,12 +479,11 @@ void xTRCClearPadMsg()
 
 void xTRCRender()
 {
-    if (!globals.cmgr) {
+    if (!globals.cmgr)
         if (composed_message_text[0] != '\0')
             render_message(composed_message_text);
         else if (message_text)
             render_message(message_text);
-    }
 }
 
 void xTRCReset()
