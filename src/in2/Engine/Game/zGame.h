@@ -3,6 +3,7 @@
 
 #include "types.h"
 
+extern F32 gRealTimeElapsed;
 extern U32 gSoak;
 extern char** soaklevels;
 

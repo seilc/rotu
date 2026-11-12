@@ -521,7 +521,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xFilter.cpp"),
             Object(Matching, "in2/Engine/Core/x/xFMV.cpp"),
             Object(Matching, "in2/Engine/Core/x/xFog.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xFont.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xFont.cpp"),
             Object(Matching, "in2/Engine/Core/x/xFX.cpp"),
             Object(Matching, "in2/Engine/Core/x/xGrid.cpp"),
             Object(Matching, "in2/Engine/Core/x/xGroup.cpp"),
