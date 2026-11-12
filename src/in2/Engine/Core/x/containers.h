@@ -436,13 +436,8 @@ public:
 
         blocks = (block_data*)xMEMALLOC(_max_blocks * sizeof(block_data), 0);
 
-        size_t i = 0;
-        size_t end = _max_blocks;
-        while (i < end) {
+        for (size_t i = 0, end = _max_blocks; i < end; i++)
             blocks[i].data = 0;
-            i++;
-        }
-
         clear();
 
         U8 arrayTempAllocs[31];
@@ -463,17 +458,10 @@ public:
     {
         head = 0;
 
-        size_t imask = _max_blocks - 1;
-        size_t i = 0;
-        size_t end = _max_blocks;
-        while (i < end) {
+        for (size_t imask = _max_blocks - 1, i = 0, end = _max_blocks; i < end; i++) {
             blocks[i].prev = (i-1) & imask;
             blocks[i].next = (i+1) & imask;
-            blocks[i].flags = 0;
-            i++;
         }
-
-        size = 0;
     }
 
     U8 alloc_block(U32 memtag)
@@ -487,10 +475,6 @@ public:
         blocks[block.next].prev = block.prev;
 
         if (!block.data) block.data = alloc_block_data(memtag);
-        
-        block.flags = FLAG_TAKEN;
-
-        size++;
 
         return index;
     }
@@ -505,9 +489,6 @@ public:
         blocks[block.prev].next = index;
         blocks[block.next].prev = index;
 
-        block.flags = 0;
-
-        size--;
         head = index;
     }
 
@@ -524,10 +505,7 @@ private:
     size_t log2_ceil(size_t v) const
     {
         size_t power = 0;
-        while (v > 1) {
-            v >>= 1;
-            power++;
-        }
+        while (v > 1) { v >>= 1; power++; }
         return power;
     }
 
@@ -544,7 +522,6 @@ private:
     size_t _max_blocks;
     size_t _max_blocks_shift;
     U8 head;
-    U32 size;
 };
 
 template <class T>
@@ -594,10 +571,8 @@ public:
     {
         size_t i = get_block(first);
         size_t end = wrap_block(i + get_block(alloc->block_size() + _size - 1));
-        while (i != end) {
+        for (; i != end; i = wrap_block(i+1))
             alloc->free_block(blocks[i]);
-            i = wrap_block(i+1);
-        }
         first = _size = 0;
     }
 
@@ -616,10 +591,7 @@ public:
 
     void pop_back()
     {
-        if (_size <= 1) {
-            clear();
-            return;
-        }
+        if (_size <= 1) { clear(); return; }
 
         _size--;
 
