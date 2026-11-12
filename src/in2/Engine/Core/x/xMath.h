@@ -132,6 +132,7 @@ void xFuncPiece_EndPointsAllInitial(xFuncPiece* func, F32 pi, F32 pf, F32 fi, F3
 void xFuncPiece_ShiftPiece(xFuncPiece* shift, xFuncPiece* func, F32 newZero);
 
 F32 xsqrt(F32 x);
+F32 xinvsqrt(F32 fVal);
 F32 xlog(F32 x);
 F32 xexp(F32 x);
 F32 xpow(F32 x, F32 y);

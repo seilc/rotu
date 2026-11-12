@@ -402,7 +402,8 @@ public:
     {
         _size--;
         T* tail = _buffer + _size;
-        if (it != tail) *it = *tail;
+        if (it != tail)
+            *it = *tail;
     }
 
 private:
