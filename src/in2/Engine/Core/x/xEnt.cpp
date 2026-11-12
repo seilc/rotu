@@ -25,7 +25,6 @@
 #include "xShadow.h"
 #include "xFFX.h"
 #include "zGrid.h"
-#include "xSpacePartitionTree.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -58,8 +57,6 @@
 #define ELEVATOR_ROTATE_UW_ID 0x2F70CD39 // xStrHash("elevator_rotate_UW")
 #define GROUND_MESH_A3_ID 0xD34FF538 // xStrHash("ground_mesh_a3")
 #define FLOOR_LIVE_A2_ID 0x8E5A52C5 // xStrHash("Floor_Live_A2")
-
-#define k_MORE_FLAGS_ANIM_COLL ((U8)1<<5)
 
 #define ANIM_COLL_SETUP()                       \
     xModelInstance& model = *ent.model;         \

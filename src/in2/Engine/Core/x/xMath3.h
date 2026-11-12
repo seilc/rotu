@@ -277,6 +277,14 @@ inline void xMat4x3Identity(xMat4x3* m)
     xMat4x3Copy(m, &g_I3);
 }
 
+inline void xMat4x3OrthoInv(xMat4x3* o, const xMat4x3* m)
+{
+    xVec3 tinv;
+    xMat3x3Transpose(o, m);
+    xMat3x3RMulVec(&tinv, o, &m->pos);
+    xVec3Inv(&o->pos, &tinv);
+}
+
 inline void xMat4x3ToWorld(xVec3* o, const xMat4x3* m, const xVec3* v)
 {
     xMat3x3RMulVec(o, m, v);

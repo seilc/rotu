@@ -89,6 +89,7 @@ struct xVec3
     void SubAdd(const xVec3& a, const xVec3& b, const xVec3& c);
     void ScaleComponents(const xVec3& scale);
     void Combine(const xVec3& a, F32 scale0, const xVec3& b, F32 scale1);
+    void Average(const xVec3& a, const xVec3& b, const xVec3& c);
 };
 
 #define xVec3AddScaleMacro(o, a, b, s)          \
@@ -324,6 +325,13 @@ inline void xVec3::Combine(const xVec3& a, F32 scale0, const xVec3& b, F32 scale
     x = a.x * scale0 + b.x * scale1;
     y = a.y * scale0 + b.y * scale1;
     z = a.z * scale0 + b.z * scale1;
+}
+
+inline void xVec3::Average(const xVec3& a, const xVec3& b, const xVec3& c)
+{
+    x = (a.x + b.x + c.x) * 0.3333333f;
+    y = (a.y + b.y + c.y) * 0.3333333f;
+    z = (a.z + b.z + c.z) * 0.3333333f;
 }
 
 #include "xVec3Inlines.h"
