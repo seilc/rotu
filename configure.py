@@ -556,7 +556,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xParMgr.cpp"),
             Object(Matching, "in2/Engine/Core/x/xParSys.cpp"),
             Object(Matching, "in2/Engine/Core/x/xPartition.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xpkrsvc.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xpkrsvc.cpp"),
             Object(Matching, "in2/Engine/Core/x/xPtankPool.cpp"),
             Object(Matching, "in2/Engine/Core/x/xQuickCull.cpp"),
             Object(Matching, "in2/Engine/Core/x/xRand.cpp"),

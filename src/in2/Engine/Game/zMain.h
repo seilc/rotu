@@ -3,8 +3,19 @@
 
 #include "types.h"
 
+typedef enum _tagGameVidMode
+{
+    eGameVidModeNTSC,
+    eGameVidModePAL
+} eGameVidMode;
+
 extern U32 FB_XRES;
 extern U32 FB_YRES;
 extern F32 SECS_PER_VBLANK;
+extern eGameVidMode gVidMode;
+
+inline bool zMainIsPAL() { return gVidMode == eGameVidModePAL; }
+
+inline bool zMainIsNTSC() { return gVidMode == eGameVidModeNTSC; }
 
 #endif
