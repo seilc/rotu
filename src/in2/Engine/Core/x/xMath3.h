@@ -103,6 +103,17 @@ struct xRot
     F32 angle;
 };
 
+class xCone
+{
+public:
+    xVec3 start;
+    xVec3 dir;
+    F32 height;
+    F32 angle;
+
+    U8 Inside(const xVec3& pos, F32 radius, F32* perpCenterDist) const;
+};
+
 class xPlane
 {
 public:
@@ -120,29 +131,76 @@ public:
     void Project(xVec3& proj, const xVec3& pt, F32 dist_above) const;
 };
 
-extern xVec3 g_O3;
-extern xVec3 g_Y3;
-extern xVec3 g_NY3;
+extern const xVec3 g_O3;
+extern const xVec3 g_X3;
+extern const xVec3 g_Y3;
+extern const xVec3 g_Z3;
+extern const xVec3 g_NY3;
+extern const xVec3 g_NZ3;
 extern xMat4x3 g_I3;
+extern const xQuat g_IQ;
+
+void xMath3Init();
+void xLine3VecDist2(const xVec3* p1, const xVec3* p2, const xVec3* v, xIsect* isx);
+void xLine3LineMinDist(const xVec3* p1, const xVec3* p2, const xVec3* q1, const xVec3* q2, F32& t, F32& u);
+void xLine3TriMinDist(const xVec3* p1, const xVec3* p2, const xVec3* V0, const xVec3* V1, const xVec3* V2, F32& t,
+                      F32& u, F32& v);
+void xTri3VecMinDist(const xVec3* V0, const xVec3* V1, const xVec3* V2, const xVec3* p, F32& s, F32& t);
+S32 xPointInBox(const xBox* b, const xVec3* p);
 
 void xBoxInitBoundOBB(xBox* o, const xBox* b, const xMat4x3* m);
 void xBoxInitBoundCapsule(xBox* b, const xCapsule* c);
+void xBoxFromCone(xBox& box, const xVec3& center, const xVec3& dir, F32 dist, F32 r1, F32 r2); // UNUSED
+void xMat3x3Init(xMat3x3* m, const xVec3* _right, const xVec3* _up, const xVec3* _at);
 void xMat3x3Normalize(xMat3x3* o, const xMat3x3* m);
+void xMat3x3GetScale(const xMat3x3* m, xVec3* s);
 void xMat3x3GetEuler(const xMat3x3* m, xVec3* a);
-void xMat3x3RotY(xMat3x3* m, F32 t);
+void xMat4x3MoveLocalRight(xMat4x3* m, F32 mag);
+void xMat4x3MoveLocalUp(xMat4x3* m, F32 mag);
+void xMat4x3MoveLocalAt(xMat4x3* m, F32 mag);
+void xMat4x3MoveWorldRight(xMat4x3* m, F32 mag);
+void xMat4x3MoveWorldUp(xMat4x3* m, F32 mag);
+void xMat4x3MoveWorldAt(xMat4x3* m, F32 mag);
 void xMat3x3Mul(xMat3x3* o, const xMat3x3* a, const xMat3x3* b);
 void xMat3x3ScaleC(xMat3x3* m, F32 x, F32 y, F32 z);
 void xMat3x3Transpose(xMat3x3* o, const xMat3x3* m);
 void xMat3x3Tolocal(xVec3* o, const xMat3x3* m, const xVec3* v);
 F32 xMat3x3LookVec(xMat3x3* m, const xVec3* at);
+void xMat3x3LookVec2(xMat3x3* m, const xVec3* at);
+F32 xMat3x3LookVec4(xMat3x3& mat, F32 at_x, F32 at_y, F32 at_z, const xVec3& hint_right);
+F32 xMat3x3LookVec5(xMat3x3& mat, F32 at_x, F32 at_y, F32 at_z, const xVec3& hint_up);
+void xMat3x3Euler(xMat3x3* m, const xVec3* ypr);
 void xMat3x3Euler(xMat3x3* m, F32 yaw, F32 pitch, F32 roll);
 void xMat3x3LMulVec(xVec3* o, const xMat3x3* m, const xVec3* v);
 void xQuatFromMat(xQuat* q, const xMat3x3* m);
+void xQuatFromAxisAngle(xQuat* q, const xVec3* a, F32 t);
 void xQuatToMat(const xQuat* q, xMat3x3* m);
+F32 xQuatNormalize(xQuat* o, const xQuat* q);
+void xQuatInv(xQuat* o, const xQuat* q); // UNUSED
 void xQuatSlerp(xQuat* o, const xQuat* a, const xQuat* b, F32 t);
-void xQuatNormalize(xQuat* o, const xQuat* q);
 void xQuatMul(xQuat* o, const xQuat* a, const xQuat* b);
-void xMat3x3Euler(xMat3x3* m, const xVec3* ypr);
+bool xVec3Rotate(xMat3x3* o, const xVec3* a, const xVec3* b, F32 l);
+void xVec3RotateOnAxis(xVec3& o, const xVec3& v, const xVec3& axis, F32 theta);
+bool xVec3Eq(const xVec3& a, const xVec3& b, F32 tol);
+
+inline void xBoxUnion(xBox& box, const xBox& a, const xBox& b)
+{
+    box.upper.x = MAX(a.upper.x, b.upper.x);
+    box.upper.y = MAX(a.upper.y, b.upper.y);
+    box.upper.z = MAX(a.upper.z, b.upper.z);
+    box.lower.x = MIN(a.lower.x, b.lower.x);
+    box.lower.y = MIN(a.lower.y, b.lower.y);
+    box.lower.z = MIN(a.lower.z, b.lower.z);
+}
+
+// UNUSED: ported from BFBB GC
+inline void xBoxFromCircle(xBox& box, const xVec3& center, const xVec3& dir, F32 radius)
+{
+    xVec3 offset = { radius * xsqrt(1.0f - dir.x * dir.x), radius * xsqrt(1.0f - dir.y * dir.y),
+                     radius * xsqrt(1.0f - dir.z * dir.z) };
+    xVec3Add(&box.upper, &center, &offset);
+    xVec3Sub(&box.lower, &center, &offset);
+}
 
 inline void xMat3x3Copy(xMat3x3* o, const xMat3x3* m)
 {
@@ -154,7 +212,12 @@ inline void xMat3x3Identity(xMat3x3* m)
     xMat3x3Copy(m, &g_I3);
 }
 
-void xMat3x3RotC(xMat3x3* m, F32 x, F32 y, F32 z, F32 t);
+void xMat3x3RotC(xMat3x3* m, F32 _x, F32 _y, F32 _z, F32 t);
+void xMat3x3RotX(xMat3x3* m, F32 t);
+void xMat3x3RotY(xMat3x3* m, F32 t);
+void xMat3x3RotZ(xMat3x3* m, F32 t);
+void xMat3x3LMulRotY(xMat3x3* o, const xMat3x3* m, F32 t);
+void xMat3x3RMulRotY(xMat3x3* o, const xMat3x3* m, F32 t);
 
 inline void xMat3x3Rot(xMat3x3* m, const xVec3* a, F32 t)
 {
@@ -204,11 +267,10 @@ inline void xMat4x3Copy(xMat4x3* o, const xMat4x3* m)
     *o = *m;
 }
 
-void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b);
 void xMat4x3Rot(xMat4x3* m, const xVec3* a, F32 t, const xVec3* p);
-void xMat4x3MoveLocalRight(xMat4x3* m, F32 mag);
-void xMat4x3MoveLocalUp(xMat4x3* m, F32 mag);
-void xMat4x3MoveLocalAt(xMat4x3* m, F32 mag);
+void xMat4x3RotY(xMat4x3* m, F32 t, const xVec3* p);
+void xMat4x3Mul(xMat4x3* o, const xMat4x3* a, const xMat4x3* b);
+void xMat4x3RMul3x3(xMat4x3* o, const xMat3x3* m3x3, const xMat4x3* m);
 
 inline void xMat4x3Identity(xMat4x3* m)
 {
@@ -308,6 +370,14 @@ inline void xBoxFromRay(xBox& box, const xRay3& ray)
     xBoxFromLine(box, line);
 }
 
+inline void xQuatCopy(xQuat* o, const xQuat* q)
+{
+    o->s = q->s;
+    o->v.x = q->v.x;
+    o->v.y = q->v.y;
+    o->v.z = q->v.z;
+}
+
 inline U32 xQuatEquals(const xQuat* a, const xQuat* b)
 {
     return a->s == b->s && xVec3Equals(&a->v, &b->v);
@@ -339,9 +409,32 @@ inline F32 xQuatGetAngleDiff(const xQuat* q0, const xQuat* q1)
     return xacos(-s1);
 }
 
+inline void xQuatAdd(xQuat* o, const xQuat* a, const xQuat* b)
+{
+    o->s = a->s + b->s;
+    xVec3Add(&o->v, &a->v, &b->v);
+}
+
+inline void xQuatSMul(xQuat* o, const xQuat* q, F32 s)
+{
+    o->s = q->s * s;
+    xVec3SMul(&o->v, &q->v, s);
+}
+
 inline F32 xQuatDot(const xQuat* a, const xQuat* b)
 {
     return xVec3Dot(&a->v, &b->v) + a->s * b->s;
+}
+
+inline F32 xQuatLength2(const xQuat* q)
+{
+    return xQuatDot(q, q);
+}
+
+inline void xQuatConj(xQuat* o, const xQuat* q)
+{
+    o->s = q->s;
+    xVec3Inv(&o->v, &q->v);
 }
 
 inline void xQuatFlip(xQuat* o, const xQuat* q)
