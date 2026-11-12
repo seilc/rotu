@@ -35,6 +35,7 @@ struct basic_rect
 
     basic_rect& expand(T v) { return expand(v, v, v, v); }
     basic_rect& contract(T v) { return expand(-v); }
+    basic_rect& contract(T left, T top, T right, T bottom) { return expand(-left, -top, -right, -bottom); }
 };
 
 extern const xVec2 g_O2;
