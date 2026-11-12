@@ -733,7 +733,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xHudText.cpp"),
             Object(NonMatching, "in2/Engine/Game/zFlameThrower.cpp"),
             Object(NonMatching, "in2/Engine/Game/zRocket.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xHudImage.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xHudImage.cpp"),
             Object(NonMatching, "in2/Engine/Game/zReactiveAnimation.cpp"),
             Object(NonMatching, "in2/Engine/Game/zDust.cpp"),
             Object(Matching, "in2/Engine/Core/x/xProjectedTexture.cpp"),
