@@ -570,7 +570,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xScreenWarp.cpp"),
             Object(Matching, "in2/Engine/Core/x/xScrFx.cpp"),
             Object(Matching, "in2/Engine/Core/x/xserializer.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xShadow.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xShadow.cpp"),
             Object(Matching, "in2/Engine/Core/x/xShadowSimple.cpp"),
             Object(Matching, "in2/Engine/Core/x/xSkyDome.cpp"),
             Object(Matching, "in2/Engine/Core/x/xSndMgr.cpp"),

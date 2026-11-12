@@ -122,6 +122,7 @@ public:
 
 extern xVec3 g_O3;
 extern xVec3 g_Y3;
+extern xVec3 g_NY3;
 extern xMat4x3 g_I3;
 
 void xBoxInitBoundOBB(xBox* o, const xBox* b, const xMat4x3* m);
