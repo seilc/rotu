@@ -492,7 +492,7 @@ config.libs = [
         "cflags": cflags_in2,
         "progress_category": "game",
         "objects": [
-            Object(NonMatching, "in2/Engine/Core/x/xAnim.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xAnim.cpp"),
             Object(Matching, "in2/Engine/Core/x/xBase.cpp"),
             Object(Matching, "in2/Engine/Core/x/xbinio.cpp"),
             Object(Matching, "in2/Engine/Core/x/xBound.cpp"),

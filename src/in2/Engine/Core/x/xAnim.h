@@ -2,8 +2,8 @@
 #define XANIM_H
 
 #include "xMath3.h"
-#include "xSndMgr.h"
 #include "xMemMgr.h"
+#include "xSndMgr.h"
 
 struct xModelInstance;
 
@@ -20,6 +20,12 @@ struct xAnimTransitionList;
 struct xAnimTable;
 struct xAnimSingle;
 struct xAnimPlay;
+
+enum
+{
+    AnimFile_Reverse = 0x1000,
+    AnimFile_BackAndForth = 0x2000
+};
 
 struct xAnimPhysicsData
 {
@@ -38,7 +44,7 @@ struct xAnimFile
     F32 TimeOffset;
     U16 BoneCount;
     U8 NumAnims[2];
-    void* RawData;
+    void** RawData;
     xAnimPhysicsData* PhysicsData;
 };
 
@@ -175,18 +181,45 @@ struct xAnimPlay
     xAnimBeforeAnimMatricesCallback BeforeAnimMatrices;
 };
 
+extern U32 gxAnimUseGrowAlloc;
+
 void xAnimInit();
+void xAnimTempTransitionInit(U32 count);
+xAnimTransition* xAnimTempTransitionAlloc(const xAnimTransition* source);
+void xAnimTempTransitionFree(xAnimTransition* tran);
+void xAnimTempStateInit(U32 count);
+xAnimState* xAnimTempStateAlloc(const xAnimState* source);
+void xAnimCalcPhysicsData(xAnimFile* afile, xAnimFile* endPose);
+xAnimFile* xAnimFileNewBilinear(void** rawData, const char* name, U32 hashed_name_id, U32 flags, xAnimFile** linkedList, U32 numX, U32 numY);
+xAnimFile* xAnimFileNew(void* rawData, const char* name, U32 flags, xAnimFile** linkedList);
+void xAnimFileSetTime(xAnimFile* data, F32 duration, F32 timeOffset);
+void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* tran, xQuat* quat, F32*);
+xAnimEffect* xAnimStateNewEffect(xAnimState* state, U16 flags, U16 probability, F32 startTime, F32 endTime, xAnimEffectCallback callback, U32 userDataSize);
 xAnimTable* xAnimTableNew(const char* name, U32 userFlags);
+void xAnimDefaultBeforeEnter(xAnimPlay*, xAnimState* state, void*);
 xAnimState* xAnimTableNewState(xAnimTable* table, const char* name, U32 flags, U32 userFlags, F32 speed, F32* boneBlend, F32* timeSnap, F32 fadeRecip, U16* fadeOffset, void* callbackData, xAnimBeforeEnterCallback beforeEnter, xAnimStateCallback stateCallback, xAnimBeforeAnimMatricesCallback beforeAnimMatrices);
+void xAnimTableNewStateMany(xAnimTable* table, const char* name, S32 howMany, U32 flags, U32 userFlags, F32 speed, F32* boneBlend, F32* timeSnap, F32 fadeRecip, U16* fadeOffset, void* callbackData, xAnimBeforeEnterCallback beforeEnter, xAnimStateCallback stateCallback, xAnimBeforeAnimMatricesCallback beforeAnimMatrices);
+xAnimTransition* xAnimTableNewTransition(xAnimTable* table, const char* source, const char* dest, xAnimTransitionCallback conditional, xAnimTransitionCallback callback, U32 flags, U32 userFlags, F32 srcTime, F32 destTime, U16 priority, U16 queuePriority, F32 fBlendTime, U16* blendOffset);
+void xAnimTableAddFile(xAnimTable* table, xAnimFile* file, const char* states);
+xAnimState* xAnimTableAddFileID(xAnimTable* table, xAnimFile* file, U32 stateID, U32 subStateID, U32 subStateCount);
+xAnimState* xAnimTableGetStateID(xAnimTable* table, U32 ID);
+xAnimState* xAnimTableGetState(xAnimTable* table, const char* name);
+void EffectSingleStart_ForceEffect(xAnimSingle* single, xAnimEffect* force_effect);
+void xAnimPhysicsEval(xAnimPhysicsData* phys, F32 time, xVec3* disp, F32* yaw);
+void xAnimPlaySetState(xAnimSingle* single, xAnimState* state, F32 startTime);
+void xAnimPlaySetup(xAnimPlay* play, void* object, xAnimTable* table, xModelInstance* modelInst);
 void xAnimPlayChooseTransition(xAnimPlay* play);
+void xAnimPlayStartTransition(xAnimPlay* play, xAnimTransition* transition);
 void xAnimPlayUpdate(xAnimPlay* play, F32 timeDelta);
 void xAnimPlayEval(xAnimPlay* play);
+void xAnimPoolCB(xMemPool* pool, void* data);
 void xAnimPoolInit(xMemPool* pool, U32 count, U32 singles, U32 blendFlags, U32 effectMax);
+xAnimPlay* xAnimPoolAlloc(xMemPool* pool, void* object, xAnimTable* table, xModelInstance* modelInst);
 void xAnimPoolFree(xAnimPlay* play);
 
 inline F32 xAnimFileRawTime(xAnimFile* afile, F32 time)
 {
-    if ((afile->FileFlags & 0x1000) || ((afile->FileFlags & 0x2000) && time > 0.5f * afile->Duration))
+    if ((afile->FileFlags & AnimFile_Reverse) || ((afile->FileFlags & AnimFile_BackAndForth) && time > 0.5f * afile->Duration))
         return afile->TimeOffset + afile->Duration - time;
     return afile->TimeOffset + time;
 }
