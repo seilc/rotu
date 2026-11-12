@@ -9,10 +9,10 @@
 #include "zMenu.h"
 #include "zPad.h"
 #include "zPlayer.h"
+#include "zScene.h"
 #include "zVar.h"
 #include "zMrIncrediblePlayer.h"
 #include "zFrozonePlayer.h"
-#include "zScene.h"
 #include "xSpacePartitionTree.h"
 
 #include <string.h>

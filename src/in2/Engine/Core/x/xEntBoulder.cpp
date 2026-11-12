@@ -15,6 +15,7 @@
 #include "zMovePoint.h"
 #include "zNPCCommon.h"
 #include "zPlayer.h"
+#include "zScene.h"
 #include "zShrapnel.h"
 #include "zSurface.h"
 
