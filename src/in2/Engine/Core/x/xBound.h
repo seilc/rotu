@@ -46,6 +46,17 @@ bool xOBBHitsBound(const xBox& box, const xMat4x3& mat, const xBound& b);
 void xBoundGetCenter(const xBound* b, xVec3* center);
 
 inline xVec3* xBoundCenter(const xBound* b) { return (xVec3*)&b->sph.center; }
+inline xVec3* xBoundCenter(xBound* b) { return &b->sph.center; }
+
+inline void xBoundFromSphere(xBound& bound, const xVec3& c, F32 r)
+{
+    bound.type = k_XBOUNDTYPE_SPHERE;
+    bound.sph.center = c;
+    bound.sph.r = r;
+    xQuickCullForBound(&bound.qcd, &bound);
+}
+
+inline void xBoundFromSphere(xBound& bound, const xSphere& o) { xBoundFromSphere(bound, o.center, o.r); }
 
 inline bool xSphereHitsBound(const xSphere& o, const xBound& b) { return xSphereHitsBound(o.center, o.r, b); }
 
