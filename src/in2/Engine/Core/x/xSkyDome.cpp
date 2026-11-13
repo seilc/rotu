@@ -1,9 +1,7 @@
 #include "xSkyDome.h"
 
-#include "zBase.h"
 #include "zEvent.h"
 #include "iCamera.h"
-#include "zRenderState.h"
 #include "xRenderState.h"
 
 struct SkyDomeInfo
