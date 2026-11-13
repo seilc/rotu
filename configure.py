@@ -709,7 +709,7 @@ config.libs = [
         "progress_category": "game",
         "objects": [
             Object(NonMatching, "in2/Engine/Game/zActionLine.cpp"),
-            Object(NonMatching, "in2/Engine/Core/x/xCollideSpherePolygon.cpp"),
+            Object(Matching, "in2/Engine/Core/x/xCollideSpherePolygon.cpp"),
             Object(NonMatching, "in2/Engine/Game/zAsync.cpp"),
             Object(Matching, "in2/Engine/Core/x/xParticleBatch.cpp"),
             Object(NonMatching, "in2/Engine/Game/zSmoke.cpp"),
