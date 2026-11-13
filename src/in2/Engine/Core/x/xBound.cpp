@@ -4,7 +4,7 @@
 #include "xMath3.h"
 #include "xQuickCull.h"
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 void xBoundMakeSphere(xBound& b, const xVec3& center, F32 radius)
 {
     b.type = k_XBOUNDTYPE_SPHERE;

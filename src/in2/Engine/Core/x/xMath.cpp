@@ -180,7 +180,7 @@ void xAccelMove(F32& x, F32& v, F32 a, F32 dt, F32 endx, F32 maxv)
     x += dx;
 }
 
-// UNUSED: ported from Incredibles GC, TSSM GC, BFBB GC
+// UNUSED: needed to match (code from Incredibles GC, TSSM GC, BFBB GC)
 void xAccelStop(F32& x, F32& v, F32 a, F32 dt)
 {
     if (xfeq0(v)) {

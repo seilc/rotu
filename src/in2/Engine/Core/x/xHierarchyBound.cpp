@@ -27,7 +27,7 @@ void xHierarchyBoundInit(xHierarchyBound* bound, const xHierarchyBoundInitData* 
     memset(bound->nodes + count, 0, sizeof(xHierarchyNode) * extraBounds);
 }
 
-// UNUSED: ported from Rat GC
+// UNUSED: needed to match (code from Rat GC)
 void xHierarchyBoundDraw(const xHierarchyBound* bound, U8 mR, U8 mG, U8 mB, U8 mA, U8 sR, U8 sG, U8 sB, U8 sA, S8 hilight, U8 hR, U8 hG, U8 hB, U8 hA)
 {
     xDrawSetColor(mR, mG, mB, mA);

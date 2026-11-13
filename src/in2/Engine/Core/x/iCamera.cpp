@@ -188,7 +188,7 @@ void iCameraSetFOV(RwCamera* cam, F32 fov)
     RwCameraSetViewWindow(cam, &vw);
 }
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 F32 iCameraGetFOV(RwCamera* cam)
 {
     const RwV2d* vw = RwCameraGetViewWindow(cam);

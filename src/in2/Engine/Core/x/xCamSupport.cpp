@@ -20,7 +20,7 @@
     if ((s) < 0.0f) { if ((x) > 0.0f) (x) = -(x); }                                               \
     else { if ((x) < 0.0f) (x) = -(x); }
 
-// UNUSED: ported from Rat GC, Incredibles GC
+// UNUSED: needed to match (code from Rat GC, Incredibles GC)
 void xCamSupportPath::prune(S32 start, S32 size)
 {
     S32 old_used = used;
@@ -48,7 +48,7 @@ void xCamSupportPath::prune(S32 start, S32 size)
     }
 }
 
-// UNUSED: ported from Rat GC, Incredibles GC
+// UNUSED: needed to match (code from Rat GC, Incredibles GC)
 F32 xCamSupportPath::traverse(xVec3& rloc, F32 velmag, F32 dt)
 {
     if (dist < 0.0f) {
@@ -115,7 +115,7 @@ F32 xCamSupportPath::traverse(xVec3& rloc, F32 velmag, F32 dt)
     return velmag;
 }
 
-// UNUSED: ported from Rat GC, Incredibles GC
+// UNUSED: needed to match (code from Rat GC, Incredibles GC)
 void xCamSupportPath::refresh_dist()
 {
     dist = 0.0f;
@@ -129,7 +129,7 @@ void xCamSupportPath::refresh_dist()
     }
 }
 
-// UNUSED: ported from Rat GC, Incredibles GC
+// UNUSED: needed to match (code from Rat GC, Incredibles GC)
 S32 xCamSupportPath::polar_subdivide(path_node* vert, S32 vert_size, const xCamCoordPolar& start, const xCamCoordPolar& end, F32 thresh)
 {
     path_node head, tail;
@@ -199,7 +199,7 @@ S32 xCamSupportPath::polar_subdivide(path_node* vert, S32 vert_size, const xCamC
     }
 }
 
-// UNUSED: ported from Rat GC, Incredibles GC
+// UNUSED: needed to match (code from Rat GC, Incredibles GC)
 void xCamSupportPath::compute_weights(F32* w, S32 n, F32 s)
 {
     F32 start_efrac = 1.0f;
@@ -247,7 +247,7 @@ struct ent_cache_entry
 ent_cache_entry ent_cache[MAX_ENT_CACHE_SIZE];
 S32 ent_cache_size;
 
-// UNUSED: ported from Rat GC, Incredibles GC
+// UNUSED: needed to match (code from Rat GC, Incredibles GC)
 struct cache_entity_callback
 {
     ent_cache_entry* cache;
@@ -285,7 +285,7 @@ struct cache_entity_callback
     }
 };
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 bool pivot_depen_bar(xVec3& cap_offset, xVec3& impact, xVec3& rot_axis, const xCapsule& cap, F32 impact_t, F32, const xVec3& tohit)
 {
     cap_offset.assign(cap.end.x - cap.start.x, cap.end.y - cap.start.y, cap.end.z - cap.start.z);

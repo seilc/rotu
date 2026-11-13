@@ -436,7 +436,7 @@ void xTRCInitMessages()
     k_CONTROLLER_INVALID_MESSAGE = xTextFindString("TRC_CONTROLLER_INVALID", NULL);
 }
 
-// UNUSED: ported from Rat GC, TSSM GC
+// UNUSED: needed to match (code from Rat GC, TSSM GC)
 static U32 pad_message_valid()
 {
     if (gGameMode == eGameMode_Boot || gGameMode == eGameMode_Intro) {
@@ -520,7 +520,7 @@ void xTRCPadSetPressed(S32 port, S32 value, bool reverse)
         mPad[port].pressed &= ~value;
 }
 
-// UNUSED: ported from Rat GC
+// UNUSED: needed to match (code from Rat GC)
 static S32 DisplayMessage(S32 port, TRCState state)
 {
     S32 display = FALSE;
@@ -577,7 +577,7 @@ static S32 DisplayMessage(S32 port, TRCState state)
     return display;
 }
 
-// UNUSED: ported from Rat GC
+// UNUSED: needed to match (code from Rat GC)
 void xTRCPadDisplayMessage(S32 pad_id, TRCState)
 {
     if (!globals.NoPadCheck) {

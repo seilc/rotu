@@ -10,7 +10,7 @@ extern xGrid colls_oso_grid;
 
 static void SweptSphereHitsCamFollowEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void* data); // UNUSED
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 void xCamFollow::start()
 {
     xCam::start();
@@ -28,7 +28,7 @@ void xCamFollow::start()
     drift_vel = 0.0f;
 }
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 void xCamFollow::face_target()
 {
     xVec3 heading = *target;
@@ -45,7 +45,7 @@ void xCamFollow::face_target()
     end_coord.theta = xatan2(heading.x, heading.z);
 }
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 void xCamFollow::apply_spring(F32 dt)
 {
     F32 emove = xDampSpringCoeff(dt, cfg.speed_move);
@@ -62,7 +62,7 @@ void xCamFollow::apply_spring(F32 dt)
     spatial.coord.cylinder.theta = end_coord.theta + theta_diff;
 }
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 void xCamFollow::collide_inward(xScene& scene, xCamCoordCylinder& coord, const xVec3& face, F32 width)
 {
     xVec3 loc;
@@ -97,7 +97,7 @@ void xCamFollow::collide_inward(xScene& scene, xCamCoordCylinder& coord, const x
     }
 }
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 void xCamFollow::apply_vel_drift(F32 dt)
 {
     xVec2 B0, B1;
@@ -156,7 +156,7 @@ void xCamFollow::apply_vel_drift(F32 dt)
     }
 }
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 static void SweptSphereHitsCamFollowEnt(xScene*, xRay3* ray, xQCData* qcd, xEnt* ent, void* data)
 {
     xSweptSphere* sws = (xSweptSphere*)data;

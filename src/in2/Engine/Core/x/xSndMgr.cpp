@@ -663,7 +663,7 @@ F32 xSndMixerGetOutputVolume(S16 eSoundCategory)
     return outputVolume;
 }
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 U32 xSndMgrGetGroupId(xSndGroupHandle hSound)
 {
     if (hSound == ISND_INVALID_SND_GROUP_HANDLE) {
@@ -1117,7 +1117,7 @@ void xSndMgrStopChildren(xEnt* pParentEnt)
     }
 }
 
-// UNUSED: ported from Incredibles GC
+// UNUSED: needed to match (code from Incredibles GC)
 xSndHandle xSndMgrFadeOn(xSndGroupHandle hSoundToPlay, F32 fadeTime, S32 uFlags, const xVec3* pPos_WS, const xVec3* pVel, xEnt* pParentEnt, const F32* pfOverrideVolume, const F32* pfOverridePitch)
 {
     if (fadeTime <= 0.0f) {

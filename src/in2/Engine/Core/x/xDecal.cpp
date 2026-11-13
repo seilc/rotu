@@ -2754,7 +2754,7 @@ void xDecalSimple::Reset()
     numFrameSkipCount = MAX_FRAMES_TO_SKIP;
 }
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 void xDecalSimple::Render(xMat4x3* Mat, F32 intensity, F32 size)
 {
     static xTWEAKABLE S32 num_frameSkipCount = 10;

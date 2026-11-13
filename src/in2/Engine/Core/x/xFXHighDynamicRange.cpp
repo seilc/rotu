@@ -254,7 +254,7 @@ static void set_sample_offsets(U16 curSizeX, U16 curSizeY)
     GXLoadTexMtxImm(matrix, GX_TEXMTX3, GX_MTX2x4);
 }
 
-// UNUSED: ported from Rat GC
+// UNUSED: needed to match (code from Rat GC)
 static void debug_render_card(void* tex, F32 x, F32 y, F32 w, F32 h)
 {
     GXTexObj tobj ATTRIBUTE_ALIGN(16);

@@ -83,7 +83,7 @@ void xCam::create()
     debug_init();
 }
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 bool xCam::blendingTo() const
 {
     return blending() && blender->dst == this;
@@ -341,14 +341,14 @@ F32 xCamScreen::world_to_screen(xVec3& screen_loc, const xVec3& world_loc) const
     return rz;
 }
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 struct plane_type
 {
     xVec3 norm;
     F32 dist;
 };
 
-// UNUSED: speculative
+// UNUSED: needed to match (speculative code)
 void xCamScreen::create_frustum_planes(xVec4* frust_planes, const xMat4x3& ltm, const xVec2& view_offset, const xVec2& view_window, F32 near_plane, F32 far_plane)
 {
     plane_type* planes = (plane_type*)frust_planes;
@@ -659,7 +659,7 @@ void xCamBlend::blend_orient(F32 s)
     }
 }
 
-// UNUSED: ported from Rat GC
+// UNUSED: needed to match (code from Rat GC)
 void xCamDebug::create()
 {
     xCam::create();
@@ -667,7 +667,7 @@ void xCamDebug::create()
     orient_type = XCAM_ORIENT_EULER;
 }
 
-// UNUSED: ported from Rat GC
+// UNUSED: needed to match (code from Rat GC)
 void xCamDebug::start()
 {
     xCam::start();
@@ -678,7 +678,7 @@ void xCamDebug::start()
     spatial.orient.euler.roll = 0.0f;
 }
 
-// UNUSED: ported from Rat GC
+// UNUSED: needed to match (code from Rat GC)
 void xCamDebug::update(xScene&, F32 dt)
 {
     F32 turn_mult = 1.0f + (cfg.slow_turn - 1.0f) * slow_input;
