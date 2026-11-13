@@ -168,6 +168,7 @@ struct xDecalEmitter
     bool valid() const { return curve_size != 0 && cfg.life_time > 0.0f; }
     inline size_t texture_units() const;
     bool need_update() const { return !units.empty() || debug_need_update(); }
+    bool full() const { return units.full(); }
 
     config cfg;
     struct
