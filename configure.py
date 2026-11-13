@@ -395,6 +395,7 @@ cflags_rttilerd = [
 # Game-specific flags (Rat's MASTER flags; RotU is a retail build)
 cflags_in2 = [
     *cflags_base,
+    "-lang=c++",
     "-pool off",
     "-schedule on",
     "-char signed",
@@ -435,7 +436,7 @@ config.precompiled_headers = [
     {
         "source": "prefix.pch++",
         "mw_version": config.linker_version,
-        "cflags": ["-lang=c++", *(f for f in cflags_in2 if f != "-prefix prefix.mch")],
+        "cflags": [f for f in cflags_in2 if f != "-prefix prefix.mch"],
     }
 ]
 # decomp.me contexts read the prefix header itself (scratches can't use the .mch).
@@ -762,7 +763,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Core/gc/water/fxmain.c"),
             Object(NonMatching, "in2/Engine/Core/gc/water/texcache.c"),
             Object(NonMatching, "in2/Engine/Core/gc/water/texconv.c"),
-            Object(NonMatching, "in2/Engine/Core/gc/water/textures.c"),
+            Object(Matching, "in2/Engine/Core/gc/water/textures.c"),
             Object(NonMatching, "in2/Engine/Game/zCameraRBand.cpp"),
             Object(Matching, "in2/Engine/Game/zWireFrameAsset.cpp"),
             Object(NonMatching, "in2/Engine/Game/zJSPExtraData.cpp"),
