@@ -4,7 +4,6 @@
 #include "iFog.h"
 #include "iEnv.h"
 #include "iTime.h"
-#include "xColor.h"
 
 extern F32 sCameraNearClip;
 extern F32 giCameraOONearClip;

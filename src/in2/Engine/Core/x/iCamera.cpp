@@ -3,7 +3,6 @@
 #include "iAsync.h"
 #include "iScrFx.h"
 #include "iMemMgr.h"
-#include "zGameState.h"
 #include "xGlobals.h"
 #include "xShadow.h"
 
@@ -29,15 +28,6 @@ F32 giCameraOONearClip = 5.0f;
 F32 sCameraFarClip = 400.0f;
 RwCamera* globalCamera = NULL;
 static RwCamera* sMainGameCamera = NULL;
-
-namespace {
-
-inline F32 iCameraFogFarClip()
-{
-    return xglobals->fog.stop;
-}
-
-}
 
 void iCameraSetOrthoProjection(RwCamera* cam, bool ortho)
 {
@@ -296,11 +286,6 @@ void iCameraUpdateFog(RwCamera*, iTime t)
         xglobals->fog_t0 = 0;
         xglobals->fogA = xglobals->fogB;
     }
-}
-
-static inline void iCameraFogOffWrapper()
-{
-    RwRenderStateSet(rwRENDERSTATEFOGENABLE, (void*)FALSE);
 }
 
 void iCameraSetFogRenderStates()
