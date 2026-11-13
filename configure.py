@@ -795,7 +795,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zNPCMelee.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCBehavior.cpp"),
             Object(NonMatching, "in2/Engine/Game/zPad.cpp"),
-            Object(NonMatching, "in2/Engine/Core/gc/i2dQuadBuffer.cpp"),
+            Object(Matching, "in2/Engine/Core/gc/i2dQuadBuffer.cpp"),
             Object(NonMatching, "in2/Engine/Game/zCamSpline.cpp"),
             Object(NonMatching, "in2/Engine/Game/zMeshNavigation.cpp"),
             Object(NonMatching, "in2/Engine/Game/zMeshCollision.cpp"),
