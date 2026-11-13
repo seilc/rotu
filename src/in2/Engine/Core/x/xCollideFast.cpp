@@ -1,3 +1,4 @@
+#include "xCommon.h"
 #include "xCollideFast.h"
 
 #include "xBound.h"

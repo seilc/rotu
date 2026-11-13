@@ -1,7 +1,7 @@
+#include "xCommon.h"
 #include "xParEmitter.h"
 
 #include "xCam.h"
-#include "xCommon.h"
 #include "xEnt.h"
 #include "xGlobals.h"
 #include "xGroup.h"

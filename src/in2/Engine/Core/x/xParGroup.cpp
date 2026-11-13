@@ -1,6 +1,5 @@
-#include "xParGroup.h"
-
 #include "xCommon.h"
+#include "xParGroup.h"
 
 #define REG_TABLE_MAX 255
 

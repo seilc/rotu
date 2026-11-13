@@ -1,3 +1,4 @@
+#include "xCommon.h"
 #include "xEvent.h"
 
 #include "xString.h"

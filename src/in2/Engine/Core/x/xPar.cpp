@@ -1,3 +1,4 @@
+#include "xCommon.h"
 #include "xPar.h"
 
 xPar gParPool[XPAR_POOL_MAX];

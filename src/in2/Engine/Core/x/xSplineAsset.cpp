@@ -1,3 +1,4 @@
+#include "xCommon.h"
 #include "xSplineAsset.h"
 
 F32 xNurbs::approximate_length(S32 divisions) const
