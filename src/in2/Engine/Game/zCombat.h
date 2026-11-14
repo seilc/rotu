@@ -4,8 +4,12 @@
 #include "xBase.h"
 #include "xMath3.h"
 #include "zHitParameters.h"
+#include "xHierarchyBound.h"
+#include "zCombatEffects.h"
+#include "xSkyDome.h"
 
-struct xEnt;
+struct xEnv;
+class zCombatAttack;
 
 struct zCombatDamageInfo
 {
@@ -25,6 +29,56 @@ struct zCombatDamageInfo
     xVec3 direction;
 };
 
+struct zCombat
+{
+    struct sphereInfo
+    {
+        xSphere sphere;
+        xSphere previousSphere;
+    };
+
+    xHierarchyBound bounds;
+    U32 lastBoundUpdateTime;
+    S16 currentHitPoints;
+    S16 maximumHitPoints;
+    U16 stateTableSize;
+    const zCombatAttack* stateTable;
+    const xAnimState* animationState;
+    const zCombatAttack* runningAttack;
+    F32 runningAttackTimer;
+    xEnt* lastNPCDamaged;
+    U8 disableMovement;
+    U8 runningEffect;
+    U8 runningBlur;
+    U8 hitting;
+    U8 hitEnv;
+    U8 hitObject;
+    U8 forceReset;
+    U8 hitObjectCount;
+    xEnt* hitObjects[24];
+    S16 currentDamage;
+    S16 lastHitDamage;
+    zHitSource lastHitSource;
+    zHitTarget lastHitTarget;
+    sphereInfo location[4];
+    S32 (*envCollisionCB)(xEnt*, xSweptSphere*, xEnv*);
+    zCombatEffects::PunchEffect punchEffect;
+    U32 effectParam;
+
+    void Init(const xHierarchyBoundInitData* initHierarchy, F32 masterRadius,
+              const zCombatAttack* stateTable, U16 stateTableSize, S32 hitPoints,
+              const char*, const char**, S32, F32 scale);
+};
+
 void zCombatDamage(xEnt* ent, const zCombatDamageInfo& damageInfo);
+
+inline zCombat* zCombatGetFrom(xEnt* ent)
+{
+    if (xSkyDome_EntityIsSkyDome(ent)) {
+        return NULL;
+    }
+
+    return (zCombat*)ent->user_data;
+}
 
 #endif

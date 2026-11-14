@@ -665,7 +665,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zMovePoint.cpp"),
             Object(NonMatching, "in2/Engine/Game/zMrIncrediblePlayer.cpp"),
             Object(NonMatching, "in2/Engine/Game/zMusic.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zNPCCombat.cpp"),
+            Object(Matching, "in2/Engine/Game/zNPCCombat.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCMgr.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCNavigation.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCTypes.cpp"),
