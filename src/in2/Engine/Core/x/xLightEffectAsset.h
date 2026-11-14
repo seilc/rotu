@@ -6,8 +6,6 @@
 
 struct xLightEffectFlickerAsset : xDynAsset
 {
-    enum { VERSION = 1 };
-
     xFColor maxColorVariation;
     F32 flickerRate;
     F32 randomFlickerRate;
@@ -17,8 +15,6 @@ struct xLightEffectFlickerAsset : xDynAsset
 
 struct xLightEffectStrobeAsset : xDynAsset
 {
-    enum { VERSION = 1 };
-
     xFColor minColor;
     F32 fadeUpTime;
     F32 fadeDownTime;

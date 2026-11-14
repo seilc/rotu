@@ -9,8 +9,6 @@ namespace xRumble {
 
 struct effectAsset : xDynAsset
 {
-    enum { VERSION = 3 };
-
     F32 time;
     F32 intensity;
     U32 id;
@@ -53,8 +51,6 @@ struct effect : emitterBase
 
 struct boxEmitterAsset : xDynAsset
 {
-    enum { VERSION = 1 };
-
     U32 effectID;
     xVec3 minCorner;
     xVec3 maxCorner;
@@ -74,8 +70,6 @@ struct boxEmitter : emitterBase
 
 struct sphericalEmitterAsset : xDynAsset
 {
-    enum { VERSION = 1 };
-
     U32 effectID;
     F32 radius;
     xVec3 position;

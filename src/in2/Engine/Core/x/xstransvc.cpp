@@ -272,7 +272,7 @@ S32 xSTSwitchScene(U32 sid, void* userdata, S32(*progmon)(void*, F32))
     return rc;
 }
 
-char* xSTAssetName(U32 aid)
+const char* xSTAssetName(U32 aid)
 {
     const char* aname = NULL;
     S32 scncnt = 0, i = 0;
@@ -287,10 +287,10 @@ char* xSTAssetName(U32 aid)
         }
     }
 
-    return (char*)aname;
+    return aname;
 }
 
-char* xSTAssetNameFromPointer(void* model)
+const char* xSTAssetNameFromPointer(void* model)
 {
     PKRAssetTOCInfo ainfo;
     memset(&ainfo, 0, sizeof(PKRAssetTOCInfo));
@@ -436,12 +436,12 @@ S32 xSTGetAssetInfoByType(U32 type, S32 idx, PKRAssetTOCInfo* tocainfo)
     return found;
 }
 
-char* xST_xAssetID_HIPFullPath(U32 aid)
+const char* xST_xAssetID_HIPFullPath(U32 aid)
 {
     return xST_xAssetID_HIPFullPath(aid, NULL);
 }
 
-char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID)
+const char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID)
 {
     const char* da_hipname = NULL;
     st_STRAN_SCENE* sdata = NULL;
@@ -461,7 +461,7 @@ char* xST_xAssetID_HIPFullPath(U32 aid, U32* sceneID)
         }
     }
 
-    return (char*)da_hipname;
+    return da_hipname;
 }
 
 static S32 XST_PreLoadScene(st_STRAN_SCENE* sdata, const char* sfile, S32 fileflags)

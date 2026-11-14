@@ -56,7 +56,7 @@ public:
     virtual F32 GetFreezeTime();
     virtual F32 GetThawTime();
     virtual void UpdateBlurs(F32);
-    virtual iSndGroupHandle GetOneLinerSoundHandle(ezNPCOneLinerType);
+    virtual xSndGroupHandle GetOneLinerSoundHandle(ezNPCOneLinerType);
     virtual U32 GetInterestingIdleAnimID(U32);
     virtual U32 GetInterestingMovementAnimID(U32);
     virtual F32 GetInterestingIdleAnimTime(U32);
@@ -93,7 +93,7 @@ public:
     virtual bool IsShielding();
     virtual bool FunkyCheatEffective();
     virtual F32 GetFunkyCheatScale();
-    virtual void NPCFXUpdate();
+    virtual void NPCFXUpdate(F32);
     virtual void NPCFXRender();
     virtual bool destroy_throwable(zThrowableSize);
     virtual bool static_object_carry();
@@ -113,7 +113,7 @@ public:
     virtual zCombatDamageInfo* GetCurrentCombatInfo() const;
     virtual void SetCurrentCombatInfo(zCombatDamageInfo* info);
     virtual ezBlockDir GetBlockDirection() const;
-    virtual void SetProjectileExtControl();
+    virtual void SetProjectileExtControl(bool);
     virtual F32 GetScreenBlockTolerance();
     virtual void debug_render();
     virtual void move();

@@ -872,7 +872,7 @@ S32 xSweptSphereToEnt(xSweptSphere* sws, xEnt* ent, xRay3* ray)
         sws = &sweptSphere;
     }
 
-    if (ent->collLev == 5) {
+    if (ent->collLev == k_XENT_COLLLEV_MODEL) {
         U32 result = FALSE;
 
         switch (ent->bound.type) {
@@ -931,7 +931,7 @@ S32 xSweptSphereToEnt(xSweptSphere* sws, xEnt* ent, xRay3* ray)
             return FALSE;
         }
 
-        if (xSweptSphereToModel(sws, collmod->Data, collmod->Mat, ent->collType == 0x20)) {
+        if (xSweptSphereToModel(sws, collmod->Data, collmod->Mat, ent->collType == k_XENT_COLLTYPE_INHIBIT)) {
             result = sphereToEntResults(sws, ent, react);
         }
 
@@ -985,7 +985,7 @@ S32 xNPCSweptSphereToEnt(xSweptSphere* sws, xEnt* ent, xRay3* ray)
         sws = &sweptSphere;
     }
 
-    if (ent->collLev == 5) {
+    if (ent->collLev == k_XENT_COLLLEV_MODEL) {
         U32 result = FALSE;
 
         switch (ent->bound.type) {
@@ -1044,7 +1044,7 @@ S32 xNPCSweptSphereToEnt(xSweptSphere* sws, xEnt* ent, xRay3* ray)
             return FALSE;
         }
 
-        if (xSweptSphereToModel(sws, collmod->Data, collmod->Mat, ent->collType == 0x20)) {
+        if (xSweptSphereToModel(sws, collmod->Data, collmod->Mat, ent->collType == k_XENT_COLLTYPE_INHIBIT)) {
             result = sphereToEntResults(sws, ent, react);
         }
 

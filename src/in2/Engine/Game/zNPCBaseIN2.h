@@ -6,9 +6,7 @@
 #include "zNPC.h"
 #include "zAnimFx.h"
 
-namespace zNPC {
-
-struct zNPCAssetIN2 : xDynAsset
+struct zNPCAsset : xDynAsset
 {
     xEntAsset ent_asset;
     U32 navigation_mesh_id;
@@ -18,6 +16,8 @@ struct zNPCAssetIN2 : xDynAsset
     U32 interestPointerGroupID;
     U32 lightKitID;
 };
+
+namespace zNPC {
 
 class zNPCBase : public xEnt
 {

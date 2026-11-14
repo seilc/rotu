@@ -1,7 +1,7 @@
 #ifndef XONELINER_H
 #define XONELINER_H
 
-#include "iSnd.h"
+#include "xSnd.h"
 
 class xOneLiner
 {
@@ -10,7 +10,7 @@ public:
     F32 mCycleTime;
     U32 mFlags;
     F32 mSoonestTimeToPlay;
-    iSndGroupHandle mSoundGroupHdl;
+    xSndGroupHandle mSoundGroupHdl;
 
     static xOneLiner* sDelayedSound;
 
@@ -32,7 +32,7 @@ public:
         return (mSoundGroupHdl != ISND_INVALID_SND_GROUP_HANDLE);
     }
 
-    iSndGroupHandle GetSoundGroup() const
+    xSndGroupHandle GetSoundGroup() const
     {
         return mSoundGroupHdl;
     }
@@ -55,7 +55,7 @@ public:
         return false;
     }
 
-    iSndGroupHandle GetSoundGroup(U32 index) const
+    xSndGroupHandle GetSoundGroup(U32 index) const
     {
         if (index >= mNumSounds) {
             return ISND_INVALID_SND_GROUP_HANDLE;

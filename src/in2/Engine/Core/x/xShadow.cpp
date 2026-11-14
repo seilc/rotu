@@ -38,7 +38,6 @@
 xTWEAKABLE F32 SHADOW_BIAS_AMT = 0.008f;
 xTWEAKABLE F32 SHADOW_MINNORMY = 0.0871557f;
 xTWEAKABLE U32 rrs = 1;
-xTWEAKABLE U32 no_shadows = 0;
 RpLight* ShadowLight;
 RwRGBAReal ShadowLightColor = { 1.0f, 1.0f, 1.0f, 1.0f };
 xTWEAKABLE U32 sCacheSrcBlend = 5;
@@ -53,7 +52,6 @@ static U32 Im3DBufferPos;
 RwCamera* ShadowCamera;
 RwRaster* ShadowCameraRaster;
 static RwRaster* ShadowRenderRaster;
-xTWEAKABLE S32 ShadowAA = 0;
 xTWEAKABLE bool shadow_tri_depth_cull = true;
 xTWEAKABLE F32 shadow_max_tri_seperation = 4.5f;
 xVec3 gShadowObjectRadius;

@@ -4,6 +4,7 @@
 #include "xFont.h"
 #include "xPad.h"
 #include "xTextAsset.h"
+#include "xutil.h"
 #include "iDraw.h"
 #include "zGameState.h"
 #include "zGlobals.h"
@@ -283,7 +284,7 @@ void xTRCSetCharactersControl(S32 i)
     S32 mriPad = zPlayerMRIGetLastUsedPad();
     S32 froPad = zPlayerFROGetLastUsedPad();
     if (mriPad == -1 && froPad == -1) {
-        if (globals.sceneCur->sceneID != 'MNUS') {
+        if (globals.sceneCur->sceneID != IDTAG('M','N','U','S')) {
             if (xTRCPadCountWereActiveTotal() == 1) {
                 if (xglobals->players.GetMrI()->Get_humanPlayer()) {
                     zPlayerMRICreatePartAtPort(-1);

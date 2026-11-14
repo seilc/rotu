@@ -5,6 +5,7 @@
 #include "xVec3.h"
 
 struct xModelAssetInfo;
+struct zNPCAsset;
 
 struct zStoredSpawn
 {
@@ -20,7 +21,6 @@ struct zStoredSpawn
 namespace zNPC {
 
 class zNPCBase;
-struct zNPCAssetIN2;
 
 class zNPCInstance : public xBase
 {
@@ -35,7 +35,7 @@ protected:
 
     zNPCBase* npc_data;
     U32 type;
-    zNPCAssetIN2* npc_asset;
+    zNPCAsset* npc_asset;
     S32 npc_asset_size;
     const xModelAssetInfo* model_asset;
     xVec3 last_pos;
