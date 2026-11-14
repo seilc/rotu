@@ -780,7 +780,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zFXFireTrail.cpp"),
             Object(NonMatching, "in2/Engine/Game/zFXEnergySystem.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomSysMessage.cpp"),
-            Object(NonMatching, "in2/Engine/Core/gc/iARAMTmp.cpp"),
+            Object(Matching, "in2/Engine/Core/gc/iARAMTmp.cpp"),
             Object(NonMatching, "in2/Engine/Game/zCamPreset.cpp"),
             Object(NonMatching, "in2/Engine/Game/zSparkEmitter.cpp"),
             Object(NonMatching, "in2/Engine/Game/zToss.cpp"),

@@ -54,6 +54,7 @@ typedef xBase*(*zSceneCallback)(xBase*, zScene*, void*);
 
 extern bool gInSceneResetOrInit;
 
+bool zSceneIsLoadingPackFile();
 xBase* zSceneFindObject(U32 gameID);
 bool zSceneUpdateAsset(xBase& sceneObject, void* asset, U32 assetSize); // UNUSED
 const char* zSceneGetName(xBase* b);
