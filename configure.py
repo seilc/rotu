@@ -762,7 +762,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Core/gc/water/fxembm.c"),
             Object(Matching, "in2/Engine/Core/gc/water/fxmain.c"),
             Object(Matching, "in2/Engine/Core/gc/water/texcache.c"),
-            Object(NonMatching, "in2/Engine/Core/gc/water/texconv.c"),
+            Object(Matching, "in2/Engine/Core/gc/water/texconv.c"),
             Object(Matching, "in2/Engine/Core/gc/water/textures.c"),
             Object(NonMatching, "in2/Engine/Game/zCameraRBand.cpp"),
             Object(Matching, "in2/Engine/Game/zWireFrameAsset.cpp"),
