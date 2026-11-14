@@ -605,7 +605,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Core/gc/iMath3.cpp"),
             Object(NonMatching, "in2/Engine/Core/gc/iMemMgr.cpp"),
             Object(NonMatching, "in2/Engine/Core/gc/iModel.cpp"),
-            Object(NonMatching, "in2/Engine/Core/gc/iMorph.cpp"),
+            Object(Matching, "in2/Engine/Core/gc/iMorph.cpp"),
             Object(NonMatching, "in2/Engine/Core/gc/iPad.cpp"),
             Object(NonMatching, "in2/Engine/Core/gc/iParMgr.cpp"),
             Object(NonMatching, "in2/Engine/Core/gc/isavegame.cpp"),
