@@ -929,7 +929,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zCineFXTableSceneUT15.cpp"),
             Object(Matching, "in2/Engine/Game/zCineFXTableSceneDD13.cpp"),
             Object(Matching, "in2/Engine/Game/zCineFXTableSceneMT13.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zCineFXTableSceneRF13.cpp"),
+            Object(Matching, "in2/Engine/Game/zCineFXTableSceneRF13.cpp"),
             Object(NonMatching, "in2/Engine/Game/zCineFXTableSceneB111.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCProjectileExplodingGrub.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomCheatsManager.cpp"),
