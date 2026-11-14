@@ -599,7 +599,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Core/gc/iEnv.cpp"),
             Object(NonMatching, "in2/Engine/Core/gc/iFile.cpp"),
             Object(NonMatching, "in2/Engine/Core/gc/iFMV.cpp"),
-            Object(NonMatching, "in2/Engine/Core/gc/iFX.cpp"),
+            Object(Matching, "in2/Engine/Core/gc/iFX.cpp"),
             Object(NonMatching, "in2/Engine/Core/gc/iLight.cpp"),
             Object(Matching, "in2/Engine/Core/gc/iMath.cpp"),
             Object(NonMatching, "in2/Engine/Core/gc/iMath3.cpp"),
