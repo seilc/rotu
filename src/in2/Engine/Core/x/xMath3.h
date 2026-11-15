@@ -305,6 +305,12 @@ inline void xMat4x3Identity(xMat4x3* m)
     xMat4x3Copy(m, &g_I3);
 }
 
+inline void xMat4x3RotY(xMat4x3* m, F32 t)
+{
+    xMat3x3RotY(m, t);
+    xVec3Copy(&m->pos, &g_O3);
+}
+
 inline void xMat4x3OrthoInv(xMat4x3* o, const xMat4x3* m)
 {
     xVec3 tinv;
