@@ -610,7 +610,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/gc/iParMgr.cpp"),
             Object(NonMatching, "in2/Engine/Core/gc/isavegame.cpp"),
             Object(Matching, "in2/Engine/Core/gc/iScrFX.cpp"),
-            Object(NonMatching, "in2/Engine/Core/gc/iSnd.cpp"),
+            Object(Matching, "in2/Engine/Core/gc/iSnd.cpp"),
             Object(Matching, "in2/Engine/Core/gc/iSystem.cpp"),
             Object(Matching, "in2/Engine/Core/gc/iTime.cpp"),
             Object(Matching, "in2/Engine/Core/gc/iTRC.cpp"),

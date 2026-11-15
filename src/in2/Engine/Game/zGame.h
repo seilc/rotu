@@ -7,6 +7,7 @@ extern F32 sTimeElapsed;
 extern F32 gRealTimeElapsed;
 extern U32 gSoak;
 extern char** soaklevels;
+extern S32 enableAudioAnnihilator;
 
 S32 zGameIsPaused();
 void zGameDemoText(F32 fTime);

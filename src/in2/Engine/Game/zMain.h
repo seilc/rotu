@@ -15,6 +15,8 @@ extern F32 SECS_PER_VBLANK;
 extern eGameVidMode gVidMode;
 extern S32 GCN_DEMO_PARAM;
 
+void zMainShowProgressBar(S32 percentage);
+
 inline bool zMainIsPAL() { return gVidMode == eGameVidModePAL; }
 
 inline bool zMainIsNTSC() { return gVidMode == eGameVidModeNTSC; }

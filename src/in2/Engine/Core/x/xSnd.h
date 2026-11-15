@@ -107,6 +107,10 @@ enum xSndListener
     xSndListener_MAX_TYPES
 };
 
+// xSndGlobals::m_uSndMgrFlags
+#define k_XSNDMGR_INITED 0x1
+#define k_XSNDMGR_DIALOG_PLAYING 0x2
+
 struct xSndGlobals
 {
     static xTWEAKABLE F32 speedOfSound;
@@ -133,6 +137,18 @@ extern xSndGlobals gSnd;
 inline void xSndSelectListenerMode(xSndListener listenerMode)
 {
     gSnd.listenerMode = listenerMode;
+}
+
+inline F32 xSndFreqFromXPitch(F32 xpitch, U32 sample_rate)
+{
+    F32 upitch = sample_rate * std::powf(2.0f, xpitch / 12.0f);
+    return upitch;
+}
+
+inline void xSndSetMode(xSndMode mode)
+{
+    gSnd.sndMode = mode;
+    iSndSetMode();
 }
 
 #endif
