@@ -11,6 +11,7 @@
 #include "xMemory.h"
 #include "xModel.h"
 #include "xSpacePartitionTree.h"
+#include "xSurface.h"
 #include "xTriggerAsset.h"
 #include "zDestructible.h"
 #include "zGrid.h"
@@ -593,16 +594,16 @@ void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, U8 collType, U8 chk
     xBoxCenter(&bound.box.center, &bound.box.box);
     xQuickCullForRay(&bound.qcd, r);
 
-    if (chk & 0x6) {
+    if (chk & (k_XENT_COLLTYPE_STAT | k_XENT_COLLTYPE_DYN)) {
         xGridCheckBound(colls_grid, bound, bound.qcd, cb);
         xGridCheckBound(colls_oso_grid, bound, bound.qcd, cb);
     }
 
-    if (chk & 0x8) {
+    if (chk & k_XENT_COLLTYPE_NPC) {
         xGridCheckBound(npcs_grid, bound, bound.qcd, cb);
     }
 
-    if (chk & 0x40) {
+    if (chk & k_XENT_COLLTYPE_ENV) {
         xCollis tempColl;
         tempColl.flags = coll->flags;
         tempColl.dist = 1e38f;
@@ -628,16 +629,16 @@ void xSphereHitsScene(xScene* sc, const xSphere* sphere, xCollis* coll, U8 collT
     bound.sph = *sphere;
     xQuickCullForSphere(&bound.qcd, sphere);
 
-    if (chk & 0x6) {
+    if (chk & (k_XENT_COLLTYPE_STAT | k_XENT_COLLTYPE_DYN)) {
         xGridCheckBound(colls_grid, bound, bound.qcd, cb);
         xGridCheckBound(colls_oso_grid, bound, bound.qcd, cb);
     }
 
-    if (chk & 0x8) {
+    if (chk & k_XENT_COLLTYPE_NPC) {
         xGridCheckBound(npcs_grid, bound, bound.qcd, cb);
     }
 
-    if (chk & 0x40) {
+    if (chk & k_XENT_COLLTYPE_ENV) {
         xCollis tempColl;
         tempColl.flags = coll->flags;
         tempColl.dist = 1e38f;
@@ -947,7 +948,7 @@ U32 xSceneNearestFloorPoly(xScene* sc, xNearFloorPoly* nfpoly, U8 collType, U8 c
     nfpoly->optr = NULL;
     nfpoly->mptr = NULL;
 
-    if (chk & 0x6) {
+    if (chk & (k_XENT_COLLTYPE_STAT | k_XENT_COLLTYPE_DYN)) {
         sNearestChk = chk;
         sNearestCollType = collType;
         xGridCheckPosition(&colls_grid, &sNearestBound.box.center, &sNearestBound.qcd, gridNearestFloorCB, nfpoly);
@@ -958,7 +959,7 @@ U32 xSceneNearestFloorPoly(xScene* sc, xNearFloorPoly* nfpoly, U8 collType, U8 c
         xGridCheckPosition(&grabbable_grid, &sNearestBound.box.center, &sNearestBound.qcd, gridNearestFloorCB, nfpoly);
     }
 
-    if (chk & 0x40) {
+    if (chk & k_XENT_COLLTYPE_ENV) {
         sTestOPtr = NULL;
         sTestMPtr = NULL;
         sBoxTestMat = NULL;

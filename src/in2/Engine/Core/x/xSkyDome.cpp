@@ -57,7 +57,7 @@ void xSkyDome_AddEntity(xEnt* ent, S32 sortorder, S32 lockY, S32 lockXZ)
         sSkyList[i].lockXZ = lockXZ;
         sSkyCount++;
         ent->user_data = (void*)i;
-        ent->model->Flags &= (U16)~0x1;
+        ent->model->Flags &= (U16)~ModelInstance_Render;
     }
 
     ent->render = xSkyDome_EmptyRender;
@@ -84,7 +84,7 @@ void xSkyDome_Render()
 
     for (S32 i = 0; i < sSkyCount; i++) {
         xEnt* ent = sSkyList[i].ent;
-        ent->model->Flags &= (U16)~0x1;
+        ent->model->Flags &= (U16)~ModelInstance_Render;
 
         if (!ent->model || !xEntIsVisible(ent)) continue;
 

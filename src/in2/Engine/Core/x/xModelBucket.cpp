@@ -390,7 +390,7 @@ void xModelBucket_Begin()
 
 void xModelBucket_Add(xModelInstance* minst, bool)
 {
-    if ((minst->Flags & 0x401) != 0x1) {
+    if ((minst->Flags & (ModelInstance_Render | ModelInstance_NoRender)) != ModelInstance_Render) {
         return;
     }
 
@@ -467,7 +467,7 @@ void xModelBucket_AddAlphaFade(xModelInstance* minst, F32 alphaFade, bool)
         return;
     }
 
-    if ((minst->Flags & 0x401) != 0x1) {
+    if ((minst->Flags & (ModelInstance_Render | ModelInstance_NoRender)) != ModelInstance_Render) {
         return;
     }
 

@@ -1,6 +1,8 @@
 #include "xCommon.h"
 #include "xSplineAsset.h"
 
+#define MAX_DEPTH ((U32)10)
+
 F32 xNurbs::approximate_length(S32 divisions) const
 {
     F32 division_size = (end() - start()) / divisions;
@@ -213,7 +215,6 @@ xVec3 xNurbs::project_point(const xVec3& point, F32* u, F32* distance, F32 guess
         length2 = point.Distance2(curve_point);
     }
 
-    const U32 MAX_DEPTH = 10;
     for (S32 depth = 0; depth < MAX_DEPTH; depth++) {
         if (length2 < 0.01f) {
             if (u)

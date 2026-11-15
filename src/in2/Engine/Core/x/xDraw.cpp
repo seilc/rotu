@@ -1,8 +1,6 @@
 #include "xCommon.h"
 #include "xDraw.h"
 
-#include "xutil.h"
-
 S32 Im2DRenderQuad(F32 x1, F32 y1, F32 x2, F32 y2, F32 z, F32 recipCamZ, F32 uvOffset)
 {
     RwIm2DVertex vx[4];
@@ -35,7 +33,7 @@ S32 Im2DRenderQuad(F32 x1, F32 y1, F32 x2, F32 y2, F32 z, F32 recipCamZ, F32 uvO
     RwIm2DVertexSetU(&vx[3], 1.0f + uvOffset, recipCamZ);
     RwIm2DVertexSetV(&vx[3], 1.0f + uvOffset, recipCamZ);
 
-    RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, vx, ARRAY_LENGTH(vx));
+    RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, vx, 4);
 
     return TRUE;
 }
@@ -73,7 +71,7 @@ S32 Im2DRenderQuadAlpha(F32 x1, F32 y1, F32 x2, F32 y2, F32 alpha, F32 z, F32 re
     RwIm2DVertexSetU(&vx[3], 1.0f + uvOffset, recipCamZ);
     RwIm2DVertexSetV(&vx[3], 1.0f + uvOffset, recipCamZ);
 
-    RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, vx, ARRAY_LENGTH(vx));
+    RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, vx, 4);
 
     return TRUE;
 }

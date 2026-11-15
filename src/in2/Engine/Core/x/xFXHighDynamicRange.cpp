@@ -6,7 +6,6 @@
 #include "xGlobals.h"
 #include "xMath.h"
 #include "xMemMgr.h"
-#include "xutil.h"
 #include "iDraw.h"
 #include "iSystem.h"
 #include "zRenderState.h"
@@ -193,7 +192,7 @@ void xFXHighDynamicRangeStartRender()
     set_vert(verts[1], 0.0f, FB_YRES, 0.0f, 0.0f, clearcolor, rcz, nsz);
     set_vert(verts[2], FB_XRES, 0.0f, 0.0f, 0.0f, clearcolor, rcz, nsz);
     set_vert(verts[3], FB_XRES, FB_YRES, 0.0f, 0.0f, clearcolor, rcz, nsz);
-    RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, verts, ARRAY_LENGTH(verts));
+    RwIm2DRenderPrimitive(rwPRIMTYPETRISTRIP, verts, 4);
 
     iDrawSetFBMSK(mask, 0xFFFFFFFF, true);
 
