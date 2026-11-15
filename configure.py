@@ -809,7 +809,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zCameraCurve.cpp"),
             Object(NonMatching, "in2/Engine/Game/zPlayerInput.cpp"),
             Object(NonMatching, "in2/Engine/Game/zHelperAI.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zNPCRat.cpp"),
+            Object(Matching, "in2/Engine/Game/zNPCRat.cpp"),
             Object(NonMatching, "in2/Engine/Game/zPlayerConstrainer.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCChicken.cpp"),
             Object(Matching, "in2/Engine/Game/zNPCSquad.cpp"),

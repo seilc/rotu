@@ -15,6 +15,7 @@ class zNPCNavigate;
 struct zNPCBlurInstance;
 class zSwitchLever;
 struct xModelAssetParam;
+struct xGroup;
 struct zNPCCombatInitData;
 
 namespace zNPC {
@@ -36,6 +37,36 @@ enum ezBlockDir
 class zNPCCommon : public zNPCBase
 {
 public:
+    zNPCCommon();
+
+    static void create_anim_table(xAnimTable* table);
+
+    template <class T>
+    void addBehavior(zBehaviorImplementation<T>* new_behavior, S8 priority)
+    {
+        manager.addBehavior(new_behavior, this, priority);
+    }
+
+    virtual ~zNPCCommon();
+    virtual void init(zNPCInstance* init_inst);
+    virtual void timestep(xScene* xscn, F32 dt);
+    virtual void activate();
+    virtual void deactivate();
+    virtual void preupdate(F32 dt);
+    virtual void reset();
+    virtual void update_bounds();
+    virtual void scene_setup();
+    virtual void render_npc();
+    virtual void render_npc_freezing();
+    virtual void render_extra();
+    virtual void post_render_cleanup();
+    virtual bool systemEvent(xBase* from, xBase* to, U32 to_event, const F32* to_param, xBase* to_param_widget, U32 to_param_widget_id);
+    virtual F32 get_shadow_strength();
+    virtual xSndHandle play_sound(zAnimFxSoundGroup* sound);
+    virtual void kill();
+    virtual void ExitingSpawnState();
+    virtual void PastUpdateDistCleanup();
+    virtual void VisibilityCullCleanup();
     virtual const char* get_type_name() const;
     virtual bool HasBlockAbility();
     virtual bool HasDodgeAbility();
@@ -57,8 +88,8 @@ public:
     virtual F32 GetThawTime();
     virtual void UpdateBlurs(F32);
     virtual xSndGroupHandle GetOneLinerSoundHandle(ezNPCOneLinerType);
-    virtual U32 GetInterestingIdleAnimID(U32);
-    virtual U32 GetInterestingMovementAnimID(U32);
+    virtual U32 GetInterestingIdleAnimID(U32) { return xStrHash("BU_L_Wait01"); }
+    virtual U32 GetInterestingMovementAnimID(U32) { return xStrHash("SA_L_Walk01"); }
     virtual F32 GetInterestingIdleAnimTime(U32);
     virtual S32 GetMaxHitPoints();
     virtual U32 GetNPCIceType();
@@ -220,6 +251,11 @@ public:
     F32 prevAlpha;
 };
 
+xEnt* CheckForPlayerInRange2(xEnt* npc, F32 range2);
+xEnt* FindClosestPlayer(xEnt* npc, F32* d2);
+
 }
+
+typedef zBehaviorImplementation<zNPC::zNPCCommon> zNPCCommonBehavior;
 
 #endif
