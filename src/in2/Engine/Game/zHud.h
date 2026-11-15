@@ -19,8 +19,8 @@ public:
     virtual void handle_event(xBase*, U32, const F32*, xBase*, U32) {}
     virtual void render() {}
 
-private:
-    U8 unk18[0x100];
+protected:
+    char text[256];
 };
 
 } // namespace zHud

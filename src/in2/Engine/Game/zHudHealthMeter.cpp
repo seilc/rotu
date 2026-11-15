@@ -15,7 +15,7 @@ HealthMeter::HealthMeter()
 void HealthMeter::SetCurValue(F32 value, bool defeated)
 {
     if (m_fCurValue != value && m_fCurValue <= m_fMaxValue) {
-        S32 character = m_nCharacter;
+        U32 character = m_nCharacter;
         if (m_fMaxValue) {
             switch (character) {
             case 1:
@@ -33,7 +33,7 @@ void HealthMeter::SetCurValue(F32 value, bool defeated)
 void HealthMeter::SetMaxValue(F32 value)
 {
     if (m_fMaxValue != value) {
-        S32 character = m_nCharacter;
+        U32 character = m_nCharacter;
         if (value) {
             switch (character) {
             case 1:

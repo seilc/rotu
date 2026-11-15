@@ -24,7 +24,7 @@ public:
 private:
     F32 m_fCurValue;
     F32 m_fMaxValue;
-    S32 m_nCharacter;
+    U32 m_nCharacter;
 };
 
 } // namespace zHud

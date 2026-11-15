@@ -7,6 +7,14 @@ class zUI;
 
 class zUICustom
 {
+public:
+    virtual void Init();
+
+    zUI* GetUI() const
+    {
+        return ui;
+    }
+
 protected:
     zUI* ui;
 };

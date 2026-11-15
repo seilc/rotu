@@ -3,6 +3,8 @@
 
 #include "zPlayer.h"
 
+#define MAX_EXP_POINTS 27500
+
 enum zCommonPlayerUpgradeType
 {
     ezCommonPlayerUpgradeType_Melee,
@@ -26,6 +28,7 @@ class zCommonPlayer : public zPlayer
 public:
     void GetBoneMat(xMat4x3* mat, S32 index, xMat4x3* boneMats);
     zCommonPlayer();
+    S32 GetAvailableUpgradePoints();
 
     virtual void Init(xEntAsset* asset);
     virtual void BoundUpdate(xVec3* _pos);
