@@ -922,7 +922,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Game/zCineFXTableSceneMM12.cpp"),
             Object(Matching, "in2/Engine/Game/zCineFXTableSceneRF11.cpp"),
             Object(NonMatching, "in2/Engine/Game/zCineFXTableSceneUT11.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zCineFXTableSceneUW12.cpp"),
+            Object(Matching, "in2/Engine/Game/zCineFXTableSceneUW12.cpp"),
             Object(NonMatching, "in2/Engine/Game/zCineFXTableSceneUW13.cpp"),
             Object(Matching, "in2/Engine/Game/zCineFXTableSceneUT13.cpp"),
             Object(Matching, "in2/Engine/Game/zCineFXTableSceneUT14.cpp"),
