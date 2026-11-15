@@ -13,6 +13,7 @@ extern U32 FB_XRES;
 extern U32 FB_YRES;
 extern F32 SECS_PER_VBLANK;
 extern eGameVidMode gVidMode;
+extern S32 GCN_DEMO_PARAM;
 
 inline bool zMainIsPAL() { return gVidMode == eGameVidModePAL; }
 
