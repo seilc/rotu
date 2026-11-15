@@ -7,6 +7,8 @@
 #include <rwcore.h>
 #include <rpworld.h>
 
+struct xEnvAsset;
+
 struct iEnvMatOrder
 {
     U16 jspIndex;
@@ -36,13 +38,21 @@ struct iEnv
     U16 numTransparent;
 };
 
+void iEnvStartup();
 void iEnvLoadBegin(iEnv* env, S32 dataType, S32 count);
 bool iEnvLoadJSP(iEnv* env, U32 aid, const void* data, U32, S32 dataType, S32 index);
+void iEnvJSPVisibilityInc(iEnv* env, xJSPHeader* jsp);
+void iEnvJSPVisibilityDec(iEnv* env, xJSPHeader* jsp);
+void iEnvJSPOn(iEnv* env, xJSPHeader* jsp);
+void iEnvJSPOff(iEnv* env, xJSPHeader* jsp);
+void iBuildJSPBound(const xClumpCollBSPTree* colltree, xBox& box);
 void iEnvLoadEnd(iEnv* env, S32 dataType);
 void iEnvFree(iEnv* env);
 void iEnvDefaultLighting(iEnv*);
+void iEnvLightingBasics(iEnv*, xEnvAsset*);
 void iEnvSetup(iEnv* env);
 void iEnvRender(iEnv* env, bool alpha);
+void iEnvEndRenderFX(iEnv* env);
 void iEnvLightPreRender(iEnv* env, RpLight* light);
 void iEnvLightPostRender(iEnv* env);
 
