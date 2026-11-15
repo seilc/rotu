@@ -16,6 +16,7 @@
 #include "iDebug.h"
 #include "iMath.h"
 #include "iScrFx.h"
+#include "zHashes.h"
 #include "zBulletTime.h"
 #include "zCam.h"
 #include "zGame.h"
@@ -36,10 +37,6 @@
 
 #define CAMERAFX_ACTIVE 0x1
 #define CAMERAFX_KILL 0x2
-
-#define EFFECT_LENS_FLARE_SOURCE_ID 0xA072A4DA // xStrHash("effect:Lens Flare Source")
-#define EFFECT_LENS_FLARE_PARAMS_ID 0xB7BA72D5 // xStrHash("effect:Lens Flare Params")
-#define FX_STREAK2_ID 0x9F681A2B // xStrHash("fx_streak2")
 
 bool g_debugRenderSafeArea;
 
@@ -408,7 +405,7 @@ xVec3 sFullScreenGlareDir = { -0.3f, 1.0f, 0.4f };
 F32 sFullScreenGlareIntensity = 0.5f;
 RwRGBA sFullScreenGlareColor = { 255, 255, 255, 64 };
 S32 sFullScreenGlareEnabled;
-U32 sFullScreenGlareTextureID = FX_STREAK2_ID;
+U32 sFullScreenGlareTextureID = HASH_fx_streak2;
 RwTexture* sFullScreenGlareTexturePtr;
 
 void xScrFXFullScreenGlareRender()
@@ -1009,7 +1006,7 @@ void xScrFxLensFlare_SceneEnter()
     sLensFlareParams = &sDefaultLensFlareParams;
     for (S32 i = 0; i < numDyns; i++) {
         xDynAsset* dyn = (xDynAsset*)xSTFindAssetByType('DYNA', i, NULL);
-        if (dyn->type == EFFECT_LENS_FLARE_PARAMS_ID) {
+        if (dyn->type == HASH_effect_Lens_Flare_Params) {
             sLensFlareParams = (xScrFxLensFlareParams*)(dyn + 1);
         }
     }
@@ -1019,7 +1016,7 @@ void xScrFxLensFlare_SceneEnter()
     S32 numSources = 0;
     for (S32 i = 0; i < numDyns; i++) {
         xDynAsset* dyn = (xDynAsset*)xSTFindAssetByType('DYNA', i, NULL);
-        if (dyn->type == EFFECT_LENS_FLARE_SOURCE_ID) {
+        if (dyn->type == HASH_effect_Lens_Flare_Source) {
             if (dyn->version != LENS_FLARE_SOURCE_VERSION) {
                 iprintf("WARNING:  skipping incompatible lens flare source %08X (%s)\n(version %d, current is %d)\n", dyn->id, xSTAssetName(dyn->id), dyn->version, LENS_FLARE_SOURCE_VERSION);
             } else
@@ -1032,7 +1029,7 @@ void xScrFxLensFlare_SceneEnter()
 
         for (S32 i = 0; i < numDyns; i++) {
             xDynAsset* dyn = (xDynAsset*)xSTFindAssetByType('DYNA', i, NULL);
-            if (dyn->type == EFFECT_LENS_FLARE_SOURCE_ID && dyn->version == LENS_FLARE_SOURCE_VERSION) {
+            if (dyn->type == HASH_effect_Lens_Flare_Source && dyn->version == LENS_FLARE_SOURCE_VERSION) {
                 ObjRecurse(((xScrFxLensFlareSourceAsset*)dyn)->object, LensFlareSourceCB, dyn);
             }
         }

@@ -4,15 +4,13 @@
 #include "zCineFX.h"
 #include "zCineFXShared.h"
 #include "zFXBossBrain.h"
-
-#define FX_HEAD_DUG_ID 0x191B9DF8 // xStrHash("fx_head_dug")
-#define BOSS_DUG_DOME_ID 0x02081446 // xStrHash("Boss_DUG_dome")
+#include "zHashes.h"
 
 namespace CineFXSceneUW12 {
 
 namespace {
 
-const cinfx_bossbrain_context braintext_uw_e_01 = { FX_HEAD_DUG_ID, 10, 0.1f, 0.2f, BOSS_DUG_DOME_ID };
+const cinfx_bossbrain_context braintext_uw_e_01 = { HASH_fx_head_dug, 10, 0.1f, 0.2f, HASH_Boss_DUG_dome };
 
 } // namespace
 

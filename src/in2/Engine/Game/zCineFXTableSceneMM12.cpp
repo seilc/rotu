@@ -4,14 +4,13 @@
 #include "zCineFX.h"
 #include "zCineFXShared.h"
 #include "zFXBossBrain.h"
-
-#define FX_HEAD_CRUST_ID 0x0A5FABE1 // xStrHash("fx_head_crust")
+#include "zHashes.h"
 
 namespace CineFXSceneMM12 {
 
 namespace {
 
-const cinfx_bossbrain_context braintext_mm_e_02 = { FX_HEAD_CRUST_ID, 10, 0.1f, 0.3f };
+const cinfx_bossbrain_context braintext_mm_e_02 = { HASH_fx_head_crust, 10, 0.1f, 0.3f };
 
 } // namespace
 

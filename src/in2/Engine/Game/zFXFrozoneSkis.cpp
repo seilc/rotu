@@ -5,13 +5,11 @@
 #include "xModelBucket.h"
 #include "xstransvc.h"
 #include "zFrozonePlayer.h"
+#include "zHashes.h"
 #include "zParSysSnowsplosion.h"
 #include "zShrapnel.h"
 
 #include <rpmatfx.h>
-
-#define FX_FROZONE_DISC_ID 0x54E8E502 // xStrHash("fx_frozone_disc")
-#define ICE_GLIDE_COLLIDE_SHRAP_ID 0x3E50F6BD // xStrHash("ice_glide_collide_shrap")
 
 namespace {
 
@@ -42,10 +40,10 @@ void zFXFrozoneSkis::SetPowerupLevel(S32 level)
 
 void zFXFrozoneSkis::Init(zFrozonePlayer* player)
 {
-    RpAtomic* atomic = (RpAtomic*)xSTFindAsset(FX_FROZONE_DISC_ID, NULL);
+    RpAtomic* atomic = (RpAtomic*)xSTFindAsset(HASH_fx_frozone_disc, NULL);
     if (atomic) {
         skiModel = xModelInstanceAlloc(atomic, NULL, 0, 0, NULL);
-        skiModel->modelID = FX_FROZONE_DISC_ID;
+        skiModel->modelID = HASH_fx_frozone_disc;
         if (skiModel) {
             skiModel->LightKit = player->model->LightKit;
         }
@@ -53,7 +51,7 @@ void zFXFrozoneSkis::Init(zFrozonePlayer* player)
         skiModel = NULL;
     }
 
-    collideShrap = (zShrapnelAsset*)xSTFindAsset(ICE_GLIDE_COLLIDE_SHRAP_ID, NULL);
+    collideShrap = (zShrapnelAsset*)xSTFindAsset(HASH_ice_glide_collide_shrap, NULL);
     Reset();
 }
 

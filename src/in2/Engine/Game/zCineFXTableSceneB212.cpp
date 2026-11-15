@@ -5,9 +5,8 @@
 #include "zCineFXShared.h"
 #include "zFrozoneIce.h"
 #include "zFXBossBrain.h"
+#include "zHashes.h"
 #include "xutil.h"
-
-#define FX_HEAD_CRUST_ID 0x0A5FABE1 // xStrHash("fx_head_crust")
 
 namespace CineFXSceneB212 {
 
@@ -40,7 +39,7 @@ const zFrozoneIceRecordEntry record_b2_e_01[] = {
 
 const cinfx_frobridge_context frotext_b2_e_01 = { 0, record_b2_e_01, ARRAY_LENGTH(record_b2_e_01) };
 
-const cinfx_bossbrain_context braintext_b2_e_01 = { FX_HEAD_CRUST_ID, 10, 0.1f, 0.3f };
+const cinfx_bossbrain_context braintext_b2_e_01 = { HASH_fx_head_crust, 10, 0.1f, 0.3f };
 
 } // namespace
 

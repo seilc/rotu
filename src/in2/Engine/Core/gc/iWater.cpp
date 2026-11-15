@@ -16,6 +16,7 @@
 #include "iCamera.h"
 #include "iDebug.h"
 #include "iModel.h"
+#include "zHashes.h"
 #include "zBase.h"
 #include "zEntSimpleObj.h"
 #include "zGame.h"
@@ -31,15 +32,6 @@
 #include <rwcore.h>
 #include <rpworld.h>
 #include <rpmatfx.h>
-
-#define S02_GOO_SIMP_ID 0x7D2B9CBF // xStrHash("S02_GOO_SIMP")
-#define S02_GOO_SIMP_GC_ID 0xB9045F94 // xStrHash("S02_GOO_SIMP_GC")
-#define S02_GOO_SIMP_B_ID 0xD08EB096 // xStrHash("S02_GOO_SIMP_B")
-#define S02_GOO_SIMP_B_GC_ID 0xA5870DC1 // xStrHash("S02_GOO_SIMP_B_GC")
-#define S04_GOO_SIMP_ID 0x24D8DF85 // xStrHash("S04_GOO_SIMP")
-#define S04_GOO_SIMP_GC_ID 0x3A4D5B76 // xStrHash("S04_GOO_SIMP_GC")
-#define GRIVER_GREEN_MT_ID 0x9DA695E1 // xStrHash("Griver_green_mt")
-#define GC_WATER_LIGHTKIT_ID 0x01092433 // xStrHash("gc_water_lightkit")
 
 #define WATER_PRESET(width, shininess, height, frame)                                             \
 {                                                                                                 \
@@ -292,7 +284,7 @@ static RpAtomic* iWaterAtomicRender(RpAtomic* atomic)
     return defaultRenderCB(atomic);
 }
 
-U32 waterTexID = GRIVER_GREEN_MT_ID;
+U32 waterTexID = HASH_Griver_green_mt;
 
 #pragma push
 #pragma optimization_level 0
@@ -325,12 +317,12 @@ void iWaterSceneEnter(RpWorld*)
     numWaterObjects = 0;
     for (; it < end; ++it) {
         U32 body = it->get_bodyID();
-        if (body == S02_GOO_SIMP_ID)
-            body = S02_GOO_SIMP_GC_ID;
-        else if (body == S02_GOO_SIMP_B_ID)
-            body = S02_GOO_SIMP_B_GC_ID;
-        else if (body == S04_GOO_SIMP_ID)
-            body = S04_GOO_SIMP_GC_ID;
+        if (body == HASH_S02_GOO_SIMP)
+            body = HASH_S02_GOO_SIMP_GC;
+        else if (body == HASH_S02_GOO_SIMP_B)
+            body = HASH_S02_GOO_SIMP_B_GC;
+        else if (body == HASH_S04_GOO_SIMP)
+            body = HASH_S04_GOO_SIMP_GC;
         zEntSimpleObj* ent = (zEntSimpleObj*)zSceneFindObject(body);
         iprintf("iWaterSceneEnter:  water body %08X (%s)\n", body, xSTAssetName(body));
         if (ent) {
@@ -636,7 +628,7 @@ void iWaterReset()
         return;
     }
 
-    waterLightKit = (xLightKit*)xSTFindAsset(GC_WATER_LIGHTKIT_ID, NULL);
+    waterLightKit = (xLightKit*)xSTFindAsset(HASH_gc_water_lightkit, NULL);
     if (!waterLightKit)
         return;
 

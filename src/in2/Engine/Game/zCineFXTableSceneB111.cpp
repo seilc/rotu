@@ -4,15 +4,13 @@
 #include "zCineFX.h"
 #include "zCineFXShared.h"
 #include "zFXBossBrain.h"
-
-#define FX_HEAD_VERM_ID 0xDB87202C // xStrHash("fx_head_verm")
-#define BOSS_VERM_DOME_ID 0x43D61802 // xStrHash("boss_verm_dome")
+#include "zHashes.h"
 
 namespace CineFXSceneB111 {
 
 namespace {
 
-const cinfx_bossbrain_context braintext_b1_o_01 = { FX_HEAD_VERM_ID, 10, 0.1f, 0.32f, BOSS_VERM_DOME_ID, 0.35f };
+const cinfx_bossbrain_context braintext_b1_o_01 = { HASH_fx_head_verm, 10, 0.1f, 0.32f, HASH_boss_verm_dome, 0.35f };
 
 } // namespace
 
