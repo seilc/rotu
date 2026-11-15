@@ -754,7 +754,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zParticleLocator.cpp"),
             Object(NonMatching, "in2/Engine/Game/zParticleSystems.cpp"),
             Object(NonMatching, "in2/Engine/Game/zParticleSystemWaterfall.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zTurretSmoke.cpp"),
+            Object(Matching, "in2/Engine/Game/zTurretSmoke.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUberLaser.cpp"),
             Object(NonMatching, "in2/Engine/Game/zLoadingScreen.cpp"),
             Object(Matching, "in2/Engine/Core/x/xModelBlur.cpp"),
