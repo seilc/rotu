@@ -19,7 +19,9 @@ struct xModelPool;
 // xModelInstance::Flags
 enum
 {
-    ModelInstance_ChildTransform = 0x40
+    ModelInstance_Render = 0x1,
+    ModelInstance_ChildTransform = 0x40,
+    ModelInstance_NoRender = 0x400
 };
 
 #define k_MAX_MODEL_LIGHTS 4
