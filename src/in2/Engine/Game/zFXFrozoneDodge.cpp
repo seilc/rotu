@@ -17,10 +17,8 @@
 #include "zFrozoneBlast.h"
 #include "zFrozonePlayerActions.h"
 #include "zGlobals.h"
+#include "zHashes.h"
 #include "zScene.h"
-
-#define ICE_CRYSTALS_SLIDE_ID 0xD4CDC067 // xStrHash("ice_crystals_slide")
-#define FX_NUKE_FRO_FLAKE_ID 0xF4194260 // xStrHash("fx_nuke_fro_flake")
 
 namespace {
 
@@ -45,7 +43,7 @@ void zFXFrozoneDodge::Setup()
     decalContext.priority = 0;
     decalContext.blend_mode = xDecal::BLEND_MODE_AVERAGE;
     decalContext.curve = &decalResponseCurve;
-    decalContext.texture = (RwTexture*)xSTFindAsset(ICE_CRYSTALS_SLIDE_ID, NULL);
+    decalContext.texture = (RwTexture*)xSTFindAsset(HASH_ice_crystals_slide, NULL);
     decalContext.emitAtomicCB = NULL;
     decalContext.emitVertListCB = NULL;
     decalContext.destAtomicCB = NULL;
@@ -218,7 +216,7 @@ void zFXIceSpray::Init()
 {
     xParticleBatchSystem system;
     system.pool_type = PGT_POS_COLOR_SIZE;
-    system.rs.texture = (RwTexture*)xSTFindAsset(FX_NUKE_FRO_FLAKE_ID, NULL);
+    system.rs.texture = (RwTexture*)xSTFindAsset(HASH_fx_nuke_fro_flake, NULL);
     system.rs.src_blend = rwBLENDSRCALPHA;
     system.rs.dst_blend = rwBLENDINVSRCALPHA;
     system.rs.flags = ptank_pool::FLAG_ORDERED;
