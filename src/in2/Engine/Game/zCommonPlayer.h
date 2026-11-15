@@ -26,6 +26,7 @@ enum zCommonPlayerUpgradeLevel
 class zCommonPlayer : public zPlayer
 {
 public:
+    void GetBonePos(xVec3* result, S32 index, const xVec3* offset, xMat4x3* matArray);
     void GetBoneMat(xMat4x3* mat, S32 index, xMat4x3* boneMats);
     zCommonPlayer();
     S32 GetAvailableUpgradePoints();

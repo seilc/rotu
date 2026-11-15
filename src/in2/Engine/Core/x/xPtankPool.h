@@ -170,6 +170,8 @@ struct ptank_pool__pos_color_size : ptank_pool
     }
 };
 
+#define FPTANK_FIELDS_pos_color_size(F) F(xVec3, pos) F(xColor, color) F(xVec2, size)
+
 struct ptank_pool__pos_color_size_uv2 : ptank_pool
 {
     xVec3* pos;
@@ -344,6 +346,34 @@ struct ptank_pool__pos_color_size_rot_uv2 : ptank_pool
         stride_uv = ls_uv.stride;
     }
 };
+
+#define _FPTANK_BIND(T, f) T* pool_##f = _fptank_pool.f;
+#define _FPTANK_LOAD(T, f) pool_##f = _fptank_pool.f;
+#define _FPTANK_STEP(T, f) pool_##f = (T*)((U8*)pool_##f + _fptank_pool.stride_##f);
+#define _FPTANK_STORE(T, f) _fptank_pool.f = pool_##f;
+
+#define FPTANK_BEGIN(type, apool)                                                                 \
+    ptank_pool__##type& _fptank_pool = (ptank_pool__##type&)(apool);                              \
+    S32 _fptank_used = _fptank_pool.used;                                                         \
+    FPTANK_FIELDS_##type(_FPTANK_BIND)
+
+#define FPTANK_NEXT(type)                       \
+    if (_fptank_used >= 80) {                   \
+        _fptank_pool.used = _fptank_used;       \
+        _fptank_pool.next();                    \
+        _fptank_used = _fptank_pool.used;       \
+        FPTANK_FIELDS_##type(_FPTANK_LOAD)      \
+        if (!_fptank_pool.valid()) {            \
+            break;                              \
+        }                                       \
+    } else {                                    \
+        _fptank_used++;                         \
+        FPTANK_FIELDS_##type(_FPTANK_STEP)      \
+    }
+
+#define FPTANK_END(type)                        \
+    _fptank_pool.used = _fptank_used;           \
+    FPTANK_FIELDS_##type(_FPTANK_STORE)
 
 void xPTankPoolSceneEnter();
 void xPTankPoolSceneExit();

@@ -75,6 +75,7 @@ struct xVec3
     F32 at_normalize() { return safe_normalize(m_UnitAxisZ); }
     void AddScale(const xVec3& p, const xVec3& d, F32 s);
     void AddScale(const xVec3& d, F32 s);
+    void Sub(const xVec3& a);
     void Sub(const xVec3& a, const xVec3& b);
     void ScaleDiff(const xVec3& a, const xVec3& b, F32 scale);
     void Add(const xVec3& a);
@@ -227,6 +228,13 @@ inline void xVec3::AddScale(const xVec3& d, F32 s)
     x += d.x * s;
     y += d.y * s;
     z += d.z * s;
+}
+
+inline void xVec3::Sub(const xVec3& a)
+{
+    x -= a.x;
+    y -= a.y;
+    z -= a.z;
 }
 
 inline void xVec3::Sub(const xVec3& a, const xVec3& b)

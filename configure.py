@@ -844,7 +844,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zCamPool.cpp"),
             Object(NonMatching, "in2/Engine/Game/zScreenWarp.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCEnforcer.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zFXFrozoneDodge.cpp"),
+            Object(Matching, "in2/Engine/Game/zFXFrozoneDodge.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCProjectileGrubFX.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPC.cpp"),
             Object(NonMatching, "in2/Engine/Game/zFXPunchSnow.cpp"),
