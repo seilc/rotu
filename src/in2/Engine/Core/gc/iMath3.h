@@ -20,11 +20,15 @@ void iSphereInitBoundVec(xSphere* s, const xVec3* v);
 void iSphereInitBoundOBB(xSphere* s, const xBox* b, const xMat4x3* m);
 void iSphereBoundVec(xSphere* o, const xSphere* s, const xVec3* v);
 void iSphereBoundSphere(xSphere* o, const xSphere* a, const xSphere* b);
+void iCylinderIsectVec(const xCylinder* c, const xVec3* v, xIsect* isx);
 void iCylinderIsectRay(const xCylinder* c, const xRay3* r, xIsect* isx);
+void iBoxVecDist(const xBox* box, const xVec3* v, xIsect* isx);
 void iBoxIsectVec(const xBox* b, const xVec3* v, xIsect* isx);
 void iBoxIsectRay(const xBox* b, const xRay3* r, xIsect* isx);
 void iBoxIsectSphere(const xBox* box, const xSphere* p, xIsect* isx);
 void iBoxInitBoundVec(xBox* b, const xVec3* v);
 void iBoxBoundVec(xBox* o, const xBox* b, const xVec3* v);
+void iBoxBoundSphere(xBox* o, const xBox* b, const xSphere* s); // UNUSED
+void iBoxBoundBox(xBox* o, const xBox* a, const xBox* b); // UNUSED
 
 #endif
