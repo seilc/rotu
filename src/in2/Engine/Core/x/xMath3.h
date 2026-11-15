@@ -256,6 +256,13 @@ inline void xMat3x3MulScaleC(xMat3x3* o, const xMat3x3* m, F32 x, F32 y, F32 z)
     o->at.assign(m->at.x * z, m->at.y * z, m->at.z * z);
 }
 
+inline void xMat3x3MulScaleC(xMat3x3& m, F32 scale)
+{
+    xVec3ScaleC(m.right, scale);
+    xVec3ScaleC(m.up, scale);
+    xVec3ScaleC(m.at, scale);
+}
+
 inline void xMat3x3MulScale(xMat3x3* o, const xMat3x3* m, xVec3* s)
 {
     return xMat3x3MulScaleC(o, m, s->x, s->y, s->z);
