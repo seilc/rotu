@@ -854,7 +854,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zNPCScientist.cpp"),
             Object(NonMatching, "in2/Engine/Game/zFXShockwave.cpp"),
             Object(NonMatching, "in2/Engine/Game/zParSysSnowsplosion.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zHudSuperMoveVials.cpp"),
+            Object(Matching, "in2/Engine/Game/zHudSuperMoveVials.cpp"),
             Object(NonMatching, "in2/Engine/Game/zHudHealthMeter.cpp"),
             Object(NonMatching, "in2/Engine/Game/zHudExperiencePointMeter.cpp"),
             Object(NonMatching, "in2/Engine/Game/zParticleSystemEarthDust.cpp"),
