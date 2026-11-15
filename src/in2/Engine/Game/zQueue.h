@@ -24,6 +24,49 @@ public:
         return &data[next_offset(offs)];
     }
 
+    void fetch_queue_copy_offset(T& elem, S32 offs)
+    {
+        if (size <= 0) {
+            return;
+        }
+
+        elem = data[next_offset(offs)];
+    }
+
+    void get_queue(T& elem, S32 offs)
+    {
+        if (size <= 0) {
+            return;
+        }
+
+        if (size == 1) {
+            get_queue(elem);
+            return;
+        }
+
+        S32 index = next_offset(offs);
+        S32 last = next_offset(size - 1);
+        swap(index, last);
+        get_queue_last(elem);
+    }
+
+    void get_queue_last(T& elem)
+    {
+        if (size <= 0) {
+            return;
+        }
+
+        elem = data[next_offset(size - 1)];
+        size--;
+    }
+
+    void swap(S32 a, S32 b)
+    {
+        T tmp = data[a];
+        data[a] = data[b];
+        data[b] = tmp;
+    }
+
     void get_queue(T& elem)
     {
         if (size <= 0) {

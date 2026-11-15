@@ -906,7 +906,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zNPCBossUnderminerUM.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomConditionallyDisabled.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomControllerManager.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zUICustomGenericHUD.cpp"),
+            Object(Matching, "in2/Engine/Game/zUICustomGenericHUD.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomImageSlideshow.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomMissionCompleteManager.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomOptionsManager.cpp"),
