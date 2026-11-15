@@ -813,7 +813,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zPlayerConstrainer.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCChicken.cpp"),
             Object(Matching, "in2/Engine/Game/zNPCSquad.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zNPCChickenFX.cpp"),
+            Object(Matching, "in2/Engine/Game/zNPCChickenFX.cpp"),
             Object(NonMatching, "in2/Engine/Game/zMrIncrediblePlayerActions.cpp"),
             Object(NonMatching, "in2/Engine/Game/zCommonPlayerActions.cpp"),
             Object(NonMatching, "in2/Engine/Game/zPlayerAction.cpp"),
