@@ -862,7 +862,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zUICustomMissionSelect.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCCommonBehavior.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCProjectileFrozen.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zFXFrozoneSkis.cpp"),
+            Object(Matching, "in2/Engine/Game/zFXFrozoneSkis.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNavigationMesh.cpp"),
             Object(NonMatching, "in2/Engine/Game/zParticleSystemPop.cpp"),
             Object(Matching, "in2/Engine/Core/x/xOneLiner.cpp"),

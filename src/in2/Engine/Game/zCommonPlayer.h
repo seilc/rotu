@@ -24,6 +24,7 @@ enum zCommonPlayerUpgradeLevel
 class zCommonPlayer : public zPlayer
 {
 public:
+    void GetBoneMat(xMat4x3* mat, S32 index, xMat4x3* boneMats);
     zCommonPlayer();
 
     virtual void Init(xEntAsset* asset);
