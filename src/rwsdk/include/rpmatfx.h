@@ -555,6 +555,7 @@ RpMTEffect* RpMTEffectSetName(RpMTEffect* effect, RwChar* name);
 RpAtomic* RpMatFXAtomicEnableEffects(RpAtomic* atomic);
 RwTexture* RpMatFXMaterialGetDualTexture(const RpMaterial* material);
 RpMatFXMaterialFlags RpMatFXMaterialGetEffects(const RpMaterial* material);
+RwReal RpMatFXMaterialGetEnvMapCoefficient(const RpMaterial* material);
 RpMaterial* RpMatFXMaterialSetBumpMapCoefficient(RpMaterial* material, RwReal coef);
 RpMaterial* RpMatFXMaterialSetEffects(RpMaterial* material, RpMatFXMaterialFlags flags);
 RpMaterial* RpMatFXMaterialSetEnvMapCoefficient(RpMaterial* material, RwReal coef);
