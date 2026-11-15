@@ -32,5 +32,6 @@ extern eGameMode gGameMode;
 
 S32 zGameModeGet();
 eGameOstrich zGameGetOstrich();
+void zGameSetOstrich(eGameOstrich o);
 
 #endif
