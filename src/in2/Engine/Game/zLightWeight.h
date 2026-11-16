@@ -50,6 +50,7 @@ public:
 template <class T>
 class zLightweightList : public zLightweightSystemBase
 {
+protected:
     typedef typename pool_list<T>::node_type node_type;
 
 public:
@@ -152,6 +153,16 @@ public:
         }
         list.push_front();
         return &list.front();
+    }
+
+    S32 FreeCount()
+    {
+        return list.max_size() - list.size();
+    }
+
+    bool IsFull()
+    {
+        return list.size() >= list.max_size();
     }
 
 protected:

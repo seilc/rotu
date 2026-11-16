@@ -35,6 +35,7 @@
 #define HASH_fx_head_crust                      0x0A5FABE1 // xStrHash("fx_head_crust")
 #define HASH_fx_head_dug                        0x191B9DF8 // xStrHash("fx_head_dug")
 #define HASH_fx_head_verm                       0xDB87202C // xStrHash("fx_head_verm")
+#define HASH_fx_nuke_crack                      0xF122A59D // xStrHash("fx_nuke_crack")
 #define HASH_fx_nuke_fro_flake                  0xF4194260 // xStrHash("fx_nuke_fro_flake")
 #define HASH_fx_streak2                         0x9F681A2B // xStrHash("fx_streak2")
 #define HASH_fx_tank_ice_block                  0x9CAFA2D1 // xStrHash("fx_tank_ice_block")

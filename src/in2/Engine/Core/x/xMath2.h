@@ -17,6 +17,8 @@ struct xVec2
     F32 dot(const xVec2& c) const { return x * c.x + y * c.y; }
     F32 length() const { return xsqrt(length2()); }
     F32 length2() const { return x * x + y * y; }
+    void AddScale(const xVec2& p, const xVec2& d, F32 s) { x = p.x + d.x * s; y = p.y + d.y * s; }
+    void Scale(const xVec2& d, F32 s) { x = d.x * s; y = d.y * s; }
 };
 
 typedef struct _xMat3x2

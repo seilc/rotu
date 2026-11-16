@@ -881,7 +881,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zCam2Player.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomStatsScreen.cpp"),
             Object(NonMatching, "in2/Engine/Game/zForceFieldEffect.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zFXScreenCrack.cpp"),
+            Object(Matching, "in2/Engine/Game/zFXScreenCrack.cpp"),
             Object(NonMatching, "in2/Engine/Game/zCheckpoint.cpp"),
             Object(Matching, "in2/Engine/Game/zNPCBlurFX.cpp"),
             Object(Matching, "in2/Engine/Game/zNPCDrillMovementDust.cpp"),
