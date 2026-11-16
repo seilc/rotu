@@ -40,3 +40,9 @@ Building
 The project is built with [decomp-toolkit](https://github.com/encounter/decomp-toolkit) on the
 [dtk-template](https://github.com/encounter/dtk-template) layout; [objdiff](https://github.com/encounter/objdiff)
 reads the generated `objdiff.json`.
+
+Credits
+=======
+
+Most of the code here is ported from the [Ratatouille prototype decomp](https://github.com/seilc/rat), whose
+contributors are credited there.
