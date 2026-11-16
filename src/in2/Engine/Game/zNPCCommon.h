@@ -41,6 +41,8 @@ public:
 
     static void create_anim_table(xAnimTable* table);
 
+    bool GetParameter(const char* name, F32* value, F32 default_value);
+
     template <class T>
     void addBehavior(zBehaviorImplementation<T>* new_behavior, S8 priority)
     {
@@ -64,6 +66,7 @@ public:
     virtual F32 get_shadow_strength();
     virtual xSndHandle play_sound(zAnimFxSoundGroup* sound);
     virtual void kill();
+    virtual bool CanBeTargeted() { return manager.CanBeTargeted(); }
     virtual void ExitingSpawnState();
     virtual void PastUpdateDistCleanup();
     virtual void VisibilityCullCleanup();

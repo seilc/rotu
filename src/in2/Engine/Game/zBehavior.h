@@ -211,6 +211,7 @@ public:
     void createTransientStack(S32 inMax);
     void addBehavior(behavior* new_behavior, S32 priority);
     void setBehavior(behavior* new_behavior);
+    bool CanBeTargeted();
 
     template <class T>
     void addBehavior(zBehaviorImplementation<T>* new_behavior, T* owner, S32 priority)

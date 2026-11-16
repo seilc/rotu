@@ -903,7 +903,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zNPCFootsteps.cpp"),
             Object(NonMatching, "in2/Engine/Game/zPlayerOneLinerData.cpp"),
             Object(NonMatching, "in2/Engine/Game/zEconomics.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zNPCBossUnderminerUM.cpp"),
+            Object(Matching, "in2/Engine/Game/zNPCBossUnderminerUM.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomConditionallyDisabled.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomControllerManager.cpp"),
             Object(Matching, "in2/Engine/Game/zUICustomGenericHUD.cpp"),

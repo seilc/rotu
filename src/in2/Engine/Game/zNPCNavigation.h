@@ -7,6 +7,11 @@ class zNPCNavigate
 {
 public:
     bool GetClosestPosition(const xVec3&, xVec3&);
+
+    void dont_apply_dpos() { dpos_apply = false; }
+
+    F32 stuck_timer;
+    bool dpos_apply;
 };
 
 #endif
