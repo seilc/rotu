@@ -1,5 +1,5 @@
-#ifndef ZHITREACTION_H
-#define ZHITREACTION_H
+#ifndef ZHITPARAMETERS_H
+#define ZHITPARAMETERS_H
 
 #include "types.h"
 
@@ -70,6 +70,7 @@ enum zHitSource
     zHS_PUNCH_FRO_4_LEVEL3,
     zHS_ENEMY_DAMAGE,
     zHS_ENEMY_FLYBACK,
+    zHS_FREEZE,
     zHS_COUNT,
     zHS_FORCE_INT = -1
 };
@@ -106,5 +107,16 @@ enum ezHitReactionState
     zHRS_Frozen,
     zHRS_Total
 };
+
+struct zHitSourceMapEntry
+{
+    const char* name;
+    zHitSource sourcetype;
+};
+
+extern const zHitSourceMapEntry zHitSourceMap[zHS_COUNT + 1];
+extern U32 zHitTargetCCs[zHT_COUNT];
+
+S32 getSourceCCIdx(U32 value);
 
 #endif
