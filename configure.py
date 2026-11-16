@@ -811,7 +811,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zHelperAI.cpp"),
             Object(Matching, "in2/Engine/Game/zNPCRat.cpp"),
             Object(NonMatching, "in2/Engine/Game/zPlayerConstrainer.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zNPCChicken.cpp"),
+            Object(Matching, "in2/Engine/Game/zNPCChicken.cpp"),
             Object(Matching, "in2/Engine/Game/zNPCSquad.cpp"),
             Object(Matching, "in2/Engine/Game/zNPCChickenFX.cpp"),
             Object(NonMatching, "in2/Engine/Game/zMrIncrediblePlayerActions.cpp"),

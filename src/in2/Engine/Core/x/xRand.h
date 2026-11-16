@@ -43,6 +43,11 @@ inline F32 xrand_RandomFloat()
     return xrand_GenRandFloat();
 }
 
+inline F32 xrand_RandomUnitFloatLessThan1()
+{
+    return xrand_GenRandFloatLessThanOne();
+}
+
 inline F32 xrand_RandomBipolarUnitFloat()
 {
     return 2.0f * xrand_RandomFloat() - 1.0f;
@@ -57,6 +62,14 @@ inline F32 xrand_RandomFloatRange(F32 fMin, F32 fMax)
 inline U32 xrand_RandomChoice(U32 nChoice)
 {
     return (nChoice * xrand_RandomInt16()) / 0x10000;
+}
+
+inline S32 xrand_RandomRange(S32 nMin, S32 nMax)
+{
+    F32 fRange = nMax - nMin + 1;
+    S32 nRandInt = nMin + (S32)(fRange * xrand_RandomUnitFloatLessThan1());
+
+    return nRandInt;
 }
 
 inline bool xrand_RandomChance(F32 fChanceOfSuccess)

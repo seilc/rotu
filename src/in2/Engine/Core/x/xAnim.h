@@ -31,6 +31,7 @@ enum
 // xAnimState::Flags
 enum
 {
+    AnimState_Once = 0x0,
     AnimState_Loop = 0x10
 };
 

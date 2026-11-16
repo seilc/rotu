@@ -9,6 +9,7 @@
 #define HASH_boss_verm_dome                     0x43D61802 // xStrHash("boss_verm_dome")
 #define HASH_bridge_dd_dest                     0xAC1BEE23 // xStrHash("bridge_dd_dest")
 #define HASH_bridge_metal_rf                    0xF72C1A2A // xStrHash("bridge_metal_rf")
+#define HASH_CHICKEN_L_IDLE02                   0xD8AA8913 // xStrHash("CHICKEN_L_IDLE02")
 #define HASH_ConstA                             0x48E48E7A // xStrHash("ConstA")
 #define HASH_ConstB                             0x48E48E7B // xStrHash("ConstB")
 #define HASH_Cosine                             0x498D7119 // xStrHash("Cosine")
