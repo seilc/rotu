@@ -13,9 +13,17 @@ struct group_asset : xDynAsset
 
 class group : public xBase
 {
+public:
+    static void init(xBase& data, xDynAsset& asset, size_t asset_size);
+
 protected:
     const group_asset* asset;
     S32 attacking_count;
+
+    static void EventCB(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget,
+                        U32 toParamWidgetID);
+    void handle_event(xBase* from, xBase* to, U32 toEvent, const F32* toParam, xBase* toParamWidget,
+                      U32 toParamWidgetID);
 };
 
 }
