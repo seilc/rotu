@@ -829,7 +829,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zNPCRobotTank.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCBomber.cpp"),
             Object(NonMatching, "in2/Engine/Game/zParticleSystemSnow.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zFXFreezeNPC.cpp"),
+            Object(Matching, "in2/Engine/Game/zFXFreezeNPC.cpp"),
             Object(NonMatching, "in2/Engine/Game/zFXGlint.cpp"),
             Object(NonMatching, "in2/Engine/Game/zParticleSystemRain.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCProjectileGrub.cpp"),

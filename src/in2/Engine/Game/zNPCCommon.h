@@ -18,6 +18,16 @@ struct xModelAssetParam;
 struct xGroup;
 struct zNPCCombatInitData;
 
+enum ezNPCRumbleType
+{
+    ezNPCRT_Tiny,
+    ezNPCRT_Small,
+    ezNPCRT_Medium,
+    ezNPCRT_Large,
+    ezNPCRT_Time,
+    ezNPCRT_Total
+};
+
 namespace zNPC {
 
 class zNPCCommonMoveToTransient;
@@ -42,6 +52,8 @@ public:
     static void create_anim_table(xAnimTable* table);
 
     bool GetParameter(const char* name, F32* value, F32 default_value);
+    ezNPCRumbleType GetGenericRumbleType();
+    void StartRumble(ezNPCRumbleType type, xVec3* pos);
 
     template <class T>
     void addBehavior(zBehaviorImplementation<T>* new_behavior, S8 priority)
