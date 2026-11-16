@@ -869,7 +869,7 @@ config.libs = [
             Object(Matching, "in2/Engine/Core/x/xSpringy.cpp"),
             Object(NonMatching, "in2/Engine/Game/zConversation.cpp"),
             Object(NonMatching, "in2/Engine/Game/zParticleSystemBurrowKickup.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zNPCFireball.cpp"),
+            Object(Matching, "in2/Engine/Game/zNPCFireball.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCBossUnderminerDrill.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomVolume.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCProjectileMetalSheet.cpp"),
