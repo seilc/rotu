@@ -187,6 +187,21 @@ inline xVec3* xEntGetPos(const xEnt* ent)
     return &xModelGetFrame(ent->model)->pos;
 }
 
+inline xVec3* xEntGetFacingDirection(const xEnt* ent)
+{
+    return &xModelGetFrame(ent->model)->at;
+}
+
+inline xVec3* xEntGetUpDirection(const xEnt* ent)
+{
+    return &xModelGetFrame(ent->model)->up;
+}
+
+inline xVec3* xEntGetRightDirection(const xEnt* ent)
+{
+    return &xModelGetFrame(ent->model)->right;
+}
+
 inline void xEntEnable(xEnt* ent)
 {
     xBaseEnable(ent);
