@@ -9,6 +9,8 @@
 #include <rpworld.h>
 #include <rpptank.h>
 
+enum { BLOCK_SIZE = 80 };
+
 enum ptank_group_type
 {
     PGT_COLOR_MAT,
@@ -87,7 +89,7 @@ struct ptank_pool__color_mat_uv2 : ptank_pool
 
     void next()
     {
-        if (used >= 80) {
+        if (used >= BLOCK_SIZE) {
             if (valid()) {
                 unlock_block();
             }
@@ -134,7 +136,7 @@ struct ptank_pool__pos_color_size : ptank_pool
 
     void next()
     {
-        if (used >= 80) {
+        if (used >= BLOCK_SIZE) {
             if (valid()) {
                 unlock_block();
             }
@@ -185,7 +187,7 @@ struct ptank_pool__pos_color_size_uv2 : ptank_pool
 
     void next()
     {
-        if (used >= 80) {
+        if (used >= BLOCK_SIZE) {
             if (valid()) {
                 unlock_block();
             }
@@ -238,7 +240,7 @@ struct ptank_pool__pos_color_size_rot : ptank_pool
 
     void next()
     {
-        if (used >= 80) {
+        if (used >= BLOCK_SIZE) {
             if (valid()) {
                 unlock_block();
             }
@@ -298,7 +300,7 @@ struct ptank_pool__pos_color_size_rot_uv2 : ptank_pool
 
     void next()
     {
-        if (used >= 80) {
+        if (used >= BLOCK_SIZE) {
             if (valid()) {
                 unlock_block();
             }
@@ -358,7 +360,7 @@ struct ptank_pool__pos_color_size_rot_uv2 : ptank_pool
     FPTANK_FIELDS_##type(_FPTANK_BIND)
 
 #define FPTANK_NEXT(type)                       \
-    if (_fptank_used >= 80) {                   \
+    if (_fptank_used >= BLOCK_SIZE) {           \
         _fptank_pool.used = _fptank_used;       \
         _fptank_pool.next();                    \
         _fptank_used = _fptank_pool.used;       \

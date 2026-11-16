@@ -248,7 +248,7 @@ void ROMFont::InitFont()
     }
     RwResEntry* fontRes = RwResourcesAllocateResEntry(NULL, NULL, fontDataSize, NULL);
     if (!fontRes) {
-        mFontDataUnaligned = RwMalloc(fontDataSize, 0);
+        mFontDataUnaligned = RwMalloc(fontDataSize, rwMEMHINTDUR_NADURATION);
         mFontMalloced = true;
     } else {
         mFontDataUnaligned = fontRes + 1;
@@ -256,7 +256,7 @@ void ROMFont::InitFont()
     void* fontTemp;
     fontRes = RwResourcesAllocateResEntry(NULL, NULL, fontTempSize, NULL);
     if (!fontRes) {
-        fontTemp = RwMalloc(fontTempSize, 0);
+        fontTemp = RwMalloc(fontTempSize, rwMEMHINTDUR_NADURATION);
     } else {
         fontTemp = fontRes + 1;
     }

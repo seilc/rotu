@@ -1,6 +1,8 @@
 #ifndef ZFXFROZONESKIS_H
 #define ZFXFROZONESKIS_H
 
+#include "types.h"
+
 struct xModelInstance;
 class zFrozonePlayer;
 

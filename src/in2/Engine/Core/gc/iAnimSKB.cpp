@@ -52,7 +52,6 @@ void iAnimEvalSKB(iAnimSKBHeader* data, F32 time, U32 flags, xVec3* tran, xQuat*
     F32 scalez = data->Scale[2];
 
     if (tcount == 1) {
-
         F32 scalex = data->Scale[0];
         F32 scaley = data->Scale[1];
         F32 scalez = data->Scale[2];

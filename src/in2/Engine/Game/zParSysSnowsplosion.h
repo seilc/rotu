@@ -1,6 +1,8 @@
 #ifndef ZPARSYSSNOWSPLOSION_H
 #define ZPARSYSSNOWSPLOSION_H
 
+#include "types.h"
+
 struct xVec3;
 
 struct zParSysSnowsplosionConfig

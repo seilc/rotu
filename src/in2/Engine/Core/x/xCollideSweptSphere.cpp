@@ -865,7 +865,7 @@ S32 xSweptSphereToEnt(xSweptSphere* sws, xEnt* ent, xRay3* ray)
         return FALSE;
     }
 
-    bool react = sSweptSphereCollType == 0x8 && zReactiveIsReactive(*ent);
+    bool react = sSweptSphereCollType == k_XENT_COLLTYPE_NPC && zReactiveIsReactive(*ent);
     xSweptSphere sweptSphere;
     if (react) {
         sweptSphere = *sws;
@@ -978,7 +978,7 @@ S32 xNPCSweptSphereToEnt(xSweptSphere* sws, xEnt* ent, xRay3* ray)
         }
     }
 
-    bool react = sSweptSphereCollType == 0x8 && zReactiveIsReactive(*ent);
+    bool react = sSweptSphereCollType == k_XENT_COLLTYPE_NPC && zReactiveIsReactive(*ent);
     xSweptSphere sweptSphere;
     if (react) {
         sweptSphere = *sws;
