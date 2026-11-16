@@ -91,6 +91,7 @@ struct xVec3
     void SubAdd(const xVec3& a, const xVec3& b, const xVec3& c);
     void ScaleComponents(const xVec3& scale);
     void Combine(const xVec3& a, F32 scale0, const xVec3& b, F32 scale1);
+    void AddCombine(const xVec3& v, const xVec3& a, F32 scale0, const xVec3& b, F32 scale1);
     void Average(const xVec3& a, const xVec3& b, const xVec3& c);
     F32 NormalizeSafe();
 };
@@ -347,6 +348,13 @@ inline void xVec3::Combine(const xVec3& a, F32 scale0, const xVec3& b, F32 scale
     x = a.x * scale0 + b.x * scale1;
     y = a.y * scale0 + b.y * scale1;
     z = a.z * scale0 + b.z * scale1;
+}
+
+inline void xVec3::AddCombine(const xVec3& v, const xVec3& a, F32 scale0, const xVec3& b, F32 scale1)
+{
+    x = v.x + a.x * scale0 + b.x * scale1;
+    y = v.y + a.y * scale0 + b.y * scale1;
+    z = v.z + a.z * scale0 + b.z * scale1;
 }
 
 inline void xVec3::Average(const xVec3& a, const xVec3& b, const xVec3& c)

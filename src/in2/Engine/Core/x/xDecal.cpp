@@ -2217,7 +2217,7 @@ void xDecal::emit(const emit_context& ec, const xMat4x3& mat, RpAtomic* model, c
         }
 
         if (ec.emitVertListCB) {
-            ec.emitVertListCB(im->vert, im->index, im->index_size, (xMat4x3*)decal->driver, decal->driver_ent, ec.context);
+            ec.emitVertListCB(im->vert, im->index, im->index_size, decal->driver, decal->driver_ent, ec.context);
         }
     } else {
         if (iMemMgrGetMinFreeSpace() <= 100 * 1024) {
@@ -2253,7 +2253,7 @@ void xDecal::emit(const emit_context& ec, const xMat4x3& mat, RpAtomic* model, c
         complete_decal_atomic(decal->data.atomic, arg->out.uv, o);
 
         if (ec.emitAtomicCB) {
-            ec.emitAtomicCB(decal->data.atomic, (xMat4x3*)decal->driver, decal->driver_ent, ec.context);
+            ec.emitAtomicCB(decal->data.atomic, decal->driver, decal->driver_ent, ec.context);
         }
     }
 
@@ -2346,7 +2346,7 @@ void xDecal::emit_env(const emit_context& ec, const xMat4x3& mat)
         transform_points(im->vert, carg->out.vert, im->vert_size, mat);
 
         if (ec.emitVertListCB) {
-            ec.emitVertListCB(im->vert, im->index, im->index_size, (xMat4x3*)decal->driver, decal->driver_ent, ec.context);
+            ec.emitVertListCB(im->vert, im->index, im->index_size, decal->driver, decal->driver_ent, ec.context);
         }
     } else {
         S32 free_space = iMemMgrGetMinFreeSpace();
@@ -2385,7 +2385,7 @@ void xDecal::emit_env(const emit_context& ec, const xMat4x3& mat)
         complete_decal_atomic(decal->data.atomic, carg->out.uv, NULL);
 
         if (ec.emitAtomicCB) {
-            ec.emitAtomicCB(decal->data.atomic, (xMat4x3*)decal->driver, decal->driver_ent, ec.context);
+            ec.emitAtomicCB(decal->data.atomic, decal->driver, decal->driver_ent, ec.context);
         }
     }
 

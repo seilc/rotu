@@ -53,6 +53,7 @@
 #define HASH_ice_stream_particle_01             0xDED04D47 // xStrHash("ice_stream_particle_01")
 #define HASH_iced_enf_block_dff                 0x4961B5AF // xStrHash("iced_enf_block.dff")
 #define HASH_iced_foe_block                     0xB30FAA5C // xStrHash("iced_foe_block")
+#define HASH_iced_foe_iceblooms                 0x4A5D94DA // xStrHash("iced_foe_iceblooms")
 #define HASH_lid_dd_MINF                        0xE71A065E // xStrHash("lid_dd.MINF")
 #define HASH_light_card_b_tl                    0x5EE75CD7 // xStrHash("light_card_b_tl")
 #define HASH_Linear                             0xB7353B79 // xStrHash("Linear")

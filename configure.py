@@ -820,7 +820,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zAnimCustom.cpp"),
             Object(Matching, "in2/Engine/Core/x/xCamTransition.cpp"),
             Object(NonMatching, "in2/Engine/Game/zFrozonePlayerActions.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zFrostEffect.cpp"),
+            Object(Matching, "in2/Engine/Game/zFrostEffect.cpp"),
             Object(Matching, "in2/Engine/Game/zCombatAttack.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCCustomAV.cpp"),
             Object(Matching, "in2/Engine/Game/zFrozoneBlast.cpp"),
