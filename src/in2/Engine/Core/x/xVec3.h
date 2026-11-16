@@ -80,6 +80,7 @@ struct xVec3
     void ScaleDiff(const xVec3& a, const xVec3& b, F32 scale);
     void Add(const xVec3& a);
     void Add(const xVec3& a, const xVec3& b);
+    void Add(const xVec3& a, F32 dx, F32 dy, F32 dz);
     void Lerp(const xVec3& start, const xVec3& end, F32 percent);
     void Scale(F32 scalar);
     void Scale(const xVec3& a, F32 scalar);
@@ -269,6 +270,13 @@ inline void xVec3::Add(const xVec3& a, const xVec3& b)
     x = a.x + b.x;
     y = a.y + b.y;
     z = a.z + b.z;
+}
+
+inline void xVec3::Add(const xVec3& a, F32 dx, F32 dy, F32 dz)
+{
+    x = a.x + dx;
+    y = a.y + dy;
+    z = a.z + dz;
 }
 
 inline void xVec3::Add(const xVec3& a)

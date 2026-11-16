@@ -874,7 +874,7 @@ config.libs = [
             Object(NonMatching, "in2/Engine/Game/zUICustomVolume.cpp"),
             Object(NonMatching, "in2/Engine/Game/zNPCProjectileMetalSheet.cpp"),
             Object(Matching, "in2/Engine/Game/zOneLinerSystem.cpp"),
-            Object(NonMatching, "in2/Engine/Game/zFreezableObject.cpp"),
+            Object(Matching, "in2/Engine/Game/zFreezableObject.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUICustomHUD.cpp"),
             Object(NonMatching, "in2/Engine/Game/zUIUVs.cpp"),
             Object(Matching, "in2/Engine/Core/x/xLaserBolt.cpp"),
