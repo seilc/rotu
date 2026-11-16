@@ -163,7 +163,7 @@ enum en_ZBASETYPE
     eBaseTypeFrozenProjectile,
     eBaseTypeInterestPointer,
     eBaseTypeCheckpoint,
-    eBaseTypeTightrope,
+    eBaseTypeBossBrain,
     eBaseTypeCount
 };
 

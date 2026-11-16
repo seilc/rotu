@@ -58,6 +58,7 @@ public:
     virtual void create_data(void* mem) = 0;
 
     bool StoreSpawnInfo(xBase*, xBase*, U32, const F32*, xBase*, U32);
+    zNPCBase* get_data() { return npc_data; }
 
     zStoredSpawn storedSpawn;
 };

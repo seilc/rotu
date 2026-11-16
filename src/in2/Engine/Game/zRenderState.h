@@ -58,5 +58,6 @@ typedef enum _SDRenderState
 } SDRenderState;
 
 void zRenderState(SDRenderState next);
+SDRenderState zRenderStateCurrent();
 
 #endif
