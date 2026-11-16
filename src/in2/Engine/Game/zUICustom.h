@@ -17,24 +17,21 @@ public:
     virtual void Reset();
     virtual void ResetMotion();
     virtual bool HandleEvent(xBase* from, U32 toEvent, const F32* toParam, xBase* toParamWidget, U32 toParamWidgetID);
-    virtual void PreUpdate(F32);
-    virtual void PostUpdate(F32);
+    virtual void PreUpdate(F32 dt);
+    virtual void PostUpdate(F32 dt);
     virtual bool PreRender();
     virtual void PostRender();
     virtual void Exit();
     virtual bool PreAutoMenu();
     virtual void PreInitMotion();
     virtual void PostInitMotion();
-    virtual void PreApplyMotionFrame(zUIMotionFrame*);
-    virtual void PostApplyMotionFrame(zUIMotionFrame*);
+    virtual void PreApplyMotionFrame(zUIMotionFrame* frame);
+    virtual void PostApplyMotionFrame(zUIMotionFrame* frame);
     virtual bool IsSystem(zUI*) { return false; }
     virtual bool IsSignalAllowed(U32) { return true; }
     virtual bool IsForcePreUpdate() { return false; }
 
-    zUI* GetUI() const
-    {
-        return ui;
-    }
+    zUI* GetUI() const { return ui; }
 
 protected:
     zUI* ui;
