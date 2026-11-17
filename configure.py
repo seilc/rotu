@@ -924,7 +924,7 @@ config.libs = [
             GameObject(Matching, "in2/Engine/Game/zCineFXTableSceneRF13.cpp", sym="on"),
             GameObject(Matching, "in2/Engine/Game/zCineFXTableSceneB111.cpp", sym="on"),
             GameObject(Matching, "in2/Engine/Game/zNPCProjectileExplodingGrub.cpp", sym="on"),
-            GameObject(NonMatching, "in2/Engine/Game/zUICustomCheatsManager.cpp", sym="on"),
+            GameObject(Matching, "in2/Engine/Game/zUICustomCheatsManager.cpp", sym="on"),
         ],
     },
     {
