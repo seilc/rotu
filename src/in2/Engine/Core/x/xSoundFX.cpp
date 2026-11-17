@@ -160,7 +160,7 @@ static void xSoundFXPlay(xSoundFX* t)
     if (xSoundFXIsAttached(t->asset)) {
         xEnt* ent = (xEnt*)zSceneFindObject(t->asset->attachID);
         if (ent) {
-            sndFlags |= 0x800;
+            sndFlags |= xSnd_FOLLOW;
             t->sndHandle = xSndMgrPlay(t->asset->soundAsset, sndFlags, xEntGetPos(ent), NULL, ent, NULL, NULL);
         }
     } else {

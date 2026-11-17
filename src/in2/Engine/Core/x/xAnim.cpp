@@ -879,7 +879,7 @@ static void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, c
                         tran->Dest = tempState;
                     }
 
-                    if (tran->Dest != state || (state->Flags & 0x70) == 0x40)
+                    if (tran->Dest != state || (state->Flags & AnimState_ModeMask) == AnimState_EndTransitionSelf)
                         _xAnimTableAddTransitionHelper(state, tran, allocCount, stateCount, stateList);
                 }
             next:
@@ -888,7 +888,7 @@ static void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, c
         } else {
             state = xAnimTableGetState(table, stateName);
             if (state) {
-                if (tran->Dest != state || (state->Flags & 0x70) == 0x40) {
+                if (tran->Dest != state || (state->Flags & AnimState_ModeMask) == AnimState_EndTransitionSelf) {
                     _xAnimTableAddTransitionHelper(state, tran, allocCount, stateCount, stateList);
                 }
             }
@@ -1376,7 +1376,7 @@ static void SingleUpdate(xAnimSingle* single, F32 timeDelta)
             }
         }
     } else {
-        if ((single->State->Flags & 0x70) == 0x20 || (single->State->Flags & 0x70) == 0x40) {
+        if ((single->State->Flags & AnimState_ModeMask) == AnimState_EndTransition || (single->State->Flags & AnimState_ModeMask) == AnimState_EndTransitionSelf) {
             F32 timeCmp = single->State->Default->T->SrcTime;
             if (timeCmp == 0.0f || timeCmp > duration) timeCmp = duration;
 
@@ -1523,7 +1523,7 @@ static void SingleUpdate(xAnimSingle* single, F32 timeDelta)
             single->BlendFactor += timeDelta;
         }
 
-        if ((single->State->Flags & 0x70) == AnimState_Loop) {
+        if ((single->State->Flags & AnimState_ModeMask) == AnimState_Loop) {
             LoopUpdate(single);
         } else {
             StopUpdate(single);
@@ -1532,7 +1532,7 @@ static void SingleUpdate(xAnimSingle* single, F32 timeDelta)
         EffectSingleRun(single);
 
         if (bl) {
-            if ((bl->State->Flags & 0x70) == AnimState_Loop) {
+            if ((bl->State->Flags & AnimState_ModeMask) == AnimState_Loop) {
                 LoopUpdate(bl);
             } else {
                 StopUpdate(bl);
@@ -1544,7 +1544,7 @@ static void SingleUpdate(xAnimSingle* single, F32 timeDelta)
         firstStep = FALSE;
     } while (foundBlendstop || foundTransition);
 
-    if (single->Tran == NULL && single->BlendFactor == 0.0f && (single->State->Flags & 0x70) == 0x30) {
+    if (single->Tran == NULL && single->BlendFactor == 0.0f && (single->State->Flags & AnimState_ModeMask) == AnimState_BlendOut) {
         if (single->State->Flags & 0x200) {
             if (single->Time >= duration)
                 single->BlendFactor = 1e-7f;

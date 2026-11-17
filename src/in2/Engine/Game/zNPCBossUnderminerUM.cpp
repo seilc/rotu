@@ -27,28 +27,28 @@ void zNPCBossUnderminerUMIdle::create_anim_table(xAnimTable* table)
     xAnimTableNewState(table, "UM_TAUNT_LOOP_01", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
     xAnimTableNewState(table, "UM_TAUNT_LOOP_02", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
     xAnimTableNewState(table, "UM_TAUNT_LOOP_03", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_JUMP", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_RAM_READY", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_JUMP", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_RAM_READY", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
     xAnimTableNewState(table, "UM_RAM_LOOP", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_RAM_STOP", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_MONO_HIT_LIGHT", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_MONO_HIT_HARD", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_COMMAND_TROOPS", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_SLASH_HIT", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_RAM_STOP", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_MONO_HIT_LIGHT", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_MONO_HIT_HARD", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_COMMAND_TROOPS", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_SLASH_HIT", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
     xAnimTableNewState(table, "UM_SLASH_LOOP", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_SLASH_READY", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_SLASH_STOP", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_FREEZE_STOP", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_SLASH_READY", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_SLASH_STOP", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_FREEZE_STOP", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
     xAnimTableNewState(table, "UM_MISSILE_IDLE", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_MISSILE_READY", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_MISSILE_SHOOT_L", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_MISSILE_SHOOT_R", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_MISSILE_STOP", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_MISSILE_READY", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_MISSILE_SHOOT_L", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_MISSILE_SHOOT_R", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_MISSILE_STOP", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
     xAnimTableNewState(table, "UM_SWING_DIZZY", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_SWING_HIT", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_SWING_HIT", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
     xAnimTableNewState(table, "UM_SWING_LOOP", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_SWING_READY", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "UM_SWING_STOP", 0, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_SWING_READY", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "UM_SWING_STOP", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
 }
 
 void zNPCBossUnderminerUMIdle::enterBehavior(const zNPCCommonBehavior*)

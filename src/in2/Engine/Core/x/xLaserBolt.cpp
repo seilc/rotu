@@ -581,7 +581,7 @@ void xLaserBoltEmitter::emit_sound(fx_when_enum when, effect_data& effect, bolt&
         break;
     case FX_WHEN_HEAD:
         if (b.sound == XSNDMGR_INVALID_SND_HANDLE) {
-            b.sound = xSndMgrPlay(effect.data.sound, 0x800, &b.loc, NULL, NULL, NULL, NULL);
+            b.sound = xSndMgrPlay(effect.data.sound, xSnd_FOLLOW, &b.loc, NULL, NULL, NULL, NULL);
         }
         break;
     case FX_WHEN_BIRTH:

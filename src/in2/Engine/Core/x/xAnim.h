@@ -31,8 +31,12 @@ enum
 // xAnimState::Flags
 enum
 {
+    AnimState_ModeMask = 0x70,
     AnimState_Once = 0x0,
-    AnimState_Loop = 0x10
+    AnimState_Loop = 0x10,
+    AnimState_EndTransition = 0x20,
+    AnimState_BlendOut = 0x30,
+    AnimState_EndTransitionSelf = 0x40
 };
 
 struct xAnimPhysicsData

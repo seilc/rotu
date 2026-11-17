@@ -3,6 +3,7 @@
 
 #include "iSystem.h"
 #include "xMath.h"
+#include "xutil.h"
 #include "zGame.h"
 
 #include <stdlib.h>
@@ -202,7 +203,7 @@ void* xMemAlloc(U32 heapID, U32 size, S32 align)
         return NULL;
     }
 
-    for (i = 0; i < XMEM_MAX_HEAPS; i++) {
+    for (i = 0; i < ARRAY_LENGTH(heap->opp_heap); i++) {
     }
 
     sp->curr = info.curr;
