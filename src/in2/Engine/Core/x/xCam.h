@@ -202,6 +202,9 @@ private:
 
     S32 group_flags;
     xCamBlend* blender;
+
+public:
+    void add_tweaks(const char*) {}
 };
 
 struct xCamGroup
