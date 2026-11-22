@@ -2,6 +2,7 @@
 #define ZCAMERACURVE_H
 
 #include "xBase.h"
+#include "xVec3.h"
 #include "zCameraCurveAsset.h"
 
 struct xCam;
@@ -12,6 +13,35 @@ class zCamPoolBase;
 class zCameraCurve : public xBase
 {
 public:
+    struct BeadInfo
+    {
+        S32 mBeadIndex;
+        F32 mBeadIndexFrac;
+        F32 mCurveU[2];
+        xVec3 mCurvePos[2];
+        F32 mDistanceScale;
+        F32 mPitchOffset;
+        F32 mTargetRadius;
+        F32 mTargetMarginAngle;
+        F32 mLeadOffset;
+        F32 mYOffset;
+        F32 mNearWallScale;
+        F32 mFarWallScale;
+    };
+
+    class Follower
+    {
+    public:
+        void Init(const zCameraCurve& curveInfo, const xVec3& playerPos);
+        void UpdatePosition(const xVec3& playerPos);
+        const xVec3& CameraPathPos() const { return mInfo.mCurvePos[eCamCurve_Camera]; }
+
+    private:
+        bool mValidPlayerPathPos;
+        const zCameraCurve* mCurves;
+        BeadInfo mInfo;
+    };
+
     bool Activate(const xCamTransitionParams* transition, bool forceRestart);
 
 private:
