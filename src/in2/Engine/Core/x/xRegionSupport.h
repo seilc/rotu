@@ -35,6 +35,14 @@ extern char* region_array[eRegionCount];
 
 bool xRegionCodeIsValid(const char* pszRegionCode);
 
+inline char* xRegionCode(xRegion region)
+{
+    if (region < eRegionUS || region >= eRegionCount) {
+        return region_array[eRegionUS];
+    }
+    return region_array[region];
+}
+
 inline xRegion xRegionString(const char* pszRegion)
 {
     for (xRegion iRegion = eRegionUS; iRegion < eRegionCount; iRegion = (xRegion)(iRegion + 1)) {

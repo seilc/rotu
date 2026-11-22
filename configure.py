@@ -645,7 +645,7 @@ config.libs = [
             GameObject(NonMatching, "in2/Engine/Game/zExplosion.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zFire.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zFlameEmitter.cpp"),
-            GameObject(NonMatching, "in2/Engine/Game/zFMV.cpp"),
+            GameObject(Matching, "in2/Engine/Game/zFMV.cpp"),
             GameObject(Matching, "in2/Engine/Game/zFX.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zFXRibbonPool.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zGame.cpp"),
