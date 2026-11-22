@@ -676,7 +676,7 @@ config.libs = [
             GameObject(NonMatching, "in2/Engine/Game/zPlayer.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zPlayerBase.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zPortal.cpp"),
-            GameObject(NonMatching, "in2/Engine/Game/zReference.cpp"),
+            GameObject(Matching, "in2/Engine/Game/zReference.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zRenderState.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zSaveLoad.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zScene.cpp"),
