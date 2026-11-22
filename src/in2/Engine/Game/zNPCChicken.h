@@ -90,7 +90,7 @@ public:
     static void create_anim_table(xAnimTable* table);
 
     virtual const char* get_type_name() const { return "zNPCChicken"; }
-    virtual S32 GetNPCType() { return 3; }
+    virtual S32 GetNPCType() { return eNPCType_Chicken; }
     virtual bool CanBeTargeted() { return false; }
     virtual F32 GetMeshCircleRadius() { return 0.3f; }
     virtual bool FunkyCheatEffective() { return true; }

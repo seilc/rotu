@@ -48,7 +48,7 @@ public:
     static void create_anim_table(xAnimTable* table);
 
     virtual const char* get_type_name() const { return "zNPCRat"; }
-    virtual S32 GetNPCType() { return 2; }
+    virtual S32 GetNPCType() { return eNPCType_Rat; }
     virtual bool CanBeTargeted() { return false; }
     virtual F32 GetMeshCircleRadius() { return 0.1f; }
     virtual bool FunkyCheatEffective() { return true; }

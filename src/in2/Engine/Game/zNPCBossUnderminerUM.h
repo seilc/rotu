@@ -32,7 +32,7 @@ public:
     static void create_anim_table(xAnimTable* table);
 
     virtual const char* get_type_name() const { return "zNPCBossUnderminerUM"; }
-    virtual S32 GetNPCType() { return 11; }
+    virtual S32 GetNPCType() { return eNPCType_BossUnderminerUM; }
     virtual bool CanHelperAITarget();
     virtual zNPCCombatInitData* GetCombatData();
     virtual void init(zNPC::zNPCInstance* init_inst);

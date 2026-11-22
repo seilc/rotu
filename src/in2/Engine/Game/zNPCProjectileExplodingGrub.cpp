@@ -265,7 +265,7 @@ void zNPCProjectileExplodingGrub::Collide(const xVec3& dpos, F32)
 
     if (xSweptSphereToNPC(&sws, xglobals->sceneCur, owner, k_XENT_COLLTYPE_PC, 0)) {
         xSweptSphereGetResults(&sws);
-        if (((zNPC::zNPCCommon*)sws.optr)->GetNPCType() == 9) {
+        if (((zNPC::zNPCCommon*)sws.optr)->GetNPCType() == eNPCType_Scientist) {
             Explode(true, (xEnt*)sws.optr);
         } else {
             Explode(false, (xEnt*)sws.optr);
