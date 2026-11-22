@@ -105,8 +105,8 @@ bool Manager::Add(xPad* pad, emitterBase* pEmitter)
     }
     
     S32 counter = 0;
-    for (S32 i = 0; i < xglobals->players.size(); i++) {
-        if (xglobals->players[i]->IsDead() && pEmitter->pEffectAsset->id != xStrHash("VibrationSet"))
+    for (S32 i = 0; i < CURPLAYERS.size(); i++) {
+        if (CURPLAYERS[i]->IsDead() && pEmitter->pEffectAsset->id != xStrHash("VibrationSet"))
             counter++;
     }
     if (counter == 2) {

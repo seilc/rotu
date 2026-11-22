@@ -39,7 +39,7 @@ F32 zFreezableObject::mTimeToFreezeMultiplier = 1.0f;
 void zFreezableObject::Freezing()
 {
     if (mTimeToFreeze >= mAsset->timeToFreeze) {
-        zOneLinerSystemPlay(xglobals->players.GetFrozone(), zOLT_FreezeObject);
+        zOneLinerSystemPlay(CURPLAYERS.GetFrozone(), zOLT_FreezeObject);
     }
 
     if (mCanFreeze) {
@@ -227,7 +227,7 @@ void zFreezableObject::Update(F32 dt)
         mTimeToFreeze -= dt * mTimeToFreezeMultiplier;
         if (mTimeToFreeze < 0.0f) {
             mTimeToFreeze = 0.0f;
-            zOneLinerSystemPlay(xglobals->players.GetFrozone(), zOLT_ShatterObject);
+            zOneLinerSystemPlay(CURPLAYERS.GetFrozone(), zOLT_ShatterObject);
             Explode();
             return;
         }
@@ -274,20 +274,20 @@ void zFreezableObject::Update(F32 dt)
         }
     }
 
-    for (S32 i = 0; i < xglobals->players.size(); i++) {
+    for (S32 i = 0; i < CURPLAYERS.size(); i++) {
         const xSphere* spheres[5];
-        S32 count = xglobals->players[i]->GetCollisionSpheres(spheres);
+        S32 count = CURPLAYERS[i]->GetCollisionSpheres(spheres);
         xVec3* pos = (xVec3*)&model->Mat->pos;
 
         for (S32 j = 0; j < count; j++) {
             if (xSphereHitsVCylinder(spheres[j]->center, spheres[j]->r, *pos, 1.5f, 2.5f)) {
                 xVec3 knockback;
-                knockback.Sub(xglobals->players[i]->frame->mat.pos, *pos);
+                knockback.Sub(CURPLAYERS[i]->frame->mat.pos, *pos);
                 knockback.y = 0.0f;
-                knockback.safe_normalize(xglobals->players[i]->frame->mat.at);
+                knockback.safe_normalize(CURPLAYERS[i]->frame->mat.at);
                 knockback.Scale(10.0f);
                 knockback.y = 7.0f;
-                xglobals->players[i]->Damage(zCombatDamageInfo(this, 5, zHS_KNOCKBACK, zHT_GENERAL, knockback,
+                CURPLAYERS[i]->Damage(zCombatDamageInfo(this, 5, zHS_KNOCKBACK, zHT_GENERAL, knockback,
                                                                xVec3::m_Null, xVec3::m_Null, 0));
                 break;
             }
@@ -335,7 +335,7 @@ void zFreezableObject::Explode()
         return;
     }
 
-    xglobals->players.GetFrozone()->playStats.rangeDamage++;
+    CURPLAYERS.GetFrozone()->playStats.rangeDamage++;
     mHealth = 0.0f;
     mTimeToFreeze = 0.0f;
 

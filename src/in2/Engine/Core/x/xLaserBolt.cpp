@@ -351,15 +351,15 @@ namespace
         const xSphere* hit = NULL;
         dist = ray.max_t;
 
-        for (S32 i = 0; i < xglobals->players.size(); i++) {
+        for (S32 i = 0; i < CURPLAYERS.size(); i++) {
             const xSphere* player_spheres[5];
-            S32 player_spheres_size = xglobals->players[i]->GetCollisionSpheres(player_spheres);
+            S32 player_spheres_size = CURPLAYERS[i]->GetCollisionSpheres(player_spheres);
             const xSphere** o = player_spheres;
             const xSphere** endo = o + player_spheres_size;
             for (; o != endo; ++o) {
                 F32 t = ray_vs_sphere(ray.origin, ray.dir, (*o)->center, (*o)->r);
                 if (t >= ray.min_t && t < dist) {
-                    hit_player = xglobals->players[i];
+                    hit_player = CURPLAYERS[i];
                     dist = t;
                     hit = *o;
                 }

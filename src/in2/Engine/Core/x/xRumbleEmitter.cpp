@@ -125,7 +125,7 @@ bool boxEmitter::GetIntensity(const xVec3& playerPos, F32& intensity) const
 {
     intensity = 0.0f;
 
-    if (pAsset->onlyOnFloor && !(xglobals->players[0]->collis->colls[0].flags & k_HIT_IT)) {
+    if (pAsset->onlyOnFloor && !(CURPLAYERS[0]->collis->colls[0].flags & k_HIT_IT)) {
         return false;
     }
 
@@ -174,7 +174,7 @@ bool sphericalEmitter::GetIntensity(const xVec3& playerPos, F32& intensity) cons
         return false;
     }
 
-    if (pAsset->onlyOnFloor && !xglobals->players[0]->IsFloorColliding()) {
+    if (pAsset->onlyOnFloor && !CURPLAYERS[0]->IsFloorColliding()) {
         return false;
     }
 

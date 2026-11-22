@@ -387,7 +387,7 @@ namespace
         }
 
         xSphere* spheres[5];
-        S32 count = xglobals->players[0]->GetCollisionSpheres((const xSphere**)spheres);
+        S32 count = CURPLAYERS[0]->GetCollisionSpheres((const xSphere**)spheres);
         S32 i;
         for (i = 0; i < count; i++) {
             xBound b;
@@ -402,7 +402,7 @@ namespace
             zEntEvent(&ent, eEventHit, 1000000.0f, 0.0f, 0.0f, 0.0f);
             loc = ((xMat4x3*)ent.model->Mat)->pos;
             loc.y -= coll.dist - lower_bound_extent;
-            hit = xglobals->players[0];
+            hit = CURPLAYERS[0];
             return true;
         }
 

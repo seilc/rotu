@@ -101,9 +101,9 @@ void RayCast(xCollis& coll, const xEnt* ignore, const xVec3& origin, const xVec3
         playerColl.optr = NULL;
         playerColl.mptr = NULL;
 
-        for (S32 i = 0; i < xglobals->players.size(); i++) {
+        for (S32 i = 0; i < CURPLAYERS.size(); i++) {
             const xSphere* spheres[5];
-            S32 count = xglobals->players[i]->GetCollisionSpheres(spheres);
+            S32 count = CURPLAYERS[i]->GetCollisionSpheres(spheres);
             for (S32 j = 0; j < count; j++) {
                 xBound bound;
                 bound.type = k_XBOUNDTYPE_SPHERE;
@@ -112,7 +112,7 @@ void RayCast(xCollis& coll, const xEnt* ignore, const xVec3& origin, const xVec3
                 xRayHitsBound(&ray, &bound, &playerColl);
                 if (playerColl.flags & k_HIT_IT) {
                     coll = playerColl;
-                    coll.optr = xglobals->players[i];
+                    coll.optr = CURPLAYERS[i];
                     return;
                 }
             }

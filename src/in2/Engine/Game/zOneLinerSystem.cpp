@@ -225,8 +225,8 @@ void zOneLinerSystemPlay(zPlayer* player, zOneLinerTypes type)
         }
     }
 
-    for (S32 i = 0; i < xglobals->players.size(); i++) {
-        if (oneLiners[i].GetSoundGroup(type) != ISND_INVALID_SND_GROUP_HANDLE && xglobals->players[i]->CanSayOneLiner()) {
+    for (S32 i = 0; i < CURPLAYERS.size(); i++) {
+        if (oneLiners[i].GetSoundGroup(type) != ISND_INVALID_SND_GROUP_HANDLE && CURPLAYERS[i]->CanSayOneLiner()) {
             choice = i;
             count++;
         }

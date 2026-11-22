@@ -68,8 +68,8 @@ void zFXFreezeNPC::Init()
 void zFXFreezeNPC::_Init()
 {
     frozoneIndex = -1;
-    for (S32 i = 0; i < xglobals->players.size(); i++) {
-        if (xglobals->players[i]->brain_id == 14) {
+    for (S32 i = 0; i < CURPLAYERS.size(); i++) {
+        if (CURPLAYERS[i]->brain_id == 14) {
             frozoneIndex = i;
         }
     }
@@ -218,7 +218,7 @@ void zFXFreezeNPC::_Freeze(xEnt* ent, F32 amount, U32 type)
         b->ent = ent;
         b->amount = 0.0f;
 
-        zPlayer* frozone = xglobals->players[frozoneIndex];
+        zPlayer* frozone = CURPLAYERS[frozoneIndex];
         xVec3 dir;
         xVec3Sub(&dir, (xVec3*)&frozone->model->Mat->pos, (xVec3*)&ent->model->Mat->pos);
         xVec3Normalize(&dir, &dir);

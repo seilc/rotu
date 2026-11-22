@@ -273,12 +273,12 @@ void zNPCProjectileExplodingGrub::Collide(const xVec3& dpos, F32)
         return;
     }
 
-    for (S32 i = 0; i < xglobals->players.size(); i++) {
+    for (S32 i = 0; i < CURPLAYERS.size(); i++) {
         const xSphere* extra_spheres[5];
-        S32 num_spheres = xglobals->players[i]->GetCollisionSpheres(extra_spheres);
+        S32 num_spheres = CURPLAYERS[i]->GetCollisionSpheres(extra_spheres);
         for (S32 j = 0; j < num_spheres; j++) {
             if (xSweptSphereToSphere(&sws, extra_spheres[j])) {
-                Explode(true, xglobals->players[i]);
+                Explode(true, CURPLAYERS[i]);
                 return;
             }
         }
