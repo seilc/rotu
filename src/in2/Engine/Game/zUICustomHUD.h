@@ -8,6 +8,8 @@ class zUICustomHUDManager : public zUICustom
 public:
     bool GetMRIMasterCheat();
     bool GetFROMasterCheat();
+    void SetMRIMasterCheat(bool);
+    void SetFROMasterCheat(bool);
     void PressToUpgradeMRI(bool);
     void PressToUpgradeFRO(bool);
     void SetExpPointsRatioMRI(F32);

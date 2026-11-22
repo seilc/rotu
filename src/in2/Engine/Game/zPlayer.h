@@ -118,6 +118,8 @@ public:
     bool CanSayOneLiner();
     bool IsUsingLeftHUD();
 
+    static void ClearGalleryPickupPoints() { galleryPickupPoints = 0; }
+
     bool Get_humanPlayer() const
     {
         return (zPlayerFlags >> 19) & 0x1;
@@ -237,6 +239,8 @@ private:
 
 public:
     U32* hitSoundsMap;
+
+    static S32 galleryPickupPoints;
 };
 
 #endif
