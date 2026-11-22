@@ -3,6 +3,7 @@
 
 #include "xBase.h"
 
+struct xDynAsset;
 struct xEnt;
 
 class zWaterBody : private xBase
@@ -20,11 +21,16 @@ private:
     xEnt** reflect_ents;
     S32 reflect_ents_size;
     S32 body_id;
-    U8 visible;
+    bool visible;
     S32 motion_cfg_id;
 
 public:
+    static void load(xBase& data, xDynAsset& asset, size_t asset_size);
+    void show();
+    void hide();
+    void load(const asset_type& a);
     U32 get_bodyID();
+    static void cb_dispatch(xBase*, xBase* to, U32 event, const F32*, xBase*, U32);
 };
 
 #endif
