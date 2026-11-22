@@ -41,11 +41,6 @@ struct zPlayerCheckPoint
 struct zPlayer : zEnt
 {
     S32 index;
-    
-    zPad* GetPad()
-    {
-        return pad;
-    }
 
     virtual void Init(xEntAsset* asset);
     virtual void SceneSetup();
@@ -69,6 +64,12 @@ struct zPlayer : zEnt
     virtual void Load(xSerial* serial);
     virtual void BeforeAnimMatrices(xAnimPlay*, xQuat*, xVec3*, S32);
     virtual bool Damage(const zCombatDamageInfo& damageInfo);
+
+    xEntDrive* GetDrive()
+    {
+        return &drv;
+    }
+
     virtual xEnt* GetCarriedEntity();
     virtual S32* GetHeadBones();
     virtual void PostRenderCleanup();
@@ -133,6 +134,11 @@ struct zPlayer : zEnt
         return (zPlayerFlags >> 3) & 0x1;
     }
 
+    zPad* GetPad()
+    {
+        return pad;
+    }
+
     virtual void SetEnemyIsNear(bool isit);
     virtual void EnemyKilled(zNPC::zNPCCommon* npc);
     virtual void ParseIni();
@@ -144,11 +150,6 @@ struct zPlayer : zEnt
     virtual bool CollideWithNPC();
     virtual F32 InitialDepenetrationVelocity();
     virtual void ReactiveAnimationCollided();
-
-    xEntDrive* GetDrive()
-    {
-        return &drv;
-    }
 
     struct mblur_data
     {
