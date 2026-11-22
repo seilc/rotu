@@ -123,6 +123,7 @@ public:
     }
 
     bool need_update() const;
+    void eval_joint(const joint_data& joint, xColor& color, F32& width);
 
 private:
     struct activity_data
@@ -138,7 +139,6 @@ private:
 
     void get_normal(xVec3& norm, const xVec3& dir, F32 orient);
     void refresh_joint(joint_data& joint, const joint_iterator& it);
-    void eval_joint(const joint_data& joint, xColor& color, F32& width);
     void render_strip(RwIm3DVertex* verts, joint_iterator first, size_t size);
 
     static S32 compare_ribbons(const void* e1, const void* e2);
