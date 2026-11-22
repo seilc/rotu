@@ -11,11 +11,11 @@
 #include "zThrowable.h"
 #include "zHitParameters.h"
 
+struct xGroup;
 class zNPCNavigate;
 struct zNPCBlurInstance;
 class zSwitchLever;
 struct xModelAssetParam;
-struct xGroup;
 struct zNPCCombatInitData;
 
 enum ezNPCRumbleType
