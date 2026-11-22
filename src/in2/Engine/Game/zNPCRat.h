@@ -3,6 +3,7 @@
 
 #include "zNPCCommon.h"
 #include "zNPCMove.h"
+#include "zNPCTypes.h"
 
 class zNPCRatIdle : public zNPCCommonBehavior
 {

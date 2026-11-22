@@ -18,6 +18,7 @@
 #include "zNPCCommon.h"
 #include "zNPCProjectileGrub.h"
 #include "zNPCProjectileGrubFX.h"
+#include "zNPCTypes.h"
 #include "zPlayer.h"
 #include "zScene.h"
 #include "zShrapnel.h"
