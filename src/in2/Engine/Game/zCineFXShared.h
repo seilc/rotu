@@ -134,4 +134,7 @@ struct NCINEntry
     S32 flg_stat;
 };
 
+void zCinFX_EntityBonePar_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomic* model, RwMatrix* animMat,
+                             U32 animIndex, U32, U32&);
+
 #endif
