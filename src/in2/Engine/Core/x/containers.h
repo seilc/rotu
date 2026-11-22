@@ -40,7 +40,6 @@ public:
 private:
     iterator create_iterator(size_t i) const { iterator r; r._it = i; r._owner = (fixed_queue*)this; return r; }
 
-private:
     size_t _first;
     size_t _last;
     T _buffer[SIZE+1];
@@ -67,7 +66,6 @@ public:
 
         T& operator*() const { return _owner->_buffer[_it]; }
         
-    public:
         size_t _it;
         static_queue* _owner;
     };
@@ -125,7 +123,6 @@ public:
 template <class T, size_t SIZE>
 class fixed_stack_list
 {
-private:
     struct node_type;
 
     struct empty_node_type
@@ -253,7 +250,6 @@ private:
         stack = n;
     }
 
-private:
     size_t _size;
     empty_node_type head;
     empty_node_type tail;
@@ -313,7 +309,6 @@ protected:
         it->next->prev = it->prev;
     }
 
-protected:
     S32 _size;
     S32 _max_size;
     node_base head;
@@ -415,7 +410,6 @@ private:
 
 class tier_queue_allocator
 {
-private:
     struct block_data
     {
         U8 prev;
@@ -515,7 +509,6 @@ private:
         return xMEMALLOC(_block_size * _unit_size, 0);
     }
 
-private:
     block_data* blocks;
     size_t _unit_size;
     size_t _block_size;
@@ -640,7 +633,6 @@ private:
         return it;
     }
 
-private:
     size_t first;
     size_t _size;
     size_t wrap_mask;

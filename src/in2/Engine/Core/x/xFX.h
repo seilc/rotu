@@ -58,7 +58,6 @@ S32 xFXanimUVCreate();
 
 struct xFXRibbon
 {
-public:
     struct joint_data
     {
         S32 flags;
