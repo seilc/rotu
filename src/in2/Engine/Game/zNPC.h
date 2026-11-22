@@ -61,6 +61,8 @@ public:
     zNPCBase* get_data() { return npc_data; }
 
     zStoredSpawn storedSpawn;
+
+    U32 get_type() const { return type; }
 };
 
 }
