@@ -1,8 +1,9 @@
 #ifndef ZCOMBATEFFECTS_H
 #define ZCOMBATEFFECTS_H
 
-#include "xFX.h"
 #include "xMath3.h"
+
+struct xFXRibbon;
 
 namespace zCombatEffects {
 

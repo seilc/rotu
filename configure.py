@@ -629,7 +629,7 @@ config.libs = [
             GameObject(NonMatching, "in2/Engine/Game/zCombat.cpp"),
             GameObject(Matching, "in2/Engine/Game/zCombatCombo.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zCombatEffects.cpp"),
-            GameObject(NonMatching, "in2/Engine/Game/zCombatSystem.cpp"),
+            GameObject(Matching, "in2/Engine/Game/zCombatSystem.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zCommonPlayer.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zConditional.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zConfiguration.cpp"),

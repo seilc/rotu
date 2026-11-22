@@ -9,6 +9,7 @@
 #include "xSkyDome.h"
 
 struct xEnv;
+struct xSweptSphere;
 class zCombatAttack;
 
 struct zCombatDamageInfo
@@ -37,6 +38,8 @@ struct zCombat
         xSphere previousSphere;
     };
 
+    static const S32 MAX_HIT_OBJECTS = 24;
+
     xHierarchyBound bounds;
     U32 lastBoundUpdateTime;
     S16 currentHitPoints;
@@ -55,7 +58,7 @@ struct zCombat
     U8 hitObject;
     U8 forceReset;
     U8 hitObjectCount;
-    xEnt* hitObjects[24];
+    xEnt* hitObjects[MAX_HIT_OBJECTS];
     S16 currentDamage;
     S16 lastHitDamage;
     zHitSource lastHitSource;
@@ -65,9 +68,11 @@ struct zCombat
     zCombatEffects::PunchEffect punchEffect;
     U32 effectParam;
 
-    void Init(const xHierarchyBoundInitData* initHierarchy, F32 masterRadius,
-              const zCombatAttack* stateTable, U16 stateTableSize, S32 hitPoints,
-              const char*, const char**, S32, F32 scale);
+    void Init(const xHierarchyBoundInitData* initHierarchy, F32 masterRadius, const zCombatAttack* stateTable,
+              U16 stateTableSize, S32 hitPoints, const char*, const char**, S32, F32 scale);
+    void PreUpdate(xEnt*, F32);
+    void PostUpdate(xEnt* ent, F32 dt);
+    void RenderAfterEffect(xEnt*);
 };
 
 void zCombatDamage(xEnt* ent, const zCombatDamageInfo& damageInfo);
