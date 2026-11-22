@@ -116,5 +116,6 @@
 #define HASH_snowflakes                         0x97FB0169 // xStrHash("snowflakes")
 #define HASH_Step                               0x0B354BD4 // xStrHash("Step")
 #define HASH_TURRET_HOLDABLE_DEATH_SIMP         0x3159B667 // xStrHash("TURRET_HOLDABLE_DEATH_SIMP")
+#define HASH_UI_MISSION_COUNTER                 0x3AF23364 // xStrHash("UI MISSION COUNTER")
 
 #endif
