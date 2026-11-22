@@ -23,7 +23,7 @@ public:
 
     bool IsActive(U32 npcType) const
     {
-        if (npcType >= eNPCType_CMG_PourNSwirl) {
+        if (npcType >= eNPCType_BossUnderminerUM) {
             return false;
         }
 
