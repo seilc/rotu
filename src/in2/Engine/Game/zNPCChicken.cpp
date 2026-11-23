@@ -133,6 +133,7 @@ void zNPCChickenWalk::updateBehavior(F32 dt)
         switchToRun = true;
     }
 
+    // BUG: timeElapsed is never reset
     timeElapsed += dt;
 
     if (!switchToFly && !switchToRun) {
