@@ -682,7 +682,7 @@ config.libs = [
             GameObject(NonMatching, "in2/Engine/Game/zScene.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zScript.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zShrapnel.cpp"),
-            GameObject(NonMatching, "in2/Engine/Game/zSlideCamera.cpp"),
+            GameObject(Matching, "in2/Engine/Game/zSlideCamera.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zSurface.cpp"),
             GameObject(Matching, "in2/Engine/Game/zSymbol.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zTalkBox.cpp"),
