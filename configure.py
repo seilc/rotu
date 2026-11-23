@@ -662,7 +662,7 @@ config.libs = [
             GameObject(NonMatching, "in2/Engine/Game/zLOD.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zMain.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zMenu.cpp"),
-            GameObject(NonMatching, "in2/Engine/Game/zMovePoint.cpp"),
+            GameObject(Matching, "in2/Engine/Game/zMovePoint.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zMrIncrediblePlayer.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zMusic.cpp"),
             GameObject(Matching, "in2/Engine/Game/zNPCCombat.cpp"),
