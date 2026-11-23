@@ -702,7 +702,7 @@ config.libs = [
             GameObject(NonMatching, "in2/Engine/Game/zWaterhose.cpp"),
             GameObject(Matching, "in2/Engine/Game/zActionLine.cpp", sym="on"),
             GameObject(Matching, "in2/Engine/Core/x/xCollideSpherePolygon.cpp", sym="on"),
-            GameObject(NonMatching, "in2/Engine/Game/zAsync.cpp", sym="on"),
+            GameObject(Matching, "in2/Engine/Game/zAsync.cpp", sym="on"),
             GameObject(Matching, "in2/Engine/Core/x/xParticleBatch.cpp", sym="on"),
             GameObject(NonMatching, "in2/Engine/Game/zSmoke.cpp", sym="on"),
             GameObject(NonMatching, "in2/Engine/Game/zSplash.cpp", sym="on"),
