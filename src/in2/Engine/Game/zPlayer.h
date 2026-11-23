@@ -116,6 +116,7 @@ struct zPlayer : zEnt
 
     bool CanSayOneLiner();
     bool IsUsingLeftHUD();
+    void Portaling(U32);
 
     static void ClearGalleryPickupPoints() { galleryPickupPoints = 0; }
 
