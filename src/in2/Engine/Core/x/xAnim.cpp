@@ -485,10 +485,10 @@ void xAnimCalcPhysicsData(xAnimFile* afile, xAnimFile* endPose)
     }
 
     F32* yawTable = physDat->yawTable;
-    xVec3 tranStart[64];
-    xQuat quatStart[64];
-    xVec3 tranEnd[64];
-    xQuat quatEnd[64];
+    xVec3 tranStart[IANIM_MAX_BONES];
+    xQuat quatStart[IANIM_MAX_BONES];
+    xVec3 tranEnd[IANIM_MAX_BONES];
+    xQuat quatEnd[IANIM_MAX_BONES];
     iAnimEval(afile->RawData[0], 0.0f, 0, tranStart, quatStart);
 
     if (!axis[0])
@@ -657,10 +657,10 @@ void xAnimFileEval(xAnimFile* data, F32 time, F32* bilinear, U32 flags, xVec3* t
         }
 
         xQuat* q0 = (xQuat*)(g_iAnim_workBuffer + 0x1560);
-        xVec3* t0 = (xVec3*)(q0 + 65);
+        xVec3* t0 = (xVec3*)(q0 + IANIM_MAX_BONES + 1);
         if (bilerp[0] && bilerp[1]) {
             xQuat* q1 = (xQuat*)(g_iAnim_workBuffer + 0x1c80);
-            xVec3* t1 = (xVec3*)(q1 + 65);
+            xVec3* t1 = (xVec3*)(q1 + IANIM_MAX_BONES + 1);
             iAnimEval(data->RawData[biindex[0] + biindex[1] * data->NumAnims[0]], evalTime, flags, tran, quat);
             iAnimEval(data->RawData[biplus[0] + biindex[1] * data->NumAnims[0]], evalTime, flags, t0, q0);
             iAnimBlend(bilerp[0], 1.0f, NULL, NULL, numBones, tran, quat, t0, q0, tran, quat);
@@ -1587,7 +1587,7 @@ static void SingleEval(xAnimSingle* single, xVec3* tran, xQuat* quat)
 
             if (single->Blend && single->Blend->State) {
                 xQuat* blendquat = (xQuat*)(g_iAnim_workBuffer + 0xe40);
-                xVec3* blendtran = (xVec3*)(blendquat + 65);
+                xVec3* blendtran = (xVec3*)(blendquat + IANIM_MAX_BONES + 1);
                 xAnimFileEval(single->Blend->State->Data, single->Blend->Time, single->Blend->BilinearLerp, 0x2, blendtran, blendquat, NULL);
 
                 iAnimBlend(single->BlendFactor, single->Tran->BlendRecip, single->Tran->BlendOffset, NULL, single->Play->BoneCount - 1, blendtran, blendquat, tran, quat, tran, quat);
@@ -1746,10 +1746,10 @@ void xAnimPlayEval(xAnimPlay* play)
 
     U32 i, bone;
     xQuat* quatresult = (xQuat*)g_iAnim_workBuffer;
-    xVec3* tranresult = (xVec3*)(quatresult + 65);
+    xVec3* tranresult = (xVec3*)(quatresult + IANIM_MAX_BONES + 1);
     if (play->BoneCount > 1) {
         xQuat* quatblend = (xQuat*)(g_iAnim_workBuffer + 0x720);
-        xVec3* tranblend = (xVec3*)(quatblend + 65);
+        xVec3* tranblend = (xVec3*)(quatblend + IANIM_MAX_BONES + 1);
 
         SingleEval(play->Single, tranresult, quatresult);
 
