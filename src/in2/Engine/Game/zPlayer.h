@@ -119,6 +119,7 @@ struct zPlayer : zEnt
     void Portaling(U32);
 
     static void ClearGalleryPickupPoints() { galleryPickupPoints = 0; }
+    static void SwitchedNavmeshes();
 
     bool Get_humanPlayer() const
     {
