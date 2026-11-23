@@ -112,13 +112,19 @@ struct xFXRibbon
 
     bool visible() const { return act != NULL; }
 
+    size_t size() const { return (act == NULL) ? 0 : act->joints.size(); }
     bool empty() const { return (act == NULL) ? true : act->joints.empty(); }
-    joint_iterator begin() const;
+    joint_iterator begin() const { return (act == NULL) ? joint_queue::dummy_iterator() : act->joints.begin(); }
     joint_iterator end() const { return (act == NULL) ? joint_queue::dummy_iterator() : act->joints.end(); }
 
     F32 get_age(const joint_data& joint) const
     {
         return 0.001f * (act->mtime - joint.born);
+    }
+
+    F32 time_remaining()
+    {
+        return cfg->life_time - get_age(*begin());
     }
 
     bool need_update() const;
