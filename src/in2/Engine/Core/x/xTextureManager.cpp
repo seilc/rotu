@@ -296,7 +296,7 @@ void xTextureManager::reload(xTextureHandle* pHandle)
     xFileSetUserData(pFile, pNode);
 
     const char* pHipFilename = xST_xAssetID_HIPFullPath(pNode->info.aid);
-    iFileOpen(pHipFilename, 0x41, pFile);
+    iFileOpen(pHipFilename, IFILE_READ | 0x40, pFile);
     iFileSeek(pFile, pNode->info.sector * iFileGetSectorSize(XFILE_DRIVE_CDVD), 0);
 
     S32 result = iFileReadAsync(pFile, pNode->pAssetMemory, size, fileCallback, 0);
