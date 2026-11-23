@@ -1793,7 +1793,7 @@ U8 xCone::Inside(const xVec3& pos, F32 radius, F32* perpCenterDist) const
     targetDir.Sub(pos, shiftedStart);
     targetDir.safe_normalize(dir);
 
-    U8 inCone = targetDir.dot(dir) >= icos(angle);
+    bool inCone = targetDir.dot(dir) >= icos(angle);
     if (inCone) {
         if (perpCenterDist) {
             *perpCenterDist = perpDistance;

@@ -12,7 +12,7 @@ struct xSB
     char* disp;
 };
 
-static U8 gInRenderLoop;
+static bool gInRenderLoop;
 
 U32 gFrameCount;
 U32 gSceneFrameCount;
@@ -53,12 +53,12 @@ void xprintf(const char*, ...)
 
 void xDebugRenderLoopStart()
 {
-    gInRenderLoop = 1;
+    gInRenderLoop = true;
 }
 
 void xDebugRenderLoopEnd()
 {
-    gInRenderLoop = 0;
+    gInRenderLoop = false;
 }
 
 void xDebugInit()

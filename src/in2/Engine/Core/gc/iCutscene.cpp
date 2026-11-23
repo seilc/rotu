@@ -21,7 +21,7 @@ void iCSSoundSetup(xCutscene* csn)
 
     csn->SndAssetID[0] = csn->Info->AudioTracks[eMyRegion].uLeftSoundId;
     csn->SndAssetID[1] = csn->Info->AudioTracks[eMyRegion].uRightSoundId;
-    csn->useDefaultTrack = 0;
+    csn->useDefaultTrack = false;
     csn->useDefaultTrackID = 0;
 
     if (csn->SndAssetID[0] == 0 && csn->SndAssetID[1] == 0) {
@@ -29,13 +29,13 @@ void iCSSoundSetup(xCutscene* csn)
             if (csn->Info->AudioTracks[i].uLeftSoundId != 0) {
                 csn->SndAssetID[0] = csn->Info->AudioTracks[i].uLeftSoundId;
                 csn->SndAssetID[1] = csn->Info->AudioTracks[i].uRightSoundId;
-                csn->useDefaultTrack = 1;
+                csn->useDefaultTrack = true;
                 break;
             }
     }
 
     dataIndex = 0;
-    U8 bLeftFound = 0;
+    bool bLeftFound = false;
     U32 uDefaultLeftTrack = 0, uDefaultRightTrack = 0;
 
     while (dataIndex < numData) {
@@ -44,7 +44,7 @@ void iCSSoundSetup(xCutscene* csn)
                 uDefaultLeftTrack = data->AssetID;
             }
             if (data->AssetID == csn->SndAssetID[0]) {
-                bLeftFound = 1;
+                bLeftFound = true;
             }
         }
         data = (xCutsceneData*)((U8*)data + sizeof(xCutsceneData) + ((data->ChunkSize + 15) & ~15));
