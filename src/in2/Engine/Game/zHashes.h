@@ -44,6 +44,7 @@
 #define HASH_fx_tower_ice                       0x52311104 // xStrHash("fx_tower_ice")
 #define HASH_gc_water_lightkit                  0x01092433 // xStrHash("gc_water_lightkit")
 #define HASH_gc_wbump                           0xBE266DB6 // xStrHash("gc_wbump")
+#define HASH_glare_hit_64                       0x68726BF6 // xStrHash("glare_hit_64")
 #define HASH_grate_circular_room_bb             0x216EE348 // xStrHash("grate_circular_room_bb")
 #define HASH_grate_rotating_tower_bb            0x64F7DEF5 // xStrHash("grate_rotating_tower_bb")
 #define HASH_Griver_green_mt                    0x9DA695E1 // xStrHash("Griver_green_mt")

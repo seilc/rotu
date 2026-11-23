@@ -1,9 +1,9 @@
 #ifndef ZFXGLINT_H
 #define ZFXGLINT_H
 
-#include "types.h"
+#include "xMath3.h"
 
-struct xVec3;
+struct ptank_pool;
 
 namespace zFX
 {
@@ -27,10 +27,24 @@ public:
         F32 size_delta;
     };
 
+    struct particle
+    {
+        xVec3 pos;
+        F32 size;
+        F32 life;
+        F32 lifetime;
+        config* cfg;
+        U32 pad;
+    };
+
     static void setup();
+    static void scene_setup();
     static void emit(const xVec3& position, F32& emit_remaining, F32 dt, config* cfg);
+    static S32 update(U8* mem, S32 count, ptank_pool& pool_, F32 dt, void*);
 
     static config default_config;
+    static S32 system_id;
+    static bool need_setup;
 };
 
 } // namespace zFX
