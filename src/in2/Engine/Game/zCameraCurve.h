@@ -35,6 +35,7 @@ public:
         void Init(const zCameraCurve& curveInfo, const xVec3& playerPos);
         void UpdatePosition(const xVec3& playerPos);
         const xVec3& CameraPathPos() const { return mInfo.mCurvePos[eCamCurve_Camera]; }
+        const BeadInfo& InterpBeadInfo(bool wantPlayerPathPosition);
 
     private:
         bool mValidPlayerPathPos;
@@ -42,6 +43,8 @@ public:
         BeadInfo mInfo;
     };
 
+    void Start(xCam&);
+    void Stop(xCam&);
     bool Activate(const xCamTransitionParams* transition, bool forceRestart);
 
 private:
