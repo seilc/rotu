@@ -121,7 +121,7 @@ public:
     F32 height;
     F32 angle;
 
-    U8 Inside(const xVec3& pos, F32 radius, F32* perpCenterDist) const;
+    bool Inside(const xVec3& pos, F32 radius, F32* perpCenterDist) const;
 };
 
 class xPlane

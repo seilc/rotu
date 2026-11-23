@@ -1773,17 +1773,17 @@ bool xVec3Eq(const xVec3& a, const xVec3& b, F32 tol)
     return true;
 }
 
-U8 xCone::Inside(const xVec3& pos, F32 radius, F32* perpCenterDist) const
+bool xCone::Inside(const xVec3& pos, F32 radius, F32* perpCenterDist) const
 {
     xVec3 diff;
     diff.Sub(pos, start);
     F32 perpDistance = diff.dot(dir);
     if (perpDistance < 0.0f) {
-        return 0;
+        return false;
     }
 
     if (start.Distance2(pos) > (height + radius) * (height + radius)) {
-        return 0;
+        return false;
     }
 
     xVec3 shiftedStart = start;
@@ -1798,8 +1798,8 @@ U8 xCone::Inside(const xVec3& pos, F32 radius, F32* perpCenterDist) const
         if (perpCenterDist) {
             *perpCenterDist = perpDistance;
         }
-        return 1;
+        return true;
     }
 
-    return 0;
+    return false;
 }
