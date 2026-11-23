@@ -9,6 +9,8 @@
 #include "xString.h"
 #include "xstransvc.h"
 
+#define SMOKE_PARTICLE_LIFE 0.8f
+
 RwTexture* zTurretSmokeSystem::texture;
 
 namespace
@@ -96,7 +98,7 @@ void zTurretSmokeSystem::Update(F32 dt)
             p->vel.AddScale(dir, 2.0f);
             p->vel.y = MAX(1.5f, p->vel.y);
             p->rot = 2.0f * PI * xurand() - PI;
-            p->life = 0.8f - timePassed;
+            p->life = SMOKE_PARTICLE_LIFE - timePassed;
             p->pos = pos;
             p->pos.AddScale(p->pos, p->vel, timePassed);
             p->pos.y -= 0.5f * timePassed * timePassed;
@@ -134,8 +136,8 @@ S32 zTurretSmokeSystem::Update(U8* mem, S32 count, ptank_pool& pool_, F32 dt, vo
                 break;
             }
 
-            if (p->life < 0.8f * 0.2f) {
-                p->color.a = 40.0f * (p->life / (0.8f * 0.2f));
+            if (p->life < SMOKE_PARTICLE_LIFE * 0.2f) {
+                p->color.a = 40.0f * (p->life / (SMOKE_PARTICLE_LIFE * 0.2f));
             } else {
                 p->color.a = 40;
             }
