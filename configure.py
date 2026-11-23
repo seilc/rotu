@@ -616,7 +616,7 @@ config.libs = [
             GameObject(Matching, "in2/Engine/Core/gc/iTRC.cpp"),
             GameObject(Matching, "in2/Engine/Core/gc/iAnim.cpp"),
             GameObject(Matching, "in2/Engine/Game/zZipLine.cpp"),
-            GameObject(NonMatching, "in2/Engine/Game/zAnimCache.cpp"),
+            GameObject(Matching, "in2/Engine/Game/zAnimCache.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zAnimList.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zAssetTypes.cpp"),
             GameObject(NonMatching, "in2/Engine/Game/zBulletTime.cpp"),
