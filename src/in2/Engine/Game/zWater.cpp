@@ -7,7 +7,7 @@
 
 struct zWaterBody::asset_type : xDynAsset
 {
-    // zWaterBody::asset_type::flags
+    // flags
     enum
     {
         FLAG_VISIBLE = 0x1,
