@@ -366,14 +366,14 @@ inline void xVec3::Average(const xVec3& a, const xVec3& b, const xVec3& c)
 
 inline F32 xVec3::NormalizeSafe()
 {
-    F32 len2 = length2();
-    if (len2 < 1e-10f) {
+    F32 len_squ = length2();
+    if (len_squ < 1e-10f) {
         return 0.0f;
     }
 
-    F32 len = xsqrt(len2);
-    Scale(1.0f / len);
-    return len;
+    len_squ = xsqrt(len_squ);
+    Scale(1.0f / len_squ);
+    return len_squ;
 }
 
 #include "xVec3Inlines.h"
