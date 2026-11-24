@@ -127,10 +127,7 @@ S32 zTurretSmokeSystem::Update(U8* mem, S32 count, ptank_pool& pool_, F32 dt, vo
             continue;
         }
 
-        RwSphere sphere;
-        sphere.center = p->pos.m_RwV3d;
-        sphere.radius = 1.0f;
-        if (RwCameraFrustumTestSphere(xglobals->screen->icam, &sphere)) {
+        xIF_SPHERE_VISIBLE(p->pos.m_RwV3d, 1.0f) {
             pool.next();
             if (!pool.valid()) {
                 break;

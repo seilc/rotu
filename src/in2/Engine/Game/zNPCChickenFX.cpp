@@ -114,10 +114,7 @@ S32 zNPCChickenFXFeather::Update(U8* mem, S32 count, ptank_pool& pool_, F32 dt, 
         p->pos.y += -0.3f * dt;
         p->pos.z += p->vel.y * dt;
 
-        RwSphere worldsph;
-        worldsph.center = p->pos.m_RwV3d;
-        worldsph.radius = p->size;
-        if (RwCameraFrustumTestSphere(xglobals->screen->icam, &worldsph)) {
+        xIF_SPHERE_VISIBLE(p->pos.m_RwV3d, p->size) {
             pool.next();
             if (!pool.valid()) {
                 end = p;

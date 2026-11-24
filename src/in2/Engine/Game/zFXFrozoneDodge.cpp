@@ -190,10 +190,7 @@ S32 updateSprayParticles(U8* mem, S32 count, ptank_pool& apool, F32 dt, void*)
         p->vel.Scale(0.95f);
         p->pos.AddScale(p->vel, dt);
 
-        RwSphere worldsph;
-        worldsph.center = p->pos.m_RwV3d;
-        worldsph.radius = 0.2f;
-        if (RwCameraFrustumTestSphere(xglobals->screen->icam, &worldsph)) {
+        xIF_SPHERE_VISIBLE(p->pos.m_RwV3d, 0.2f) {
             FPTANK_NEXT(pos_color_size);
 
             *pool_pos = p->pos;
