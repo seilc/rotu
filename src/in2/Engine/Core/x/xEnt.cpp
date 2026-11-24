@@ -320,7 +320,7 @@ void xEntInitForType(xEnt* ent)
         break;
     }
 
-    if ((ent->moreFlags & k_MORE_FLAGS_ANIM_COLL || ent->flags & 0x2) && !ent->frame) {
+    if ((ent->moreFlags & k_MORE_FLAGS_ANIM_COLL || ent->flags & k_XENT_IS_STACKED) && !ent->frame) {
         ent->frame = (xEntFrame*)xMEMALLOC(sizeof(xEntFrame), 0);
         memset(ent->frame, 0, sizeof(xEntFrame));
     }
@@ -566,7 +566,7 @@ void xEntSetup(xEnt* ent)
 
     HackHoldableTurret(ent);
 
-    if (ent->flags & 0x2) {
+    if (ent->flags & k_XENT_IS_STACKED) {
         setup_stacked_entity(*ent);
     }
 }
@@ -748,7 +748,7 @@ void xEntReset(xEnt* ent, const xVec3& pos, const xVec3& ang)
         ent->bupdate(ent, &((xMat4x3*)ent->model->Mat)->pos);
     }
 
-    if (ent->flags & 0x2) {
+    if (ent->flags & k_XENT_IS_STACKED) {
         setup_stacked_entity(*ent);
     }
 
@@ -951,7 +951,7 @@ void xEntUpdate(xEnt* ent, xScene* sc, F32 dt)
         xEntCollide(ent, sc, dt);
     }
 
-    if ((ent->flags & 0x2) && (ent->pflags & k_XENT_HAS_GRAVITY)) {
+    if ((ent->flags & k_XENT_IS_STACKED) && (ent->pflags & k_XENT_HAS_GRAVITY)) {
         update_stacked_entity(*sc, *ent, dt);
     }
 
