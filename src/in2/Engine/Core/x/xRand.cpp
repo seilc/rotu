@@ -150,6 +150,7 @@ U32 xrand_RandomChoice(U32& randomChoiceData, U8& randomChoiceDataSize, U32 maxC
         choice = xrand_RandomChoice(maxCount);
         break;
     case xRandomChoiceRule_ANY_NOT_CHOSEN:
+    {
         if (maxCount >= 32)
             maxCount = 32;
         U32 ithUnplayed = xrand_RandomChoice(maxCount - randomChoiceDataSize) + 1;
@@ -175,6 +176,7 @@ U32 xrand_RandomChoice(U32& randomChoiceData, U8& randomChoiceDataSize, U32 maxC
             }
         }
         break;
+    }
     case xRandomChoiceRule_IN_ORDER:
         choice = randomChoiceData;
         if (choice >= maxCount)
