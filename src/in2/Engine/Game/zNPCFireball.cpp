@@ -77,7 +77,7 @@ void RayCast(xCollis& coll, const xEnt* ignore, const xVec3& origin, const xVec3
     ray.flags = XRAY3_USE_MAX;
 
     coll.flags = 0;
-    coll.dist = 1e38f;
+    coll.dist = HUGE;
     coll.optr = NULL;
     coll.mptr = NULL;
     xRayHitsSceneFlags(globals.sceneCur, &ray, &coll, k_XENT_COLLTYPE_NPC, collFlags);
@@ -97,7 +97,7 @@ void RayCast(xCollis& coll, const xEnt* ignore, const xVec3& origin, const xVec3
     if (collFlags & k_XENT_COLLTYPE_PC) {
         xCollis playerColl;
         playerColl.flags = 0;
-        playerColl.dist = 1e38f;
+        playerColl.dist = HUGE;
         playerColl.optr = NULL;
         playerColl.mptr = NULL;
 

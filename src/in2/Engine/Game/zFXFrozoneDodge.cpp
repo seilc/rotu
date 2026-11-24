@@ -117,7 +117,7 @@ void zFXFrozoneDodge::Update(F32 dt, xEntFrame* frame, zFrozonePlayerDodge* dodg
 
     xCollis coll;
     coll.flags = 0;
-    coll.dist = 1e38f;
+    coll.dist = HUGE;
     coll.optr = NULL;
     coll.mptr = NULL;
     xRayHitsSceneFlags(globals.sceneCur, &ray, &coll, k_XENT_COLLTYPE_PC,

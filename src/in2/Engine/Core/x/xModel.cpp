@@ -169,7 +169,7 @@ xModelInstance* xModelInstanceAllocReuse(RpAtomic* data, void* object, U16 flags
     dude->Alpha = data->geometry->matList.materials[0]->color.alpha / 255.0f;
     dude->Surf = NULL;
     dude->FadeStart = 9e37f;
-    dude->FadeEnd = 1e38f;
+    dude->FadeEnd = HUGE;
 
     if (dude->Mat) {
         for (i = 0; i < (S32)matCount; i++)
@@ -337,7 +337,7 @@ void xModelEvalSingle(xModelInstance* modelInst, xBox* combinedAnimBound)
 void xModelEval(xModelInstance* modelInst)
 {
     xBox* combinedAnimBound = &modelInst->combinedAnimBound;
-    combinedAnimBound->upper.x = -1e38f;
+    combinedAnimBound->upper.x = -HUGE;
 
     while (modelInst) {
         xModelEvalSingle(modelInst, combinedAnimBound);
@@ -787,7 +787,7 @@ S32 xModelBoxCullPlusShadow(xBox* box, xVec3* shadowVec, S32* shadowOutside)
     RwCamera* camera = RwCameraGetCurrentCamera();
     F32 nearDot;
 
-    if (box->upper.x == -1e38f) {
+    if (box->upper.x == -HUGE) {
         return TRUE;
     }
 

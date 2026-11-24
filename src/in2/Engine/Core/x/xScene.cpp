@@ -405,7 +405,7 @@ void xRayHitsEnt(xScene*, xRay3* r, xQCData* qcr, xEnt* ent, void* colldata)
 
 void xRayHitsScene(xScene* sc, xRay3* r, xCollis* coll)
 {
-    coll->dist = 1e38f;
+    coll->dist = HUGE;
 
     xQCData q;
     xQuickCullForRay(&q, r);
@@ -425,7 +425,7 @@ void xRayHitsScene(xScene* sc, xRay3* r, xCollis* coll)
         coll->mptr = NULL;
     }
 
-    if (coll->dist < 1e38f) {
+    if (coll->dist < HUGE) {
         coll->flags |= k_HIT_IT;
 
         if (coll->flags & 0x200) {
@@ -583,7 +583,7 @@ namespace {
 
 void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, U8 collType, U8 chk)
 {
-    coll->dist = 1e38f;
+    coll->dist = HUGE;
     coll->flags = coll->flags & ~k_HIT_IT | 0x100;
 
     cbRayHitsEnt cb(*r, *coll, collType, chk);
@@ -606,7 +606,7 @@ void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, U8 collType, U8 chk
     if (chk & k_XENT_COLLTYPE_ENV) {
         xCollis tempColl;
         tempColl.flags = coll->flags;
-        tempColl.dist = 1e38f;
+        tempColl.dist = HUGE;
         xRayHitsEnv(r, sc->env, &tempColl);
 
         if (tempColl.dist < coll->dist) {
@@ -619,7 +619,7 @@ void xRayHitsSceneFlags(xScene* sc, xRay3* r, xCollis* coll, U8 collType, U8 chk
 
 void xSphereHitsScene(xScene* sc, const xSphere* sphere, xCollis* coll, U8 collType, U8 chk)
 {
-    coll->dist = 1e38f;
+    coll->dist = HUGE;
     coll->flags = coll->flags & ~k_HIT_IT | 0x100;
 
     cbSphereHitsEnt cb(*sphere, *coll, collType, chk);
@@ -641,7 +641,7 @@ void xSphereHitsScene(xScene* sc, const xSphere* sphere, xCollis* coll, U8 collT
     if (chk & k_XENT_COLLTYPE_ENV) {
         xCollis tempColl;
         tempColl.flags = coll->flags;
-        tempColl.dist = 1e38f;
+        tempColl.dist = HUGE;
         xSphereHitsEnv(sphere, sc->env, &tempColl);
 
         if (tempColl.dist < coll->dist) {
@@ -941,7 +941,7 @@ U32 xSceneNearestFloorPoly(xScene* sc, xNearFloorPoly* nfpoly, U8 collType, U8 c
     sSphereIsx.t.sphere.radius = xsqrt(0.25f * (xsqr(isx.t.box.sup.x - isx.t.box.inf.x) + xsqr(isx.t.box.sup.y - isx.t.box.inf.y) + xsqr(isx.t.box.sup.z - isx.t.box.inf.z)));
     sSphereIsx.t.sphere.center = *(RwV3d*)&sNearestBound.box.center;
 
-    nfpoly->neardist = 1e38f;
+    nfpoly->neardist = HUGE;
     nfpoly->center = sNearestBound.box.center;
 
     nfpoly->oid = 0;
@@ -979,7 +979,7 @@ U32 xSceneNearestFloorPoly(xScene* sc, xNearFloorPoly* nfpoly, U8 collType, U8 c
         sUseJSP = false;
     }
 
-    if (nfpoly->neardist != 1e38f) {
+    if (nfpoly->neardist != HUGE) {
         nfpoly->neardist = xsqrt(nfpoly->neardist);
         return TRUE;
     }

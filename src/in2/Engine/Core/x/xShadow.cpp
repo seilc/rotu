@@ -1128,7 +1128,7 @@ void xShadowVertical_FillCache(xShadowCache* cache, xVec3* pos, F32 r, F32 depth
     cache->entCount = 0;
     cache->polyCount = 0;
     for (i = 0; i < 5; i++) {
-        cache->polyRayDepth[i] = -1e38f;
+        cache->polyRayDepth[i] = -HUGE;
     }
 
     xEnv* env = xglobals->sceneCur->env;
@@ -1193,7 +1193,7 @@ void xShadowVertical_FillCache(xShadowCache* cache, xVec3* pos, F32 r, F32 depth
         }
 
         objMaxDepth = sortRayDepth[2];
-        if (objMaxDepth == -1e38f) {
+        if (objMaxDepth == -HUGE) {
             objMaxDepth = pos->y - depth;
         }
         if (objMaxDepth > pos->y - 0.001f) {

@@ -66,7 +66,7 @@ static void zCinFX_Incrediball_Update(const zCutsceneMgr*, NCINEntry* fxrec, S32
         ffe->SetShieldColor(color);
         ffe->SetShieldDistortion(!params->no_distortion);
         params->runtime.rot = g_I3;
-        zCinFX_Incrediball_position.pos.x = -1e38f;
+        zCinFX_Incrediball_position.pos.x = -HUGE;
     }
 }
 
@@ -82,7 +82,7 @@ static void zCinFX_Incrediball_AR(const zCutsceneMgr*, NCINEntry* fxrec, RpAtomi
     xMat3x3MulScaleC(mat, params->scale);
     mat.pos.y += params->height_offset;
 
-    if (zCinFX_Incrediball_position.pos.x != -1e38f) {
+    if (zCinFX_Incrediball_position.pos.x != -HUGE) {
         xVec3 delta = mat.pos;
         delta -= zCinFX_Incrediball_position.pos;
 
