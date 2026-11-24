@@ -26,7 +26,7 @@ xLightKit* xLightKit_Prepare(void* data)
 
         if (currlight->color.red > 1.0f || currlight->color.green > 1.0f || currlight->color.blue > 1.0f) {
             RwReal s = MAX3(currlight->color.red, currlight->color.green, currlight->color.blue);
-            s = MAX(s, 0.00001f);
+            s = MAX(s, EPSILON);
             s = 1.0f / s;
 
             currlight->color.red *= s;
