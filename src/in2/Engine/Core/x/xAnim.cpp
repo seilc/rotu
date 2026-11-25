@@ -448,19 +448,19 @@ void xAnimCalcPhysicsData(xAnimFile* afile, xAnimFile* endPose)
     }
 
     U8 axis[3];
-    if (afile->FileFlags & 0x10000) {
+    if (afile->FileFlags & AnimFile_PhysicsX) {
         axis[0] = 1;
     } else {
         axis[0] = 0;
     }
 
-    if (afile->FileFlags & 0x20000) {
+    if (afile->FileFlags & AnimFile_PhysicsY) {
         axis[1] = 1;
     } else {
         axis[1] = 0;
     }
 
-    if (afile->FileFlags & 0x40000) {
+    if (afile->FileFlags & AnimFile_PhysicsZ) {
         axis[2] = 1;
     } else {
         axis[2] = 0;
@@ -469,7 +469,7 @@ void xAnimCalcPhysicsData(xAnimFile* afile, xAnimFile* endPose)
     S32 tranCount = _iAnimSKBNumExtract((iAnimSKBHeader*)afile->RawData[0], 1);
 
     U32 size = tranCount * sizeof(xVec3) + sizeof(xAnimPhysicsData);
-    if (afile->FileFlags & 0x80000) {
+    if (afile->FileFlags & AnimFile_PhysicsYaw) {
         size += tranCount * sizeof(F32);
     }
 
@@ -478,7 +478,7 @@ void xAnimCalcPhysicsData(xAnimFile* afile, xAnimFile* endPose)
     physDat->tranTable = (xVec3*)(physDat + 1);
 
     xVec3* tranTable = physDat->tranTable;
-    if (afile->FileFlags & 0x80000) {
+    if (afile->FileFlags & AnimFile_PhysicsYaw) {
         physDat->yawTable = (F32*)(tranTable + tranCount);
     } else {
         physDat->yawTable = NULL;
@@ -1268,7 +1268,7 @@ static void LoopUpdate(xAnimSingle* single)
         single->Time = duration;
         EffectSingleLoop(single);
 
-        if (single->State->Data->FileFlags & 0xF0000) {
+        if (single->State->Data->FileFlags & (AnimFile_PhysicsX | AnimFile_PhysicsY | AnimFile_PhysicsZ | AnimFile_PhysicsYaw)) {
             xVec3 disp;
             F32 yaw;
             xAnimPhysicsEval(single->State->Data->PhysicsData, single->Time, &disp, &yaw);
@@ -1337,7 +1337,7 @@ static void SingleUpdate(xAnimSingle* single, F32 timeDelta)
     single->LastTime = single->Time;
 
     singleTime = timeDelta * single->CurrentSpeed + single->Time;
-    if (single->State->Data->FileFlags & 0xF0000) {
+    if (single->State->Data->FileFlags & (AnimFile_PhysicsX | AnimFile_PhysicsY | AnimFile_PhysicsZ | AnimFile_PhysicsYaw)) {
         xAnimPhysicsEval(single->State->Data->PhysicsData, single->LastTime, &single->PhysDisp, &single->YawDisp);
 
         xVec3Inv(&single->PhysDisp, &single->PhysDisp);
@@ -1473,7 +1473,7 @@ static void SingleUpdate(xAnimSingle* single, F32 timeDelta)
                     single->BlendFactor = 1e-7f;
                 }
 
-                if (single->State->Data->FileFlags & 0xF0000) {
+                if (single->State->Data->FileFlags & (AnimFile_PhysicsX | AnimFile_PhysicsY | AnimFile_PhysicsZ | AnimFile_PhysicsYaw)) {
                     xVec3 disp;
                     F32 yaw;
                     xAnimPhysicsEval(single->State->Data->PhysicsData, single->Time, &disp, &yaw);
@@ -1558,7 +1558,7 @@ static void SingleUpdate(xAnimSingle* single, F32 timeDelta)
     EffectSingleDuration(single);
     if (bl) EffectSingleDuration(bl);
 
-    if (single->State->Data->FileFlags & 0xF0000) {
+    if (single->State->Data->FileFlags & (AnimFile_PhysicsX | AnimFile_PhysicsY | AnimFile_PhysicsZ | AnimFile_PhysicsYaw)) {
         xVec3 disp;
         F32 yaw;
         xAnimPhysicsEval(single->State->Data->PhysicsData, single->Time, &disp, &yaw);
