@@ -52,6 +52,7 @@ typedef U32(*xEntCollisDepenQueryCallback)(xEnt*, xEnt*, xScene*, F32, xCollis*)
 // xEnt::flags
 #define k_XENT_IS_VISIBLE ((U8)(1 << 0))
 #define k_XENT_IS_STACKED ((U8)(1 << 1))
+#define k_XENT_IS_VISIBILITY_CULLED ((U8)(1 << 2))
 
 // xEnt::pflags
 #define k_XENT_IS_MOVING ((U8)(1 << 0))
@@ -221,7 +222,7 @@ inline U32 xEntIsEnabled(const xEnt* ent)
 
 inline void xEntVisibilityCullOn(xEnt* ent)
 {
-    ent->flags |= (U8)0x4;
+    ent->flags |= k_XENT_IS_VISIBILITY_CULLED;
     if (ent->visUpdate) {
         ent->visUpdate(ent);
     }
@@ -229,7 +230,7 @@ inline void xEntVisibilityCullOn(xEnt* ent)
 
 inline void xEntVisibilityCullOff(xEnt* ent)
 {
-    ent->flags &= (U8)~0x4;
+    ent->flags &= (U8)~k_XENT_IS_VISIBILITY_CULLED;
     if (ent->visUpdate) {
         ent->visUpdate(ent);
     }
@@ -320,7 +321,7 @@ inline bool xEntMoves(const xEnt& ent)
 
 inline U32 xEntIsVisible(const xEnt* ent)
 {
-    return (ent->flags & (k_XENT_IS_VISIBLE | 0x4 | 0x80)) == k_XENT_IS_VISIBLE;
+    return (ent->flags & (k_XENT_IS_VISIBLE | k_XENT_IS_VISIBILITY_CULLED | 0x80)) == k_XENT_IS_VISIBLE;
 }
 
 #endif
