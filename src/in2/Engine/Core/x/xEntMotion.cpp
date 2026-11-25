@@ -326,7 +326,7 @@ static void xEntERMove(xEntMotion* motion, xScene*, F32 dt, xEntFrame* frame)
             xVec3Sub(frame->setDpos(), motion->er.b, motion->er.a);
             xVec3SMulBy(frame->setDpos(), scale);
         }
-        frame->mode = 2;
+        frame->mode = k_XENT_SET_DPOS;
         motion->er.state = 0;
     }
     else if (xEntERIsExtended(motion)) {
@@ -341,7 +341,7 @@ static void xEntERMove(xEntMotion* motion, xScene*, F32 dt, xEntFrame* frame)
             xVec3Sub(frame->setDpos(), motion->er.a, motion->er.b);
             xVec3SMulBy(frame->setDpos(), scale);
         }
-        frame->mode = 2;
+        frame->mode = k_XENT_SET_DPOS;
         motion->er.state = 2;
     }
     else if (xEntERIsRetracted(motion)) {
@@ -371,7 +371,7 @@ static void xEntOrbitMove(xEntMotion* motion, xScene*, F32 dt, xEntFrame* frame)
         frame->setDpos().z = -2.0f * s * motion->orb.b * icos(u);
     }
 
-    frame->mode = 2;
+    frame->mode = k_XENT_SET_DPOS;
 }
 
 static void xEntMPGetNext(xEntMotion* motion, xMovePoint* prev, xScene*)
@@ -438,7 +438,7 @@ static void xEntMPMove(xEntMotion* motion, xScene* sc, F32 dt, xEntFrame* frame)
 
     xEntSpeedDataUpdate(&mp->speed_data, dt);
 
-    frame->mode = 2;
+    frame->mode = k_XENT_SET_DPOS;
 
     F32 newdist = mp->curdist + mp->speed_data.speed * dt;
 
@@ -574,7 +574,7 @@ static void xEntSplineMove(xEntMotion* motion, xScene*, F32 dt, xEntFrame* frame
     xVec3 target_position;
     spline_data->spline->evaluate(spline_data->u, target_position);
 
-    frame->mode |= 2;
+    frame->mode |= k_XENT_SET_DPOS;
 
     if (spline_data->arrived == 1) {
         frame->setDpos().Sub(target_position, frame->mat.pos);
@@ -927,7 +927,7 @@ static U32 xEntSldMove(xEntMotion* motion, xScene*, F32 dt, xEntFrame* frame)
         last = FALSE;
     }
 
-    frame->mode |= 2;
+    frame->mode |= k_XENT_SET_DPOS;
     return last;
 }
 

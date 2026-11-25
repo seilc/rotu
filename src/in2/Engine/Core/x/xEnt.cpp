@@ -1073,7 +1073,7 @@ void xEntMotionToMatrix(xEnt* ent, xEntFrame* frame)
         xEntRotationToMatrix(frame);
     }
 
-    if (frame->mode & 0x2) {
+    if (frame->mode & k_XENT_SET_DPOS) {
         if (frame->mode & 0x800) {
             xMat3x3RMulVec(&frame->setDpos(), &frame->mat, &frame->getDpos());
         }
@@ -1210,7 +1210,7 @@ void xEntApplyPhysics(xEnt* ent, xScene* sc, F32 dt)
     }
 
     ent->frame->setDpos() += dposvel;
-    ent->frame->mode |= 0x2;
+    ent->frame->mode |= k_XENT_SET_DPOS;
 }
 
 void xEntCollide(xEnt* ent, xScene* sc, F32 dt)
