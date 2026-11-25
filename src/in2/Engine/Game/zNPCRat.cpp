@@ -37,9 +37,9 @@ static bool zNPCRatIdleToRunTest(xEnt* ent, behavior* current, behavior*)
 
 void zNPCRatIdle::create_anim_table(xAnimTable* table)
 {
-    xAnimTableNewState(table, "RAT_L_IDLE01", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "RAT_L_IDLE02", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "RAT_T_STANDUP01", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "RAT_L_IDLE01", AnimState_EndLoop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "RAT_L_IDLE02", AnimState_EndLoop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "RAT_T_STANDUP01", AnimState_EndLoop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
 }
 
 void zNPCRatIdle::enterBehavior(const zNPCCommonBehavior*)
@@ -67,7 +67,7 @@ static bool zNPCRatRunToIdleTest(xEnt*, behavior* current, behavior*)
 
 void zNPCRatRun::create_anim_table(xAnimTable* table)
 {
-    xAnimTableNewState(table, "RAT_L_RUN01", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "RAT_L_RUN01", AnimState_EndLoop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
 }
 
 void zNPCRatRun::enterBehavior(const zNPCCommonBehavior*)

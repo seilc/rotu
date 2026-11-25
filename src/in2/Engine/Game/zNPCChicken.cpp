@@ -61,8 +61,8 @@ static bool zNPCChickenIdleToWalkTest(xEnt*, behavior* current, behavior*)
 
 void zNPCChickenIdle::create_anim_table(xAnimTable* table)
 {
-    xAnimTableNewState(table, "CHICKEN_L_IDLE01", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
-    xAnimTableNewState(table, "CHICKEN_L_IDLE02", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "CHICKEN_L_IDLE01", AnimState_EndLoop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "CHICKEN_L_IDLE02", AnimState_EndLoop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
 }
 
 void zNPCChickenIdle::enterBehavior(const zNPCCommonBehavior*)
@@ -113,7 +113,7 @@ static bool zNPCChickenWalkToFlyTest(xEnt*, behavior* current, behavior*)
 
 void zNPCChickenWalk::create_anim_table(xAnimTable* table)
 {
-    xAnimTableNewState(table, "CHICKEN_L_WALK01", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "CHICKEN_L_WALK01", AnimState_EndLoop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
 }
 
 void zNPCChickenWalk::enterBehavior(const zNPCCommonBehavior*)
@@ -154,7 +154,7 @@ static bool zNPCChickenRunToIdleTest(xEnt*, behavior* current, behavior*)
 
 void zNPCChickenRun::create_anim_table(xAnimTable* table)
 {
-    xAnimTableNewState(table, "CHICKEN_L_RUN01", AnimState_Loop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "CHICKEN_L_RUN01", AnimState_EndLoop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
 }
 
 void zNPCChickenRun::enterBehavior(const zNPCCommonBehavior*)
@@ -206,7 +206,7 @@ static bool zNPCChickenFlyToRunTest(xEnt*, behavior* current, behavior*)
 
 void zNPCChickenFly::create_anim_table(xAnimTable* table)
 {
-    xAnimTableNewState(table, "CHICKEN_T_FLYFORWARD01", AnimState_Once, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
+    xAnimTableNewState(table, "CHICKEN_T_FLYFORWARD01", AnimState_EndStop, 0, 1.0f, NULL, NULL, 0.0f, NULL, NULL, NULL, NULL, NULL);
 }
 
 void zNPCChickenFly::enterBehavior(const zNPCCommonBehavior*)
