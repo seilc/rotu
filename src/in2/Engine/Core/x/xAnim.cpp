@@ -793,7 +793,7 @@ static void _xAnimTableAddTransitionHelper(xAnimState* state, xAnimTransition* t
 {
     U32 flags = tran->Flags;
 
-    if (flags & 0x10) {
+    if (flags & AnimTransition_Default) {
         if (!DefaultHasTransition(state, tran, &allocCount)) {
             stateList[stateCount] = state;
             stateCount++;
@@ -901,7 +901,7 @@ static void _xAnimTableAddTransition(xAnimTable* table, xAnimTransition* tran, c
         tlist = (xAnimTransitionList*)xANIMALLOC(allocCount * sizeof(xAnimTransitionList));
     }
 
-    if (tran->Flags & 0x10) {
+    if (tran->Flags & AnimTransition_Default) {
         for (i = 0; i < stateCount; i++) {
             xAnimTransition* currentTransition = hasSubst ? substTransitionList[i] : tran;
             if (!DefaultOverride(stateList[i], currentTransition)) {

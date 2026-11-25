@@ -44,6 +44,12 @@ enum exAnimStateFlags
     AnimState_Temp = 0x800
 };
 
+// xAnimTransition::Flags
+enum
+{
+    AnimTransition_Default = 0x10
+};
+
 struct xAnimPhysicsData
 {
     xVec3* tranTable;
