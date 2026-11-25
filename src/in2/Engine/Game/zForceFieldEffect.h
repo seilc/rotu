@@ -34,7 +34,7 @@ public:
     {
         baseShieldColor = color;
         currentColor = color;
-        overrideColor = 1;
+        overrideColor = true;
     }
 
     void SetShieldDistortion(bool distort)
@@ -54,9 +54,9 @@ private:
     xVec3 offset;
     F32 scale;
     U8 used;
-    U8 skipFrame;
-    U8 overrideColor;
-    U8 distortShield;
+    bool skipFrame;
+    bool overrideColor;
+    bool distortShield;
     F32 lastUsedTime;
     F32 fadeTimer;
     xFColor baseShieldColor;

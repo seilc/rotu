@@ -25,7 +25,7 @@ private:
     xColor shadowColor;
     const char* text;
     U8 cached;
-    U8 clearLayoutCache;
+    bool clearLayoutCache;
 };
 
 #endif
