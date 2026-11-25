@@ -206,6 +206,8 @@ public:
     void add_tweaks(const char*) {}
 };
 
+#define MAX_BLEND_CAMS 4
+
 struct xCamGroup
 {
     void create();
@@ -238,7 +240,7 @@ private:
 
     S32 child_flags;
     S32 child_flags_mask;
-    xCamBlend* blend_cam[4];
+    xCamBlend* blend_cam[MAX_BLEND_CAMS];
 };
 
 inline void xCamGroup::stop(xCam& cam)

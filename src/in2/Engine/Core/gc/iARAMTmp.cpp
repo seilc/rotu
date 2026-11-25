@@ -28,7 +28,9 @@ struct tempTransfer
     U32 type;
 };
 
-static tempTransfer activeTransfers[2];
+#define MAX_TEMP_TRANSFERS ((U32)2)
+
+static tempTransfer activeTransfers[MAX_TEMP_TRANSFERS];
 
 static void transferDoneCB(u32 pointerToARQRequest)
 {
@@ -48,7 +50,7 @@ U32 iARAMTmpBegin(U32 type, U32 max, bool doTRCCheck)
     }
 
     S32 which;
-    for (which = 0; which < ARRAY_LENGTH(activeTransfers); which++) {
+    for (which = 0; which < MAX_TEMP_TRANSFERS; which++) {
         if (activeTransfers[which].type == type) {
             return 0;
         }
@@ -58,7 +60,7 @@ U32 iARAMTmpBegin(U32 type, U32 max, bool doTRCCheck)
         }
     }
 
-    if (which == ARRAY_LENGTH(activeTransfers)) {
+    if (which == MAX_TEMP_TRANSFERS) {
         return 0;
     }
 
@@ -160,13 +162,13 @@ U32 iARAMTmpBegin(U32 type, U32 max, bool doTRCCheck)
 void* iARAMTmpMalloc(U32 type, U32 size)
 {
     S32 which;
-    for (which = 0; which < ARRAY_LENGTH(activeTransfers); which++) {
+    for (which = 0; which < MAX_TEMP_TRANSFERS; which++) {
         if (activeTransfers[which].type == type) {
             break;
         }
     }
 
-    if (which == ARRAY_LENGTH(activeTransfers)) {
+    if (which == MAX_TEMP_TRANSFERS) {
         return (void*)0xBEEEEEEF;
     }
 
@@ -199,13 +201,13 @@ void iARAMTmpFree(U32, void*)
 S32 iARAMTmpInARAMTemp(U32 type, void* ptr)
 {
     S32 which;
-    for (which = 0; which < ARRAY_LENGTH(activeTransfers); which++) {
+    for (which = 0; which < MAX_TEMP_TRANSFERS; which++) {
         if (activeTransfers[which].type == type) {
             break;
         }
     }
 
-    if (which == ARRAY_LENGTH(activeTransfers)) {
+    if (which == MAX_TEMP_TRANSFERS) {
         return FALSE;
     }
 
@@ -221,13 +223,13 @@ S32 iARAMTmpInARAMTemp(U32 type, void* ptr)
 void iARAMTmpEnd(U32 type, bool doTRCCheck)
 {
     S32 which;
-    for (which = 0; which < ARRAY_LENGTH(activeTransfers); which++) {
+    for (which = 0; which < MAX_TEMP_TRANSFERS; which++) {
         if (activeTransfers[which].type == type) {
             break;
         }
     }
 
-    if (which == ARRAY_LENGTH(activeTransfers)) {
+    if (which == MAX_TEMP_TRANSFERS) {
         return;
     }
 

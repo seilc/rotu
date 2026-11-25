@@ -203,7 +203,7 @@ void* xMemAlloc(U32 heapID, U32 size, S32 align)
         return NULL;
     }
 
-    for (i = 0; i < ARRAY_LENGTH(heap->opp_heap); i++) {
+    for (i = 0; i < XMEM_MAX_OPP_HEAPS; i++) {
     }
 
     sp->curr = info.curr;
