@@ -121,20 +121,11 @@ struct zPlayer : zEnt
     static void ClearGalleryPickupPoints() { galleryPickupPoints = 0; }
     static void SwitchedNavmeshes();
 
-    bool Get_humanPlayer() const
-    {
-        return (zPlayerFlags >> 19) & 0x1;
-    }
+    bool Get_humanPlayer() const { return (zPlayerFlags >> 19) & 0x1; }
 
-    bool Get_floor_collision() const
-    {
-        return (zPlayerFlags >> 1) & 0x1;
-    }
+    bool Get_floor_collision() const { return (zPlayerFlags >> 1) & 0x1; }
 
-    bool Get_collisionOn() const
-    {
-        return (zPlayerFlags >> 3) & 0x1;
-    }
+    bool Get_collisionOn() const { return (zPlayerFlags >> 3) & 0x1; }
 
     zPad* GetPad()
     {
